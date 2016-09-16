@@ -1,7 +1,18 @@
 <!-- ******************************************
 START SITE HERE
 ********************************************** -->
+<style>
 
+.text-box{
+    display: none;
+}
+.text-box-show{
+    margin-top: 20px;
+    height: 25px;
+}
+.btn-show{
+    height: 25px;
+</style>
 <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
@@ -89,8 +100,23 @@ START SITE HERE
                                             </div>
                                             <small>
                                                 Expires : 22 June 2016 <br/>
-                                                <a href="" ng-click="loadMembers(course._id)">View Members</a>   
                                             </small>
+                                            
+                                            <!-- <a href="" ng-click="loadMembers(course._id)">View Members</a>  --> 
+                                       
+                                            <a class="btn btn-default btn-sm" ng-click="showTextBox($index)" >Enroll</a>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <input id="txtBoxEnroll" ng-model="enrollTxt" type="text" ng-class="showTextBoxState ? 'text-box-show': 'text-box'" class="form form-control" name="enroll" placeholder="Enroll">
+                                                </div>
+                                                <div class="col-md-12">
+                                                  
+                                                    <a class="btn btn-default btn-sm" ng-class="showTextBoxState ? 'btn-show': 'text-box'" ng-click="checkEnrollKey(course._id,enrollTxt)" >Go</a>
+                                                </div>
+                                            </div>
+
+                                            
                                         </div><!-- end title -->
                                     </div><!-- end video-wrapper -->
                                 </div>

@@ -5,6 +5,7 @@ $scope.$parent.body_class = "leftmenu memberprofile";
 $scope.init = function () {
     $scope.courses = [];
     $scope.loadCourses();
+    $scope.showTextBoxState=false;
     
 }
     
@@ -44,6 +45,38 @@ $scope.loadMembers = function(cid){
     // );
 
 }
+
+$scope.showTextBox = function(index){
+
+    console.log($scope.showTextBoxState);
+    $scope.showTextBoxState=true;
+    console.log($scope.showTextBoxState);
+};
+
+$scope.checkEnrollKey = function(id,txt){
+    console.log(id);
+    console.log("enroll Key Pressed");
+    console.log(txt);
+
+    $http.post('/checkEnrollmentKey', {
+        cid: txt
+    }).success(
+        function(data){
+            if(data==1){
+                console.log("done");
+            }
+           
+        }
+    ).error(
+        function(error){
+          if(error==1){
+            $location.url('/single_course/'+id);  
+          }
+        }
+    );
+
+
+};
 
 
 $scope.init();

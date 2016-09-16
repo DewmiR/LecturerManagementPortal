@@ -19,3 +19,5 @@ module.exports.createNewEnroll = function(newEnroll, callback){
 module.exports.getUsersEnrolledInCourse = function(courseId, callback){
     Enroll.find({courseId: courseId},callback);
 }
+
+

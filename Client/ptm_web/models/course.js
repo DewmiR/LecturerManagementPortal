@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 
 var CourseSchema = new mongoose.Schema({
 	courseName: String,
-	image: String
+	image: String,
+	enrollmentKey: String
 });
 
 var Course = module.exports = mongoose.model('Course',CourseSchema);
@@ -16,4 +17,8 @@ module.exports.createCourse = function(newCourse, callback){
 
 module.exports.getAllCourses = function(callback){
     Course.find({},callback);
+}
+
+module.exports.checkEnrollmentKey = function(key, callback){
+	Course.count( { enrollmentKey:key },callback);
 }

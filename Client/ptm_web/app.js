@@ -115,7 +115,16 @@ app.get('/pass', function (req, res) {
 
 
 app.get('/test', function (req, res) {
-	Enroll.getUsersEnrolledInCourse('ObjectId("57d85c9b40a3fd25b3720b73")',function (err,data) {
+
+
+	var newCourse = Course({
+		courseName: "SETM",
+		image: "ima/sds",
+		enrollmentKey: "123"
+	});
+
+
+	Course.createCourse(newCourse,function (err,data) {
 		console.log(data);
     	if(err) throw err;
 	});
@@ -138,7 +147,15 @@ app.post('/getUsersEnrolledInCourse', function (req, res) {
 	});
 });
 
+app.post('/checkEnrollmentKey', function (req, res) {
 
+	Course.checkEnrollmentKey(req.body.cid,function (err,count) {
+    	if(err) throw err;
+    	// console.log("Count: "+ count);
+    	res.sendStatus(count);
+	});
+	
+});
 
 
 

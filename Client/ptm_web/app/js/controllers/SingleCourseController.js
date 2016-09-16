@@ -5,6 +5,7 @@ $scope.$parent.body_class = "";
 $scope.init = function () {
     console.log("Single Called");
     $scope.courseId = $routeParams.id;
+    console.log($scope.courseId);
     
    
    // $scope.loadCourse();
