@@ -24,7 +24,7 @@ mongoose.connect("mongodb://localhost:27017/ptm_db");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(function(req, res, next) {
-	console.log(`${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}`);
+	//console.log('${req.method} request for '${req.url}' - ${JSON.stringify(req.body)}');
 	next();
 });
 app.use(express.static("./app"));
@@ -139,9 +139,23 @@ app.post('/getUsersEnrolledInCourse', function (req, res) {
 });
 
 
+app.post('/registerUser', function (req, res) {
+	console.log(req.body.name);
+
+	var newUser = new User({
+		name : req.body.name,
+		username : req.body.username,
+		password : req.body.password,
+		itnum : req.body.itnum
+	});
+
+	User.createUser(newUser,function (err,user) {
+		if(err) throw err;
+	});
 
 
-
+	res.send("pass");
+});
 
 
 
