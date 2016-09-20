@@ -3,6 +3,9 @@ START SITE HERE
 ********************************************** -->
 <style>
 
+.md-input-yellow {
+    border-color: #ff5722!important;
+}
 .text-box{
     display: none;
 }
@@ -68,6 +71,9 @@ START SITE HERE
                             
                             <div class="widget-title">
                                 <h3>Active Courses</h3>
+                                <md-button class="md-primary md-raised" ng-model="enrollmentKey" ng-click="showPrompt($event)" ng-class="isEnrollmentKeyValid ? 'md-input-yellow':''" >
+                                Enroll
+                                </md-button>
                                 <hr>
                             </div><!-- end title -->
                             

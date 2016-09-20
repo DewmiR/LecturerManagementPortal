@@ -1,4 +1,4 @@
-myApp.controller('MyCoursesController', ['$scope','$http','$location', function($scope,$http,$location) {
+myApp.controller('MyCoursesController', ['$scope','$http','$location','$mdDialog', function($scope,$http,$location,$mdDialog) {
  	
 $scope.$parent.body_class = "leftmenu memberprofile";
   	
@@ -6,6 +6,7 @@ $scope.init = function () {
     $scope.courses = [];
     $scope.loadCourses();
     $scope.showTextBoxState=false;
+    $scope.status = '  ';
     
 }
     
@@ -28,6 +29,24 @@ $scope.loadCourses = function () {
     );
 }
 
+$scope.showPrompt = function(ev) {
+    var confirm = $mdDialog.prompt()
+      .title()
+      .textContent()
+      .placeholder('Enrollment Key')
+      .ariaLabel('Enrollment Key')
+//      .initialValue('Buddy')
+      .targetEvent(ev)
+      .ok('Ok')
+      .cancel('Cancel\'');
+    $mdDialog.show(confirm).then(function(result) {
+      console.log(result);
+     }, function() {
+        console.log("Don't");
+    });   
+    console.log("Pressed");
+  };
+    
 $scope.loadMembers = function(cid){
 
     $location.url('/my_friends/'+ cid);  

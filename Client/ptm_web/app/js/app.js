@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute','ngAnimate', 'toastr']);
+var myApp = angular.module('myApp', ['ngRoute','ngAnimate', 'toastr','ngMaterial']);
 
 myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrConfig) {
   $routeProvider.
