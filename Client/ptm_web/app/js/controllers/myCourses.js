@@ -29,7 +29,11 @@ $scope.loadCourses = function () {
     );
 }
 
-$scope.showPrompt = function(ev) {
+$scope.showEnrollmentKeyPrompt = function(ev,cid) {
+    
+    var studentID="57e214a19e7ead1198a69d88";
+    var courseID=cid;
+    
     var confirm = $mdDialog.prompt()
       .title()
       .textContent()
@@ -40,11 +44,12 @@ $scope.showPrompt = function(ev) {
       .ok('Ok')
       .cancel('Cancel\'');
     $mdDialog.show(confirm).then(function(result) {
-      console.log(result);
+      console.log(studentID);
+        console.log(courseID);
      }, function() {
         console.log("Don't");
     });   
-    console.log("Pressed");
+   
   };
     
 $scope.loadMembers = function(cid){

@@ -100,6 +100,8 @@ app.get('/', function (req, res) {
 });
 
 app.post("/getUser",function(req,res){
+    console.log(req);
+    console.log(res);
     res.send(req.user);
 });
 
@@ -116,14 +118,13 @@ app.get('/pass', function (req, res) {
    res.send("pass");
 });
 
-
 app.get('/test', function (req, res) {
 
 
 	var newCourse = Course({
-		courseName: "SETM",
+		courseName: "DBMS",
 		image: "ima/sds",
-		enrollmentKey: "123"
+		enrollmentKey: "2"
 	});
 
 
@@ -132,6 +133,22 @@ app.get('/test', function (req, res) {
     	if(err) throw err;
 	});
 });
+
+//app.get('/test2', function (req, res) {
+//
+//
+//	var newEnrollment = Enroll({
+//		courseId: "57e21a5065a0412ef08b8f78",
+//		userId: "57e214a19e7ead1198a69d88",
+//		userName: "prageeth"
+//	});
+//
+//
+//	Enroll.createNewEnroll(newEnrollment,function (err,data) {
+//		console.log(data);
+//    	if(err) throw err;
+//	});
+//});
 
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
