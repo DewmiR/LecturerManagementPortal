@@ -100,8 +100,8 @@ app.get('/', function (req, res) {
 });
 
 app.post("/getUser",function(req,res){
-    console.log(req);
-    console.log(res);
+   // console.log(req.body);
+   // console.log(res);
     res.send(req.user);
 });
 
@@ -153,7 +153,7 @@ app.get('/test2', function (req, res) {
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
 		if(err) throw err;
-
+        console.log(courses);
 		res.send(courses);
 	});
 });
@@ -171,7 +171,7 @@ app.post('/getEnrollmentkeyByCourseId', function (req, res) {
 	Course.getEnrollmentkeyByCourseId(req.body.cid,function (err,key) {
         if(err) throw err;
         
-        console.log(key);
+       // console.log(key);
     	res.send(key);
         
 	});
@@ -188,6 +188,30 @@ app.post('/checkEnrollmentKey', function (req, res) {
 	});
 	
 });
+
+app.post('/isEnrolled', function (req, res) {
+
+	Enroll.isEnrolled(req.body.user_id,function (err,courses) {
+    	if(err) throw err;
+        res.send(courses);
+	});
+    
+    //console.log(req.body);
+	
+});
+
+
+app.post('/addNewEnrollment', function (req, res) {
+    var enrollment = req.body;
+
+	Enroll.addNewEnrollment(enrollment,function (err,count) {
+    	if(err) throw err;
+    	res.send("New Enrollment Added");
+	});
+//    console.log(enrollment.course_id)
+	
+});
+
 app.post('/registerUser', function (req, res) {
 	console.log(req.body.name);
 

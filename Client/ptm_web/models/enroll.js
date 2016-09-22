@@ -21,3 +21,16 @@ module.exports.getUsersEnrolledInCourse = function(courseId, callback){
 }
 
 
+module.exports.addNewEnrollment = function(enrollment,callback){
+
+     var enroll =new Enroll();
+      enroll.courseId = enrollment.course_id;
+      enroll.userId = enrollment.student_id;
+      enroll.userName = "test";
+      enroll.userImage = "test";
+      enroll.save(callback);
+}
+
+module.exports.isEnrolled = function(userId, callback){
+    Enroll.find({ userId: userId },callback);
+}
