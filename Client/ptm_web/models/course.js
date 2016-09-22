@@ -23,6 +23,7 @@ module.exports.checkEnrollmentKey = function(key, callback){
 	Course.count( { enrollmentKey:key },callback);
 } 
 
-//module.exports.getEnrollmentkeyByCourseId = function(id, callback){
-//    Course.findById(id, callback);
-//}
+module.exports.getEnrollmentkeyByCourseId = function(id, callback){
+    Course.find({ _id:id }, callback);
+    //Course.findById(id, callback);
+}

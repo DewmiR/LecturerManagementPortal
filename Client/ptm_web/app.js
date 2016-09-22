@@ -122,9 +122,9 @@ app.get('/test', function (req, res) {
 
 
 	var newCourse = Course({
-		courseName: "DBMS",
+		courseName: "SETM",
 		image: "ima/sds",
-		enrollmentKey: "2"
+		enrollmentKey: "1"
 	});
 
 
@@ -134,21 +134,21 @@ app.get('/test', function (req, res) {
 	});
 });
 
-//app.get('/test2', function (req, res) {
-//
-//
-//	var newEnrollment = Enroll({
-//		courseId: "57e21a5065a0412ef08b8f78",
-//		userId: "57e214a19e7ead1198a69d88",
-//		userName: "prageeth"
-//	});
-//
-//
-//	Enroll.createNewEnroll(newEnrollment,function (err,data) {
-//		console.log(data);
-//    	if(err) throw err;
-//	});
-//});
+app.get('/test2', function (req, res) {
+
+
+	var newEnrollment = Enroll({
+		courseId: "57e171ae7d3a621708c85bd3",
+		userId: "57e16fa47d3a621708c85bd2",
+		userName: "prageeth"
+	});
+
+
+	Enroll.createNewEnroll(newEnrollment,function (err,data) {
+		console.log(data);
+    	if(err) throw err;
+	});
+});
 
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
@@ -165,6 +165,18 @@ app.post('/getUsersEnrolledInCourse', function (req, res) {
 
     	res.send(friends);
 	});
+});
+
+app.post('/getEnrollmentkeyByCourseId', function (req, res) {
+	Course.getEnrollmentkeyByCourseId(req.body.cid,function (err,key) {
+        if(err) throw err;
+        
+        console.log(key);
+    	res.send(key);
+        
+	});
+
+   
 });
 
 app.post('/checkEnrollmentKey', function (req, res) {

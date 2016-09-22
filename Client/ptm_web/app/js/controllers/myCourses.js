@@ -44,8 +44,27 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
       .ok('Ok')
       .cancel('Cancel\'');
     $mdDialog.show(confirm).then(function(result) {
-      console.log(studentID);
+     // console.log(studentID);
         console.log(courseID);
+        
+        $http.post('/getEnrollmentkeyByCourseId', {
+        cid: courseID
+        }).success(
+            function(data){
+                console.log(data[0].enrollmentKey);
+                if(data[0].enrollmentKey==result){
+                    console.log("Matched");
+                    $location.url('/single_course/'+courseID);  
+                }
+            
+            }
+        ).error(
+            function(error){
+              console.log(error)
+            }
+        );
+            
+        
      }, function() {
         console.log("Don't");
     });   
