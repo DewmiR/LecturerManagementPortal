@@ -14,4 +14,7 @@ myApp.controller('CourseController', ['$scope','$http','$location', function($sc
 	        }
 		);
 
+
+
+
 }]);

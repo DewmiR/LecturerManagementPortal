@@ -13,6 +13,7 @@ var session = require('express-session');
 var User = require("./models/user");
 var Course = require("./models/course");
 var Enroll = require("./models/enroll");
+var Request = require("./models/request");
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -223,6 +224,23 @@ app.post('/registerUser', function (req, res) {
 	});
 
 	User.createUser(newUser,function (err,user) {
+		if(err) throw err;
+	});
+
+
+	res.send("pass");
+});
+
+
+app.post('/sendRequestToFriend', function (req, res) {
+
+	var newRequest = new Request({
+		requestFrom : req.body.from,
+		requestTo : req.body.to,
+		status : req.body.status
+	});
+
+	Request.createRequest(newRequest,function (err,request) {
 		if(err) throw err;
 	});
 

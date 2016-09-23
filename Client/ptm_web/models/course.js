@@ -16,18 +16,18 @@ module.exports.createCourse = function(newCourse, callback){
 }
 
 module.exports.getAllCourses = function(callback){
-    //Course.find({},callback);
-    Course.aggregate([
-        {
-            $lookup:
-                {
-                    from: "Enroll",
-                    localField:"_id",
-                    foreignField: "courseId",
-                    as: "enrolled"
-                }
-        }
-    ],callback);
+    Course.find({},callback);
+    // Course.aggregate([
+    //     {
+    //         $lookup:
+    //             {
+    //                 from: "Enroll",
+    //                 localField:"_id",
+    //                 foreignField: "courseId",
+    //                 as: "enrolled"
+    //             }
+    //     }
+    // ],callback);
 }
 
 module.exports.checkEnrollmentKey = function(key, callback){

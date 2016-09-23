@@ -85,7 +85,7 @@
                                     <h3><a href="#">{{ friend.userName }}</a></h3>
                                     <small>Student</small>
                                     <small><a href="#">Joined 1 Course</a></small>
-                                    <a href="#" class="btn btn-primary btn-sm">Invite</a>
+                                    <a href="#" class="btn btn-primary btn-sm" ng-click="sendFriendRequest(friend.userId)">Send Request</a>
                                 </div><!-- end team-desc -->
                             </div><!-- end friendbox -->
                         </div><!-- end col -->
@@ -115,6 +115,11 @@
                             </nav>
                         </div><!-- end col -->
                     </div><!-- end row -->
+
+
+
+
+
                 </div><!-- end container -->
             </div><!-- end section -->
 
