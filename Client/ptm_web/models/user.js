@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
     name : String,
     itnum : String,
     userType : String,
+    post : String,
     profilePicture : String
 
 });
