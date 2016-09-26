@@ -231,6 +231,16 @@ app.post('/registerUser', function (req, res) {
 });
 
 
+app.get('/getAllLecturers', function (req, res) {
+	User.getAllLecturers(function(err,lecturers){
+		if(err) throw err;
+		console.log(lecturers);
+		res.send(lecturers);
+	});
+});
+
+
+
 
 
 /*************************
