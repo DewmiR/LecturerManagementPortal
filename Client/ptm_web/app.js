@@ -234,9 +234,17 @@ app.post('/registerUser', function (req, res) {
 app.get('/getAllLecturers', function (req, res) {
 	User.getAllLecturers(function(err,lecturers){
 		if(err) throw err;
-		console.log(lecturers);
+		//console.log(lecturers);
 		res.send(lecturers);
 	});
+});
+
+
+app.get('/displayAllModules', function (req,res) {
+   Course.displayAllCourses(function (err,courses) {
+	   if(err) throw err;
+	    res.send(courses);
+   });
 });
 
 

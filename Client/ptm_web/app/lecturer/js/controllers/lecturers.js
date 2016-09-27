@@ -9,6 +9,10 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
         $scope.lec = "Lecturers";
         $scope.lecturers = [];
         $scope.displayLecturers();
+
+        $scope.mod = "modules";
+        $scope.modules = [];
+        $scope.displayAllModules();
     };
 
 
@@ -27,9 +31,26 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
                 console.log('Failed to load Lecturers');
             }
         );
-    }
 
+    };
 
+    $scope.displayAllModules = function () {
+        $http({
+            method: 'GET',
+            url:'/displayAllModules'
+        }).then(
+            function success(response) {
+                console.log(response.data);
+                Array.prototype.push.apply($scope.modules, response.data);
+                console.log($scope.modules);
+
+            },
+            function error(error) {
+                console.log('Failed to load modules');
+            }
+        );
+
+    };
 
     $scope.init();
 
