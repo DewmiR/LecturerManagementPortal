@@ -1,45 +1,6 @@
 <div class="col-lg-4">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>{{lec}}</h5>
-            <div class="ibox-tools">
-                <span class="label label-warning-light pull-right">Select Lecturer</span>
-            </div>
-        </div>
-        <div class="ibox-content pre-scrollable">
-
-                <div class="feed-activity-list">
-                    <div ng-repeat="lecturer in lecturers">
-                        <div class="feed-element">
-                            <a class="pull-left" href="profile.html">
-                                <img class="img-circle" alt="image" src="img/a3.jpg">
-                            </a>
-                            <div class="media-body">
-                                <div class="pull-right">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" value="" class=" i-checks icheckbox_square-green"></label>
-                                    </div>
-                                </div>
-                                <strong>{{lecturer.name}}</strong>
-
-                                <br>
-                                <h6 class="text-muted"><h6 class="text-muted">{{lecturer.post}}</h6></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--  <button class="btn btn-primary btn-block m-t"><i class="fa fa-arrow-down"></i> Show More</button>-->
-
-
-        </div>
-    </div>
-
-</div>
-
-<div class="col-lg-4">
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
             <h5>{{mod}}</h5>
             <div class="ibox-tools">
                 <span class="label label-warning-light pull-right">Select Module</span>
@@ -55,14 +16,74 @@
                     </select>
                 </div>
             </div>
-
         </div>
-
-
-
     </div>
 
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Assign Post</h5>
+            <div class="ibox-tools">
+                <span class="label label-warning-light pull-right">Assign Post</span>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            <div class="form-group">
+                <div>
+                    <select class="form-control m-b">
+                        <option value="">Select post</option>
+                        <option value="">Lecturer</option>
+                        <option value="">Project group Supervisor</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-w-m btn-primary">Assign Lecturer</button>
 </div>
+
+
+
+</div>
+
+
+
+<div class="row  border-bottom white-bg dashboard-header">
+    <div class="col-lg-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>{{lec}}</h5>
+                <div class="ibox-tools">
+                    <span class="label label-warning-light pull-right">Select Lecturer</span>
+                </div>
+            </div>
+            <div class="ibox-content pre-scrollable">
+
+                <div class="feed-activity-list">
+                    <div ng-repeat="lecturer in lecturers">
+                        <div class="feed-element">
+                            <a class="pull-left" href="profile.html">
+                                <img class="img-circle" alt="image" src="img/a3.jpg">
+                            </a>
+                            <div class="media-body">
+                                <!--<div class="pull-right">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="" class=" i-checks icheckbox_square-green"></label>
+                                    </div>
+                                </div>-->
+                                <strong>{{lecturer.name}}</strong>
+
+                                <br>
+                                <h6 class="text-muted"><h6 class="text-muted">{{lecturer.post}}</h6></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 
 

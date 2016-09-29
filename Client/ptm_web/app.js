@@ -160,9 +160,8 @@ app.get('/getAllCourses', function (req, res) {
 
 app.post('/getUsersEnrolledInCourse', function (req, res) {
 
-	Enroll.getUsersEnrolledInCourse(req.body.cid,function (err,friends) {
+	Enroll.getUsersEnrolledInCourse(req.body.cid,req.body.uType,function (err,friends) {
     	if(err) throw err;
-
     	res.send(friends);
 	});
 });

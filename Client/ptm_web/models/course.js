@@ -28,7 +28,7 @@ module.exports.getAllCourses = function(callback){
                 }
         }
     ],callback);
-}
+};
 
 module.exports.checkEnrollmentKey = function(key, callback){
 	Course.count( { enrollmentKey:key },callback);

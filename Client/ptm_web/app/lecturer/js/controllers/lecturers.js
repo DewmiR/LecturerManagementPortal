@@ -52,6 +52,22 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
 
     };
 
+
+
+    $http.post('/getUsersEnrolledInCourse', {
+        cid: cid,
+        uType:"lecturer"
+    }).success(
+        function(data){
+            console.log(data);
+        }
+    ).error(
+        function(error){
+            console.log(error)
+        }
+    );
+
+
     $scope.init();
 
 }]);
