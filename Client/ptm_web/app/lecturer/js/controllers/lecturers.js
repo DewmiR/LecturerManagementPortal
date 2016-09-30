@@ -19,7 +19,7 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
     $scope.displayLecturers = function () {
         $http({
             method: 'GET',
-            url:'/getAllLecturers',
+            url:'/getAllLecturers'
         }).then(
             function success(response) {
                 console.log(response.data);
@@ -53,20 +53,24 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
     };
 
 
+    $scope.getAssignLecs = function(courseName) {
+        // console.log(courseName);
+        //
+        // $http.post('/getAssigenedLecturers', {
+        //     courseName: courseName
+        // }).success(
+        //     function(data){
+        //         Array.prototype.push.apply($scope.lecturers, data);
+        //     }
+        // ).error(
+        //     function(error){
+        //         console.log(error);
+        //     }
+        // );
 
-    $http.post('/getUsersEnrolledInCourse', {
-        cid: cid,
-        uType:"lecturer"
-    }).success(
-        function(data){
-            console.log(data);
-        }
-    ).error(
-        function(error){
-            console.log(error)
-        }
-    );
 
+
+    };
 
     $scope.init();
 

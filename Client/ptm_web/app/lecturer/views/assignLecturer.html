@@ -11,7 +11,7 @@
             <div class="form-group">
                 <div>
                     <select ng-model="selectedTestAccount" class="form-control m-b" name="module"
-                            ng-options="module.courseName for module in modules">
+                            ng-options="module.courseName for module in modules" ng-click="getAssignLecs(this)" >
                         <option value="">Select Module</option>
                     </select>
                 </div>

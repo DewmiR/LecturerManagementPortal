@@ -13,6 +13,7 @@ var session = require('express-session');
 var User = require("./models/user");
 var Course = require("./models/course");
 var Enroll = require("./models/enroll");
+var assignedLecs = require("./models/assignedLecturer");
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -245,6 +246,15 @@ app.get('/displayAllModules', function (req,res) {
 	    res.send(courses);
    });
 });
+
+app.post('/getAssigenedLecturers', function (req,res) {
+    var courseName = req.body.courseName;
+    assignedLecs.getLecturersAssignedToCourse(courseName,function (err,lecturers) {
+        if(err) throw err;
+        res.send(lecturers);
+    });
+});
+
 
 
 
