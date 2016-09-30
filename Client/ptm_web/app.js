@@ -122,9 +122,11 @@ app.get('/test', function (req, res) {
 
 
 	var newCourse = Course({
-		courseName: "SETM",
-		image: "ima/sds",
-		enrollmentKey: "1"
+		courseName: "ITA",
+		image: "course_05.jpg",
+		enrollmentKey: "5",
+        lecturerIncharge: "Mr.Prageeth",
+        lecturerImage:"testi_04.png"
 	});
 
 

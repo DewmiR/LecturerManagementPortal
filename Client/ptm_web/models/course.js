@@ -5,7 +5,9 @@ var mongoose = require('mongoose');
 var CourseSchema = new mongoose.Schema({
 	courseName: String,
 	image: String,
-	enrollmentKey: String
+	enrollmentKey: String,
+    lecturerIncharge: String,
+    lecturerImage: String
 });
 
 var Course = module.exports = mongoose.model('Course',CourseSchema);

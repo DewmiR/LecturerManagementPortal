@@ -18,6 +18,10 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/my_courses.html',
       controller: 'MyCoursesController'
     }).
+    when('/my_coursee_grid', {
+      templateUrl: 'views/course-list-grid.html',
+      controller: 'MyCourseGrideController'
+    }).
     when('/single_course/:id?', {
       templateUrl: 'views/course-single.html',
       controller: 'SingleCourseController'

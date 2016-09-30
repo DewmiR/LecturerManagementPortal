@@ -1,6 +1,6 @@
-myApp.controller('MyCoursesController', ['$scope','$http','$location','$mdDialog', function($scope,$http,$location,$mdDialog) {
+myApp.controller('MyCourseGrideController', ['$scope','$http','$location','$mdDialog', function($scope,$http,$location,$mdDialog) {
  	
-$scope.$parent.body_class = "leftmenu memberprofile";
+$scope.$parent.body_class = "";
   	
 $scope.init = function () {
     
@@ -12,8 +12,8 @@ $scope.init = function () {
     
     
     //all method calls
-    $scope.getCurrentUser();
     $scope.loadCourses();
+    $scope.getCurrentUser();
     
     
 }
@@ -28,27 +28,44 @@ $scope.loadCourses = function () {
         params: params
     }).then(
             function success(response) {
-                //console.log(response.data);
-                console.log("ID detected");
-                console.log($scope.currentUser);
-                //$scope.checkIsEnrolled(studentID);
-                //console.log($scope.enrolledCourses);
                 
-                $http.post('/isEnrolled', {
+              //  console.log(response.data)
+                 $http.post('/isEnrolled', {
                     user_id: $scope.currentUser
                     }).success(
-                        function(data){
+                        function(dataIsEnrolled){
                          console.log("isEnroll called");
-                            console.log(data);
+                           // console.log(dataIsEnrolled);
+                            
+                            for(var i=0;i<dataIsEnrolled.length;i++){
+                                for(var x=0;x<response.data.length;x++){
+                                    
+                                    if(response.data[x]._id==dataIsEnrolled[i].courseId){
+                                        response.data[x].enrolled= true;
+                                        //response.data.splice(x,1);
+                                      //  console.log(dataIsEnrolled[i]);
+                                        //console.log(response.data[x]);
+                                        
+                                    }
+                                    //console.log(response.data[x]);
+                                    //console.log(dataIsEnrolled[i]._id);
+                                    
+                                }
+                                
+                            }
+                            
+                            
+                           console.log(response.data);
+                        Array.prototype.push.apply($scope.courses, response.data);
                         }
                     ).error(
                         function(error){
                         console.log(error);
                         }
                     );
-
-                console.log(response.data);
-                Array.prototype.push.apply($scope.courses, response.data);
+                
+               // console.log(response.data);
+               // Array.prototype.push.apply($scope.courses, response.data);
                 //console.log($scope.courses)
 	
             },
@@ -62,6 +79,7 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
     
     var studentID=$scope.currentUser;
     var courseID=cid;
+    console.log();
 
     var confirm = $mdDialog.prompt()
       .title()
@@ -86,7 +104,8 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
                     
                        $http.post('/addNewEnrollment', {
                         course_id: courseID,
-                        student_id: studentID
+                        student_id: studentID,
+                        student_name: $scope.currentUserName
                     }).success(
                         function(data){
                            console.log(data);
@@ -114,53 +133,13 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
    
   };
     
-$scope.checkIsEnrolled = function(userId){
-$scope.enrolledCourses={};
-    $http.post('/isEnrolled', {
-        user_id: userId
-        }).success(
-            function(data){
-             console.log("isEnroll called");
-             $scope.enrolledCourses = data;
-            }
-        ).error(
-            function(error){
-            console.log(error);
-            }
-        );
-}
-    
-$scope.loadMembers = function(cid){
-
-    $location.url('/my_friends/'+ cid);  
-    
-    // $http.post('/getUsersEnrolledInCourse', {
-    //     cid: cid
-    // }).success(
-    //     function(data){
-    //         console.log(data);
-    //     }
-    // ).error(
-    //     function(error){
-    //       console.log(error)
-    //     }
-    // );
-
-}
-
-$scope.showTextBox = function(index){
-
-    console.log($scope.showTextBoxState);
-    $scope.showTextBoxState=true;
-    console.log($scope.showTextBoxState);
-};
-    
 $scope.getCurrentUser = function (){
      
      $http.post('/getUser', {
         }).success(
             function(data){
             $scope.currentUser=data._id; 
+            $scope.currentUserName=data.name;
              console.log($scope.currentUser);
             }
         ).error(
@@ -171,30 +150,6 @@ $scope.getCurrentUser = function (){
     
 };
 
-$scope.checkEnrollKey = function(id,txt){
-    console.log(id);
-    console.log("enroll Key Pressed");
-    console.log(txt);
-
-    $http.post('/checkEnrollmentKey', {
-        cid: txt
-    }).success(
-        function(data){
-            if(data==1){
-                console.log("done");
-            }
-           
-        }
-    ).error(
-        function(error){
-          if(error==1){
-            $location.url('/single_course/'+id);  
-          }
-        }
-    );
-
-
-};
 
 
 $scope.init();
