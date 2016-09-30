@@ -1,6 +1,6 @@
 myApp.controller('MyfriendsController', ['$scope','$http','$location', '$routeParams', function($scope,$http,$location,$routeParams) {
  	
-    $scope.$parent.body_class = "leftmenu memberprofile";
+  //  $scope.$parent.body_class = "leftmenu memberprofile";
       	
     $scope.init = function () {
         $scope.friends = [];
@@ -32,16 +32,17 @@ myApp.controller('MyfriendsController', ['$scope','$http','$location', '$routePa
                 console.log("Sending request to " + userId + " from "+data._id+"...")
 
                 $http.post('/sendRequestToFriend', {
-                    from: userId,
-                    to: data._id,
+                    from: data._id,
+                    fromName: data.name,
+                    to: userId,
                     status: "0"
                 }).success(
                     function(data){
                         if(data == "pass"){
-                            $location.url('/profile');
-                            toastr.success('Successfully Sent!', 'Success!');
+                            //$location.url('/profile');
+
                         }else{
-                            $location.url('/login');
+                            //$location.url('/login');
                         }
                     }
                 ).error(

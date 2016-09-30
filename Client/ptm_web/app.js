@@ -60,19 +60,6 @@ passport.use(new LocalStrategy(
 	            return done(null, user);
 	        }
 
-	        // User.comparePassword(password, user.password, function(err, isMatch){
-
-	        //     if(err) throw err;
-	        
-	        //     if(isMatch){
-	        //         console.log("User found with username & password.");
-	        //         return done(null, user);
-	        //     } else {
-	        //         console.log("User found with username, But password is wrong.");
-	        //         return done(null, false, {message: 'Invalid password'});
-	        //     }
-
-	        // });
      	});
   	}
 ));
@@ -237,7 +224,8 @@ app.post('/sendRequestToFriend', function (req, res) {
 	var newRequest = new Request({
 		requestFrom : req.body.from,
 		requestTo : req.body.to,
-		status : req.body.status
+		status : req.body.status,
+		requestFromName : req.body.fromName
 	});
 
 	Request.createRequest(newRequest,function (err,request) {
@@ -248,7 +236,13 @@ app.post('/sendRequestToFriend', function (req, res) {
 	res.send("pass");
 });
 
-
+app.post('/getReceivedRequests', function (req, res) {
+	var userId = 
+	Request.getAllRequests(req.body.userId, req.body.status, function(err,data){
+		if(err) throw err
+		res.send(data)
+	})
+});
 
 
 /*************************

@@ -26,6 +26,10 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/my-friends.html',
       controller: 'MyfriendsController'
     }).
+    when('/friend_requests', {
+      templateUrl: 'views/friend_requests.html',
+      controller: 'RequestController'
+    }).
     otherwise({
       redirectTo: '/login'
     });

@@ -12,6 +12,7 @@ $scope.init = function () {
     
     //all method calls
     $scope.loadCourses();
+    $scope.getCurrentUser();
     
     
 }
@@ -57,9 +58,26 @@ $scope.loadCourses = function () {
     );
 }
 
+
+$scope.getCurrentUser = function (){
+     
+     $http.post('/getUser', {
+        }).success(
+            function(data){
+            $scope.currentUser=data._id; 
+             //console.log($scope.currentUser);
+            }
+        ).error(
+            function(error){
+            console.log(error);
+            }
+        );
+    
+};
+
 $scope.showEnrollmentKeyPrompt = function(ev,cid) {
     
-    var studentID="57e214a19e7ead1198a69d88";
+    var studentID=$scope.currentUser;
     var courseID=cid;
     
     var confirm = $mdDialog.prompt()
@@ -155,6 +173,7 @@ $scope.showTextBox = function(index){
 };
 
 $scope.checkEnrollKey = function(id,txt){
+
     console.log(id);
     console.log("enroll Key Pressed");
     console.log(txt);
@@ -175,7 +194,6 @@ $scope.checkEnrollKey = function(id,txt){
           }
         }
     );
-
 
 };
 
