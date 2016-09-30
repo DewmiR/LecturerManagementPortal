@@ -6,7 +6,8 @@ var EnrollSchema = new mongoose.Schema({
 	courseId: String,
 	userId: String,
 	userName: String,
-	userImage: String
+	userImage: String,
+    userType : String
 });
 
 var Enroll = module.exports = mongoose.model('Enroll',EnrollSchema);
@@ -14,11 +15,11 @@ var Enroll = module.exports = mongoose.model('Enroll',EnrollSchema);
 
 module.exports.createNewEnroll = function(newEnroll, callback){
     newEnroll.save(callback);
-}
+};
 
-module.exports.getUsersEnrolledInCourse = function(courseId, callback){
+module.exports.getUsersEnrolledInCourse = function(courseId,userType, callback){
     Enroll.find({courseId: courseId},callback);
-}
+};
 
 
 module.exports.addNewEnrollment = function(enrollment,callback){
@@ -29,8 +30,8 @@ module.exports.addNewEnrollment = function(enrollment,callback){
       enroll.userName = "test";
       enroll.userImage = "test";
       enroll.save(callback);
-}
+};
 
 module.exports.isEnrolled = function(userId, callback){
     Enroll.find({ userId: userId },callback);
-}
+};

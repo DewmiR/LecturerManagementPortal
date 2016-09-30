@@ -13,7 +13,11 @@ var session = require('express-session');
 var User = require("./models/user");
 var Course = require("./models/course");
 var Enroll = require("./models/enroll");
+<<<<<<< HEAD
 var Request = require("./models/request");
+=======
+var assignedLecs = require("./models/assignedLecturer");
+>>>>>>> ad2900dad6ecf99c39ff9190c84930c28587f913
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -148,9 +152,8 @@ app.get('/getAllCourses', function (req, res) {
 
 app.post('/getUsersEnrolledInCourse', function (req, res) {
 
-	Enroll.getUsersEnrolledInCourse(req.body.cid,function (err,friends) {
+	Enroll.getUsersEnrolledInCourse(req.body.cid,req.body.uType,function (err,friends) {
     	if(err) throw err;
-
     	res.send(friends);
 	});
 });
@@ -219,6 +222,7 @@ app.post('/registerUser', function (req, res) {
 });
 
 
+<<<<<<< HEAD
 app.post('/sendRequestToFriend', function (req, res) {
 
 	var newRequest = new Request({
@@ -243,6 +247,35 @@ app.post('/getReceivedRequests', function (req, res) {
 		res.send(data)
 	})
 });
+=======
+app.get('/getAllLecturers', function (req, res) {
+	User.getAllLecturers(function(err,lecturers){
+		if(err) throw err;
+		//console.log(lecturers);
+		res.send(lecturers);
+	});
+});
+
+
+app.get('/displayAllModules', function (req,res) {
+   Course.displayAllCourses(function (err,courses) {
+	   if(err) throw err;
+	    res.send(courses);
+   });
+});
+
+app.post('/getAssigenedLecturers', function (req,res) {
+    var courseName = req.body.courseName;
+    assignedLecs.getLecturersAssignedToCourse(courseName,function (err,lecturers) {
+        if(err) throw err;
+        res.send(lecturers);
+    });
+});
+
+
+
+
+>>>>>>> ad2900dad6ecf99c39ff9190c84930c28587f913
 
 
 /*************************

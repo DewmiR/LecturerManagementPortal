@@ -28,24 +28,6 @@ $scope.loadCourses = function () {
     }).then(
             function success(response) {
                 $scope.enrolledCourses = {};
-                //console.log(response.data);
-                
-                //$scope.checkIsEnrolled(studentID);
-                //console.log($scope.enrolledCourses);
-                
-//                $http.post('/isEnrolled', {
-//                    user_id: studentID
-//                    }).success(
-//                        function(data){
-//                         console.log("isEnroll called");
-//                         $scope.enrolledCourses = data;
-//                         console.log($scope.enrolledCourses);
-//                        }
-//                    ).error(
-//                        function(error){
-//                        console.log(error);
-//                        }
-//                    );
 
                 console.log(response.data);
                 Array.prototype.push.apply($scope.courses, response.data);
