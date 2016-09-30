@@ -215,7 +215,7 @@
                                         <div class="entry">
                                             <img src="upload/{{ course.image }}" alt="" class="img-responsive">
                                             <div class="magnifier">
-                                                <div class="magni-desc">
+                                                <div class="magni-desc" ng-if="course.enrolled==true">
                                                     <a class="secondicon" href="#/single_course/{{ course._id }}"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
                                                 </div><!-- end team-desc -->
                                             </div><!-- end magnifier -->
