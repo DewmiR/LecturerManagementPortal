@@ -1,11 +1,15 @@
-var lectApp = angular.module('lectApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute']);
 
-lectApp.config(['$routeProvider', function($routeProvider) {
+myApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/lecturer', {
       templateUrl: 'views/courses.html',
       controller: ''
     }).
+  when('/assignLecturer', {
+    templateUrl: 'views/assignLecturer.html',
+    controller: 'lecturerController'
+  }).
     otherwise({
       redirectTo: '/lecturer'
     });

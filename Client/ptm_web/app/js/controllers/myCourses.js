@@ -14,6 +14,7 @@ $scope.init = function () {
     //all method calls
     $scope.getCurrentUser();
     $scope.loadCourses();
+    $scope.getCurrentUser();
     
     
 }
@@ -46,6 +47,7 @@ $scope.loadCourses = function () {
                         console.log(error);
                         }
                     );
+                $scope.enrolledCourses = {};
 
                 console.log(response.data);
                 Array.prototype.push.apply($scope.courses, response.data);
@@ -57,6 +59,23 @@ $scope.loadCourses = function () {
             }
     );
 }
+
+
+$scope.getCurrentUser = function (){
+     
+     $http.post('/getUser', {
+        }).success(
+            function(data){
+            $scope.currentUser=data._id; 
+             //console.log($scope.currentUser);
+            }
+        ).error(
+            function(error){
+            console.log(error);
+            }
+        );
+    
+};
 
 $scope.showEnrollmentKeyPrompt = function(ev,cid) {
     
@@ -172,6 +191,7 @@ $scope.getCurrentUser = function (){
 };
 
 $scope.checkEnrollKey = function(id,txt){
+
     console.log(id);
     console.log("enroll Key Pressed");
     console.log(txt);
@@ -193,8 +213,12 @@ $scope.checkEnrollKey = function(id,txt){
         }
     );
 
-
 };
+
+
+
+
+
 
 
 $scope.init();

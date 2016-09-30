@@ -13,6 +13,8 @@ var session = require('express-session');
 var User = require("./models/user");
 var Course = require("./models/course");
 var Enroll = require("./models/enroll");
+var Request = require("./models/request");
+var assignedLecs = require("./models/assignedLecturer");
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -59,19 +61,6 @@ passport.use(new LocalStrategy(
 	            return done(null, user);
 	        }
 
-	        // User.comparePassword(password, user.password, function(err, isMatch){
-
-	        //     if(err) throw err;
-	        
-	        //     if(isMatch){
-	        //         console.log("User found with username & password.");
-	        //         return done(null, user);
-	        //     } else {
-	        //         console.log("User found with username, But password is wrong.");
-	        //         return done(null, false, {message: 'Invalid password'});
-	        //     }
-
-	        // });
      	});
   	}
 ));
@@ -162,9 +151,8 @@ app.get('/getAllCourses', function (req, res) {
 
 app.post('/getUsersEnrolledInCourse', function (req, res) {
 
-	Enroll.getUsersEnrolledInCourse(req.body.cid,function (err,friends) {
+	Enroll.getUsersEnrolledInCourse(req.body.cid,req.body.uType,function (err,friends) {
     	if(err) throw err;
-
     	res.send(friends);
 	});
 });
@@ -233,6 +221,54 @@ app.post('/registerUser', function (req, res) {
 });
 
 
+app.post('/sendRequestToFriend', function (req, res) {
+
+	var newRequest = new Request({
+		requestFrom : req.body.from,
+		requestTo : req.body.to,
+		status : req.body.status,
+		requestFromName : req.body.fromName
+	});
+
+	Request.createRequest(newRequest,function (err,request) {
+		if(err) throw err;
+	});
+
+
+	res.send("pass");
+});
+
+app.post('/getReceivedRequests', function (req, res) {
+	var userId = 
+	Request.getAllRequests(req.body.userId, req.body.status, function(err,data){
+		if(err) throw err
+		res.send(data)
+	})
+});
+
+app.get('/getAllLecturers', function (req, res) {
+	User.getAllLecturers(function(err,lecturers){
+		if(err) throw err;
+		//console.log(lecturers);
+		res.send(lecturers);
+	});
+});
+
+
+app.get('/displayAllModules', function (req,res) {
+   Course.displayAllCourses(function (err,courses) {
+	   if(err) throw err;
+	    res.send(courses);
+   });
+});
+
+app.post('/getAssigenedLecturers', function (req,res) {
+    var courseName = req.body.courseName;
+    assignedLecs.getLecturersAssignedToCourse(courseName,function (err,lecturers) {
+        if(err) throw err;
+        res.send(lecturers);
+    });
+});
 
 
 /*************************
