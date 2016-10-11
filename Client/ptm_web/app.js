@@ -148,6 +148,50 @@ app.get('/getAllCourses', function (req, res) {
 		res.send(courses);
 	});
 });
+app.get('/getAllCoursesFirstYear', function (req, res) {
+	Course.getAllCoursesFirstYear(function(err,courses){
+		if(err) throw err;
+
+		res.send(courses);
+	});
+});
+app.get('/getAllCoursesSecondYear', function (req, res) {
+	Course.getAllCoursesSecondYear(function(err,courses){
+		if(err) throw err;
+
+		res.send(courses);
+	});
+});
+app.get('/getAllCoursesThirdYear', function (req, res) {
+	Course.getAllCoursesThirdYear(function(err,courses){
+		if(err) throw err;
+
+		res.send(courses);
+	});
+});
+app.get('/getAllCoursesFourthYear', function (req, res) {
+	Course.getAllCoursesFourthYear(function(err,courses){
+		if(err) throw err;
+
+		res.send(courses);
+	});
+});
+
+app.post('/getModulesSingle', function (req, res) {
+
+    Course.getModulesSingle(req.body.id,function (err,courseDetails) {
+        if(err) throw err;
+        res.send(courseDetails);
+    });
+    //console.log(req.body.id);
+});
+
+app.get('/getAllLecturers', function (req, res) {
+    User.getAllLecturers(function (err,lecturers) {
+        if(err) throw err;
+        res.send(lecturers);
+    });
+});
 
 app.post('/getUsersEnrolledInCourse', function (req, res) {
 

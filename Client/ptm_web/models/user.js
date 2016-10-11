@@ -10,8 +10,12 @@ var UserSchema = new mongoose.Schema({
     itnum : String,
     userType : String,
     post : String,
-    profilePicture : String
-
+    profilePicture : String,
+    type: String,
+    phone:String,
+    email: String,
+    lecturerPosition: String,
+    image: String
 });
 
 var User = module.exports = mongoose.model('User',UserSchema);
@@ -20,7 +24,7 @@ var User = module.exports = mongoose.model('User',UserSchema);
 module.exports.getUserByUsername = function(username, callback){
     var query = {username: username};
     User.findOne(query, callback);
-};
+}
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){
     if(candidatePassword == hash){
@@ -28,11 +32,11 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     }else{
     	callback("not mathing",false);
     }
-};
+}
 
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback);
-};
+}
 
 
 module.exports.createUser = function(newUser, callback){
@@ -42,6 +46,12 @@ module.exports.createUser = function(newUser, callback){
             newUser.save(callback);
         });
     });
+}
+
+module.exports.getAllLecturers = function(callback){
+    var type = 'Lecturer';
+    User.find({ type:type },callback);
+}
 };
 
 module.exports.getAllLecturers = function(callback){
