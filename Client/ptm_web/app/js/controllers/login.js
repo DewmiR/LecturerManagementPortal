@@ -19,7 +19,8 @@ myApp.controller('LoginController', ['$scope','$http','$location','toastr', func
       }).success(
         function(data){
           if(data == "pass"){
-              $location.url('/profile');
+              //$location.url('/profile');
+              $location.url('/my_coursee_grid');
           }else{
             $location.url('/login');
           }

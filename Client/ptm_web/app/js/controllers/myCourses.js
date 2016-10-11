@@ -3,15 +3,26 @@ myApp.controller('MyCoursesController', ['$scope','$http','$location','$mdDialog
 $scope.$parent.body_class = "leftmenu memberprofile";
   	
 $scope.init = function () {
+    
+    //all variables
     $scope.courses = [];
-    $scope.loadCourses();
     $scope.showTextBoxState=false;
     $scope.status = '  ';
+    $scope.currentUser="";
+    
+    
+    //all method calls
+    $scope.getCurrentUser();
+    $scope.loadCourses();
+    $scope.getCurrentUser();
+    
     
 }
     
 $scope.loadCourses = function () {
     var params = {};
+    var studentID=$scope.currentUser;
+    
     $http({
         method: 'GET',
         url:'/getAllCourses',
@@ -19,8 +30,28 @@ $scope.loadCourses = function () {
     }).then(
             function success(response) {
                 //console.log(response.data);
+                console.log("ID detected");
+                console.log($scope.currentUser);
+                //$scope.checkIsEnrolled(studentID);
+                //console.log($scope.enrolledCourses);
+                
+                $http.post('/isEnrolled', {
+                    user_id: $scope.currentUser
+                    }).success(
+                        function(data){
+                         console.log("isEnroll called");
+                            console.log(data);
+                        }
+                    ).error(
+                        function(error){
+                        console.log(error);
+                        }
+                    );
+                $scope.enrolledCourses = {};
+
+                console.log(response.data);
                 Array.prototype.push.apply($scope.courses, response.data);
-                console.log($scope.courses)
+                //console.log($scope.courses)
 	
             },
             function error(error) {
@@ -29,11 +60,28 @@ $scope.loadCourses = function () {
     );
 }
 
+
+$scope.getCurrentUser = function (){
+     
+     $http.post('/getUser', {
+        }).success(
+            function(data){
+            $scope.currentUser=data._id; 
+             //console.log($scope.currentUser);
+            }
+        ).error(
+            function(error){
+            console.log(error);
+            }
+        );
+    
+};
+
 $scope.showEnrollmentKeyPrompt = function(ev,cid) {
     
-    var studentID="57e214a19e7ead1198a69d88";
+    var studentID=$scope.currentUser;
     var courseID=cid;
-    
+
     var confirm = $mdDialog.prompt()
       .title()
       .textContent()
@@ -54,7 +102,21 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
                 console.log(data[0].enrollmentKey);
                 if(data[0].enrollmentKey==result){
                     console.log("Matched");
-                    $location.url('/single_course/'+courseID);  
+                    
+                       $http.post('/addNewEnrollment', {
+                        course_id: courseID,
+                        student_id: studentID
+                    }).success(
+                        function(data){
+                           console.log(data);
+                           $location.url('/single_course/'+courseID); 
+                        }
+                    ).error(
+                        function(error){
+                            console.log(error);
+                        }
+                    );
+                     
                 }
             
             }
@@ -70,6 +132,22 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
     });   
    
   };
+    
+$scope.checkIsEnrolled = function(userId){
+$scope.enrolledCourses={};
+    $http.post('/isEnrolled', {
+        user_id: userId
+        }).success(
+            function(data){
+             console.log("isEnroll called");
+             $scope.enrolledCourses = data;
+            }
+        ).error(
+            function(error){
+            console.log(error);
+            }
+        );
+}
     
 $scope.loadMembers = function(cid){
 
@@ -95,8 +173,25 @@ $scope.showTextBox = function(index){
     $scope.showTextBoxState=true;
     console.log($scope.showTextBoxState);
 };
+    
+$scope.getCurrentUser = function (){
+     
+     $http.post('/getUser', {
+        }).success(
+            function(data){
+            $scope.currentUser=data._id; 
+             console.log($scope.currentUser);
+            }
+        ).error(
+            function(error){
+            console.log(error);
+            }
+        );
+    
+};
 
 $scope.checkEnrollKey = function(id,txt){
+
     console.log(id);
     console.log("enroll Key Pressed");
     console.log(txt);
@@ -118,8 +213,12 @@ $scope.checkEnrollKey = function(id,txt){
         }
     );
 
-
 };
+
+
+
+
+
 
 
 $scope.init();

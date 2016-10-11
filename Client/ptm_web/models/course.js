@@ -5,7 +5,9 @@ var mongoose = require('mongoose');
 var CourseSchema = new mongoose.Schema({
 	courseName: String,
 	image: String,
-	enrollmentKey: String
+	enrollmentKey: String,
+    lecturerIncharge: String,
+    lecturerImage: String
 });
 
 var Course = module.exports = mongoose.model('Course',CourseSchema);
@@ -26,4 +28,10 @@ module.exports.checkEnrollmentKey = function(key, callback){
 module.exports.getEnrollmentkeyByCourseId = function(id, callback){
     Course.find({ _id:id }, callback);
     //Course.findById(id, callback);
-}
+};
+
+
+module.exports.displayAllCourses = function(callback){
+    Course.find({},callback);
+};
+
