@@ -27,10 +27,20 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams', function($scope,$http,$location,$routeParams) {
 
+
     $scope.message = "Adooooo"
-
-
-
+    
+    $http({
+        method: 'GET',
+        url:'/projects/getAllProjects'
+    }).then(
+            function success(response) {
+                $scope.projects = response.data
+            },
+            function error(error) {
+                console.log('Failed to load courses');
+            }
+    );
 
 
 }]);

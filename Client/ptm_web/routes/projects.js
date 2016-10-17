@@ -18,5 +18,12 @@ router.post('/createProject', function (req, res) {
 });
 
 
+router.get('/getAllProjects', function (req, res) {
+
+	Project.getAllPrpjects(function(err,projects){
+		if(err) throw err;
+		res.send(projects);
+	});
+});
 
 module.exports = router;

@@ -13,3 +13,8 @@ var Project = module.exports = mongoose.model('Project',ProjectSchema);
 module.exports.createProject = function(newproject, callback){
     newproject.save(callback);
 }
+
+
+module.exports.getAllPrpjects = function(callback){
+	Project.find({},callback);
+}
