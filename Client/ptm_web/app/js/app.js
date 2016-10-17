@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute','ngAnimate', 'toastr','ngMaterial']);
+var myApp = angular.module('myApp', ['ngRoute','ngAnimate', 'toastr','ngMaterial','notifications']);
 
 myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrConfig) {
   $routeProvider.
@@ -38,7 +38,7 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/course_module_forum.html',
       controller: 'CourseModuleForumController'
     }).
-    when('/course_friends', {
+    when('/course_friends/:id?', {
       templateUrl: 'views/my_friends_course.html',
       controller: 'CourseFriendsController'
     }).

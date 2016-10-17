@@ -1186,7 +1186,7 @@ div.content {
     position: relative;
     /*background-color: #ffffff;*/
     background-color: white;
-    padding: 02px 0;
+    padding: 10px 0;
 }
 
 .table-striped > tbody > tr:nth-of-type(odd),
@@ -2682,7 +2682,7 @@ mark {
 
 .comments .media-list li {
     border: 1px solid #ededed;
-    margin: 20px 0;
+    margin: 30px 0;
     background-color: transparent;
     display: block;
     padding: 20px;

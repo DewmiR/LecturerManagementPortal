@@ -4,6 +4,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
 
     $scope.init = function () {
       console.log("CourseModuleForumController started");
+      $scope.studentId=$routeParams.id;
     }
 
 
