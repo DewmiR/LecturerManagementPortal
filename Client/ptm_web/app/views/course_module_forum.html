@@ -184,16 +184,13 @@
         <!-- end header -->
 
         <div class="page-title section lb">
-                <div class="container">
+            <div class="container">
                 <div class="clearfix">
-                <div class="title-area pull-left">
-                    <h2>Single Course <small>A basic single course page with sidebar.</small></h2>
-                </div><!-- /.pull-right -->
                 <div class="pull-right hidden-xs">
                     <div class="bread">
                         <ol class="breadcrumb">
                             <li><a href="#">Home</a></li>
-                            <li class="active">Single Course</li>
+                            <li class="active">Blog</li>
                         </ol>
                     </div><!-- end bread -->
                 </div><!-- /.pull-right -->
@@ -204,64 +201,251 @@
         <div class="section">
             <div class="container">
                 <div class="row">
+                    <div class="content col-md-9 col-sm-12">
 
 
-
-                        <div class="row course-list" >
-                        <div ng-repeat="course in courses">
-                            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 wow fadeIn">
-                                <div class="video-wrapper course-widget clearfix">
-                                    <div class="post-media">
-                                        <div class="entry">
-                                            <img src="upload/{{ course.image }}" alt="" class="img-responsive">
-                                            <div class="magnifier">
-                                                <div class="magni-desc" ng-if="course.enrolled">
-                                                    <a class="secondicon" href="#/course_module_forum/{{ course._id }}"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
-                                                </div><!-- end team-desc -->
-                                            </div><!-- end magnifier -->
-                                        </div>
-                                    </div><!-- end media -->
-
-                                    <div class="widget-title clearfix">
-                                        <h3><a href="course-single.html">{{ course.courseName}}</a></h3>
-                                        <hr>
-                                        <div class="bottom-line clearfix">
+                        <div class="blog-list course-list normal-list">
+                            <div class="video-wrapper course-widget clearfix">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <div class="entry">
+                                                <img src="upload/blog_small_02.jpg" alt="" class="img-responsive">
+                                                <div class="magnifier">
+                                                    <div class="magni-desc">
+                                                        <a class="secondicon" href="blog-single.html"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
+                                                    </div><!-- end team-desc -->
+                                                </div><!-- end magnifier -->
+                                            </div>
+                                        </div><!-- end media -->
+                                        <div class="course-meta clearfix">
                                             <div class="pull-left">
-                                                <a href="member-profile.html" class="readmore"><img src="upload/{{ course.lecturerImage }}" class="img-circle" alt="">{{ course.lecturerIncharge }}</a>
+                                                <p><i class="fa fa-clock-o"></i> 20 Jan 2016</p>
                                             </div>
+                                            <div class="pull-right">
+                                                <p><a href="blog-single.html"><i class="fa fa-comments-o"></i> 44</a></p>
+                                            </div>
+                                        </div><!-- end meta -->
+                                    </div><!-- end col-->
 
-                                            <div class="pull-right" ng-if="!course.enrolled">
-                                                <a class="btn btn-sm btn-primary" ng-click="showEnrollmentKeyPrompt($event,course._id)">Enroll</a>
-                                            </div>
-                                        </div><!-- end bottom -->
-                                    </div><!-- end title -->
+                                    <div class="col-md-8">
+                                        <div class="widget-title clearfix">
+                                            <h3><a href="blog-single.html">College student working design.</a></h3>
+                                            <hr>
+                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                            <hr>
 
-                                    <div class="course-meta clearfix">
-                                        <div class="pull-left">
-                                            <p><i class="fa fa-users"></i> 11</p>
-                                        </div>
-                                        <div class="pull-right">
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </div>
-                                        </div>
-                                    </div><!-- end meta -->
-                                </div><!--widget -->
+                                            <div class="bottom-line clearfix">
+                                                <div class="pull-left">
+                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_02.png" class="img-circle" alt="">Adam</a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="blog-single.html" class="btn btn-sm btn-default">Read More</a>
+                                                </div>
+                                            </div><!-- end bottom -->
+                                        </div><!-- end title -->
+                                    </div><!-- end col -->
+                                </div>
+                            </div><!--widget -->
+                        </div><!-- end row -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="banner-widget">
+                                    <a href="#"><img src="upload/banner_02.jpg" alt="" class="img-responsive"></a>
+                                </div>
+                            </div>
+                        </div><!-- end row -->
+
+
+                        <div class="row text-center">
+                            <div class="col-md-12">
+                                <nav>
+                                    <ul class="pagination">
+                                        <li>
+                                            <a href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li>
+                                            <a href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div><!-- end col -->
-                          </div>
+                        </div><!-- end row -->
+                    </div><!-- end content -->
+
+                    <div class="sidebar col-md-3 col-sm-12">
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Search</h3>
+                                <hr>
+                            </div><!-- end widget-title -->
+                            <form>
+                                <input type="text" name="search" class="form-control" placeholder="Site search...">
+                            </form>
+                        </div><!-- end widget -->
+
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Popular Articles</h3>
+                                <hr>
+                            </div><!-- end widget-title -->
+
+                            <div class="related-posts">
+                                <div class="entry">
+                                    <p><a href="blog-single.html" title=""> What’s in My Desktop, 2016 edition.</a></p>
+                                    <small>21 March 2016</small>
+                                </div><!-- end entry -->
+                                <div class="entry">
+                                    <p><a href="blog-single.html" title="">Teach when you are filled with wonder.</a></p>
+                                    <small>10 February 2016</small>
+                                </div><!-- end entry -->
+                            </div><!-- end related -->
+                        </div><!-- end widget -->
+
+                        <div class="widget clearfix">
+                            <a href="#"><img src="upload/banner_01.jpg" alt="" class="img-responsive"></a>
                         </div>
 
-                    </div><!-- end col -->
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Related Courses</h3>
+                                <hr>
+                            </div><!-- end widget-title -->
+                            <div class="sidebar-course-carousel owl-carousel owl-theme custom-list">
+                                <div class="carousel-item">
+                                    <div class="video-wrapper clearfix">
+                                        <div class="post-media">
+                                            <div class="entry">
+                                                <img src="upload/blog_06.jpg" alt="" class="img-responsive">
+                                                <div class="magnifier">
+                                                    <div class="magni-desc">
+                                                        <a class="secondicon" href="course-single.html"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
+                                                    </div><!-- end team-desc -->
+                                                </div><!-- end magnifier -->
+                                            </div>
+                                        </div><!-- end media -->
 
-                </div>
+                                        <div class="widget-title clearfix">
+                                            <div class="pull-left">
+                                                <h3><a href="course-single.html">Learn English...</a></h3>
+                                                <a href="member-profile.html" class="readmore">Michael Denson</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="course-single.html" class="btn btn-sm btn-inverse">$20.00</a>
+                                            </div>
+                                        </div><!-- end title -->
+                                    </div><!--widget -->
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="video-wrapper clearfix">
+                                        <div class="post-media">
+                                            <div class="entry">
+                                                <img src="upload/blog_05.jpg" alt="" class="img-responsive">
+                                                <div class="magnifier">
+                                                    <div class="magni-desc">
+                                                        <a class="secondicon" href="course-single.html"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
+                                                    </div><!-- end team-desc -->
+                                                </div><!-- end magnifier -->
+                                            </div>
+                                        </div><!-- end media -->
+
+                                        <div class="widget-title clearfix">
+                                            <div class="pull-left">
+                                                <h3><a href="course-single.html">Design elegant..</a></h3>
+                                                <a href="member-profile.html" class="readmore">Jenny DOE</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="course-single.html" class="btn btn-sm btn-inverse">$11.00</a>
+                                            </div>
+                                        </div><!-- end title -->
+                                    </div><!--widget -->
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="video-wrapper clearfix">
+                                        <div class="post-media">
+                                            <div class="entry">
+                                                <img src="upload/blog_04.jpg" alt="" class="img-responsive">
+                                                <div class="magnifier">
+                                                    <div class="magni-desc">
+                                                        <a class="secondicon" href="course-single.html"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
+                                                    </div><!-- end team-desc -->
+                                                </div><!-- end magnifier -->
+                                            </div>
+                                        </div><!-- end media -->
+
+                                        <div class="widget-title clearfix">
+                                            <div class="pull-left">
+                                                <h3><a href="course-single.html">Get HTML Pack..</a></h3>
+                                                <a href="member-profile.html" class="readmore">Boby WP</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="course-single.html" class="btn btn-sm btn-inverse">$77.00</a>
+                                            </div>
+                                        </div><!-- end title -->
+                                    </div><!--widget -->
+                                </div>
+
+                                <div class="carousel-item">
+                                    <div class="video-wrapper clearfix">
+                                        <div class="post-media">
+                                            <div class="entry">
+                                                <img src="upload/blog_06.jpg" alt="" class="img-responsive">
+                                                <div class="magnifier">
+                                                    <div class="magni-desc">
+                                                        <a class="secondicon" href="course-single.html"> <span class="oi" data-glyph="link-intact" title="Read More" aria-hidden="false"></span></a>
+                                                    </div><!-- end team-desc -->
+                                                </div><!-- end magnifier -->
+                                            </div>
+                                        </div><!-- end media -->
+
+                                        <div class="widget-title clearfix">
+                                            <div class="pull-left">
+                                                <h3><a href="course-single.html">Learn English...</a></h3>
+                                                <a href="member-profile.html" class="readmore">Michael Denson</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="course-single.html" class="btn btn-sm btn-inverse">$20.00</a>
+                                            </div>
+                                        </div><!-- end title -->
+                                    </div><!--widget -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Tags</h3>
+                                <hr>
+                            </div><!-- end widget-title -->
+                            <div class="tags clearfix">
+                                <a href="#">web design</a>
+                                <a href="#">club</a>
+                                <a href="#">html5</a>
+                                <a href="#">css3</a>
+                                <a href="#">app</a>
+                                <a href="#">business</a>
+                                <a href="#">material</a>
+                                <a href="#">multi purpose</a>
+                                <a href="#">photoshop</a>
+                                <a href="#">icons</a>
+                            </div><!-- end tags -->
+                        </div><!-- end widget -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
             </div><!-- end container -->
         </div><!-- end section -->
-
-
 
         <footer class="copyrights">
             <div class="container">
@@ -326,3 +510,7 @@
             </div><!-- end container -->
         </footer><!-- end copyrights -->
     </div><!-- end wrapper -->
+
+    <!-- ******************************************
+    /END SITE
+    ********************************************** -->

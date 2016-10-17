@@ -1184,13 +1184,15 @@ div.content {
 .section {
     display: block;
     position: relative;
-    background-color: #ffffff;
-    padding: 30px 0;
+    /*background-color: #ffffff;*/
+    background-color: white;
+    padding: 02px 0;
 }
 
 .table-striped > tbody > tr:nth-of-type(odd),
 .section.lb {
     background-color: #ecf0f1 !important
+      /*background-color: white !important*/
 }
 
 .section.nobg {
@@ -3739,4 +3741,3 @@ h6,
     body.landingpage .normal-header .navbar-nav > li > a {
         font-weight: bold !important;
     }
-
