@@ -15,6 +15,9 @@ var Course = require("./models/course");
 var Enroll = require("./models/enroll");
 var Request = require("./models/request");
 var assignedLecs = require("./models/assignedLecturer");
+var Project = require("./models/project");
+
+var projects = require('./routes/projects');
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -34,7 +37,7 @@ app.use(function(req, res, next) {
 });
 app.use(express.static("./app"));
 app.use(cors());
-app.use(cookieParser());    
+app.use(cookieParser());
 app.use(session({
   secret: 'secret',
   saveUninitialized: true,
@@ -48,13 +51,13 @@ passport.use(new LocalStrategy(
 
 
      	User.getUserByUsername(username, function(err, user){
-	        
+
 	        if(err) throw err;
-	        
+
 	        if(!user){
 	        	console.log("User not found...");
 	          	return done(null, false, {message: 'Unknown User'});
-	        }else{ 
+	        }else{
 
 
 	            console.log("User found by username...");
@@ -95,7 +98,7 @@ app.post("/getUser",function(req,res){
 });
 
 app.post('/login', passport.authenticate('local',
-    {   
+    {
     	successRedirect:'/pass',
         failureRedirect:'/fail'
     }), function(req, res) {
@@ -204,13 +207,13 @@ app.post('/getUsersEnrolledInCourse', function (req, res) {
 app.post('/getEnrollmentkeyByCourseId', function (req, res) {
 	Course.getEnrollmentkeyByCourseId(req.body.cid,function (err,key) {
         if(err) throw err;
-        
+
        // console.log(key);
     	res.send(key);
-        
+
 	});
 
-   
+
 });
 
 app.post('/checkEnrollmentKey', function (req, res) {
@@ -220,7 +223,7 @@ app.post('/checkEnrollmentKey', function (req, res) {
     	// console.log("Count: "+ count);
     	res.sendStatus(count);
 	});
-	
+
 });
 
 app.post('/isEnrolled', function (req, res) {
@@ -229,9 +232,9 @@ app.post('/isEnrolled', function (req, res) {
     	if(err) throw err;
         res.send(courses);
 	});
-    
+
     //console.log(req.body);
-	
+
 });
 
 
@@ -243,7 +246,7 @@ app.post('/addNewEnrollment', function (req, res) {
     	res.send("New Enrollment Added");
 	});
 //    console.log(enrollment.course_id)
-	
+
 });
 
 app.post('/registerUser', function (req, res) {
@@ -283,7 +286,7 @@ app.post('/sendRequestToFriend', function (req, res) {
 });
 
 app.post('/getReceivedRequests', function (req, res) {
-	var userId = 
+	var userId =
 	Request.getAllRequests(req.body.userId, req.body.status, function(err,data){
 		if(err) throw err
 		res.send(data)
@@ -313,6 +316,12 @@ app.post('/getAssigenedLecturers', function (req,res) {
         res.send(lecturers);
     });
 });
+
+
+
+
+app.use('/projects', projects);
+
 
 
 /*************************
