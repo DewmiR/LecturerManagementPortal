@@ -220,20 +220,22 @@
                                         <div class="panel panel-info">
                                             <div class="panel-body">
                                                 <ul class="media-list">
-                                                            <li class="media" ng-repeat="friend in friends" ng-if="user_id!=friend.userId">
+                                                            <li class="media" ng-repeat="request in myRequestsArr">
                                                                 <div class="comment">
                                                                     <a href="#" class="pull-left">
                                                                         <img src="upload/team_03.png" alt="" class="img-circle">
                                                                     </a>
                                                                     <div class="media-body">
-                                                                        <strong class="text-success">{{ friend.userName }}</strong>
+                                                                        <strong class="text-success">{{ request.requestFromName }}</strong>
                                                                         <span class="text-muted">
                                                                                                         <small class="text-muted">15 minutes ago</small></span>
-                                                                        <p>
+                                                                        <p style="color:black">
                                                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.
                                                                         </p>
 <!--                                                                        <a href="#" class="btn btn-primary btn-sm">Reply</a>-->
-                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-primary btn-sm" ng-click="sendFriendRequest(friend.userId); show_btn = !show_btn;" value="{{ show_btn ? 'Request Sent!' : 'Send Request' }}">
+                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-success btn-sm" ng-click="sendFriendRequest(friend.userId); show_btn = !show_btn;" value="{{ show_btn ? 'Request Sent!' : 'Send Request' }}">
+                                                                        
+                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-primary btn-sm" ng-click="sendFriendRequest(friend.userId); show_btn = !show_btn;" value="{{ show_btn ? 'Request Sent!' : 'Decline' }}">
                                                                     </div>
                                                                     <div class="clearfix"></div>
                                                                 </div>

@@ -6,6 +6,7 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
       console.log("CourseFriendsController started");
       $scope.friends = [];
       $scope.loadFriends();
+      $scope.getLoggedUser();
         
         
     }
@@ -27,13 +28,14 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
 
         }
     
+   
+    
     $scope.sendFriendRequest = function(userId) {
-        $notification.info("title", "content", "sdsd")
+        console.log(userId);
 
         $http.post('/getUser').success(
             function(data){
                 console.log("Sending request to " + userId + " from "+data._id+"...")
-
                 $http.post('/sendRequestToFriend', {
                     from: data._id,
                     fromName: data.name,
@@ -62,6 +64,21 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
           }
         );      
 
+    }
+    
+    $scope.getLoggedUser = function(){
+        
+         $http.post('/getUser').success(
+            function(data){
+                $scope.user_id=data._id;
+                
+            }
+        ).error(
+          function(error){
+            console.log(error)
+          }
+        ); 
+        
     }
 
     $scope.init();

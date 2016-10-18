@@ -151,7 +151,27 @@
                                 <li><a title="" href="page-contact.html">Contact</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="cartmenu"><a href="course-checkout.html"><i class="fa fa-shopping-bag"></i> <sup>2</sup></a></li>
+                                
+                                <md-menu md-position-mode="target-right target">
+                                      <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                        <li class="cartmenu"><i class="fa fa-bell"></i> <sup>{{ myRequests }}</sup></li>
+                                      </md-button>
+                                      <md-menu-content width="4">
+                                        <md-menu-item ng-repeat="item in requestFromNameArr">
+                                          <md-button ng-click="ctrl.announceClick($index)">
+                                              <div layout="row" flex="" ng-click="test(item.requestFrom);">
+                                                <p flex="9" style="color:black">{{item.requestFromName}}</p>
+<!--                                                <md-icon md-menu-align-target="" md-svg-icon="call:portable-wifi-off" style="margin: auto 3px auto 0;"></md-icon>-->
+                                                  <a href=""><i class="fa fa-comments-o" ></i></a>
+                                                  
+                                              </div>
+                                          </md-button>
+                                        </md-menu-item>
+                                      </md-menu-content>
+                                 </md-menu>
+                                
+<!--                                <li class="cartmenu"><a href="course-checkout.html"><i class="fa fa-shopping-bag"></i> <sup>{{ myRequests }}</sup></a></li>-->
+                                
                                 <li class="dropdown cartmenu searchmenu hasmenu">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i></a>
                                     <ul class="dropdown-menu start-right">
@@ -212,7 +232,7 @@
                                         <div class="widget-title clearfix">
                                             <h3><a href="blog-single.html">Welcome to the EduPress Blog.</a></h3>
                                             <hr>
-                                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                            <p style="color:black">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
                                             <hr>
 
                                             <div class="bottom-line clearfix">
