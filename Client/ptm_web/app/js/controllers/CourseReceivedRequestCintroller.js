@@ -33,6 +33,47 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
       	}
     );
    }
+   
+   $scope.acceptRequest = function(rid){
+       console.log("done");
+       
+       
+       $http.post('/acceptFriendRequest', {
+                status: "1",
+                acceptStatus: "1",
+                id: rid
+            }).success(
+                function(data){
+                    console.log(data);
+                   
+                }
+            ).error(
+                function(error){
+                  console.log(error)
+                }
+            );
+       
+   }
+   
+   $scope.declineRequest = function(rid){
+       console.log("done");
+       
+        $http.post('/diclineFriendRequest', {
+                status: "1",
+                acceptStatus: "0",
+                id: rid
+            }).success(
+                function(data){
+                    console.log(data);
+                   
+                }
+            ).error(
+                function(error){
+                  console.log(error)
+                }
+            );
+       
+   }
 
 
     $scope.init();

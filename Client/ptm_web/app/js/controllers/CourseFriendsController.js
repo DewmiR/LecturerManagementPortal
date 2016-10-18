@@ -40,7 +40,8 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
                     from: data._id,
                     fromName: data.name,
                     to: userId,
-                    status: "0"
+                    status: "0",
+                    acceptStatus: "0"
                 }).success(
                     function(data){
                         

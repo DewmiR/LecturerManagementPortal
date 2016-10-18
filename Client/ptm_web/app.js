@@ -265,6 +265,28 @@ app.post('/registerUser', function (req, res) {
 	res.send("pass");
 });
 
+app.post('/acceptFriendRequest', function (req, res) {
+	console.log(req.body);
+
+	Request.acceptFriendRequest(req.body.id,function (err,user) {
+		if(err) throw err;
+	});
+//
+//
+	res.send("Accepted");
+});
+
+
+app.post('/diclineFriendRequest', function (req, res) {
+	console.log(req.body);
+
+	Request.diclineFriendRequest(req.body.id,function (err,user) {
+		if(err) throw err;
+	});
+//
+//
+	res.send("Dicline");
+});
 
 app.post('/sendRequestToFriend', function (req, res) {
 
@@ -272,7 +294,8 @@ app.post('/sendRequestToFriend', function (req, res) {
 		requestFrom : req.body.from,
 		requestTo : req.body.to,
 		status : req.body.status,
-		requestFromName : req.body.fromName
+		requestFromName : req.body.fromName,
+        acceptStatus: req.body.acceptStatus
 	});
 
 	Request.createRequest(newRequest,function (err,request) {

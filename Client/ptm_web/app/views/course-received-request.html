@@ -233,9 +233,9 @@
                                                                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.
                                                                         </p>
 <!--                                                                        <a href="#" class="btn btn-primary btn-sm">Reply</a>-->
-                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-success btn-sm" ng-click="sendFriendRequest(friend.userId); show_btn = !show_btn;" value="{{ show_btn ? 'Request Sent!' : 'Send Request' }}">
+                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-success btn-sm" ng-click="acceptRequest(request._id)" value="ACCEPT">
                                                                         
-                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-primary btn-sm" ng-click="sendFriendRequest(friend.userId); show_btn = !show_btn;" value="{{ show_btn ? 'Request Sent!' : 'Decline' }}">
+                                                                        <input type="button" id="more_btn_{{ $index+1 }}" class="btn btn-primary btn-sm" ng-click="declineRequest(request._id)" value="DECLINE">
                                                                     </div>
                                                                     <div class="clearfix"></div>
                                                                 </div>
