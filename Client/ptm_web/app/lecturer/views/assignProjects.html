@@ -20,7 +20,7 @@
                 <div class="ibox-title">
                     <h5>All Available Projects</h5>
                     <div class="ibox-tools">
-                        <a href="#" class="btn btn-primary btn-xs">Create new project</a>
+                        <a href="/lecturer/#/addProjects" class="btn btn-primary btn-xs">Create new project</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -48,20 +48,15 @@
                                     <br/>
                                     <small>Created 14.08.2014</small>
                                 </td>
-                                <td class="project-completion">
-                                        <small>Completion with: 48%</small>
-                                        <div class="progress progress-mini">
-                                            <div style="width: 48%;" class="progress-bar"></div>
-                                        </div>
-                                </td>
+                               
                                 <td class="project-people">
                                     <a href="#"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
                                     <a href="#"><img alt="image" class="img-circle" src="img/a1.jpg"></a>
                                     <a href="#"><img alt="image" class="img-circle" src="img/a2.jpg"></a>
                                 </td>
                                 <td class="project-actions">
-                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                    <a href="#" class="btn btn-white btn-sm"><i class="fa fa-download"></i>  Assign </a>
+                                    <button class="btn btn-white btn-sm" ng-click="viewProjet($event,project.name,project.description)"><i class="fa fa-folder"></i> View </button>    
+                                    <button class="btn btn-white btn-sm" ng-click="assignProjet($event,project.name,project._id)"><i class="fa fa-download"></i>  Assign </button>
                                 </td>
                             </tr>
                             
@@ -72,13 +67,9 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
-
-
-
-
-
-
 
 
 
