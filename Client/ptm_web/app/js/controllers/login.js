@@ -44,7 +44,7 @@ myApp.controller('LoginController', ['$scope','$http','$location','toastr', func
         }).success(
             function(data){
                 if(data == "pass"){
-                    $location.url('/profile');
+                    $location.url('/my_coursee_grid');
                     toastr.success('You have successfully registered!', 'Welcome');
                 }else{
                     $location.url('/login');

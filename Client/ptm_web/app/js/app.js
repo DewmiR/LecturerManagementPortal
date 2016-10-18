@@ -1,4 +1,5 @@
-var myApp = angular.module('myApp', ['ngRoute','ngMaterial']);
+var myApp = angular.module('myApp', ['ngRoute','ngAnimate', 'toastr','ngMaterial','notifications']);
+
 
 myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrConfig) {
   $routeProvider.
@@ -33,6 +34,18 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
     when('/friend_requests', {
       templateUrl: 'views/friend_requests.html',
       controller: 'RequestController'
+    }).
+    when('/course_module_forum/:id?', {
+      templateUrl: 'views/course_module_forum.html',
+      controller: 'CourseModuleForumController'
+    }).
+    when('/course_friends/:id?', {
+      templateUrl: 'views/my_friends_course.html',
+      controller: 'CourseFriendsController'
+    }).
+    when('/course_received_request/:id?', {
+      templateUrl: 'views/course-received-request.html',
+      controller: 'CourseReceivedRequestCintroller'
     }).
     otherwise({
       redirectTo: '/login'

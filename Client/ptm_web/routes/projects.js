@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Project = require("../models/project");
+var ProjectOfCourse = require("../models/projectOfCourse");
 
 
 router.post('/createProject', function (req, res) {
@@ -29,13 +30,13 @@ router.get('/getAllProjects', function (req, res) {
 
 router.post('/createProjectOfCourse', function (req, res) {
 
-	var newCourseProject = new Project({
+	var newCourseProject = new ProjectOfCourse({
 		courseName: req.body.courseName,
 	    projectName: req.body.projectName,
 	    projectId: req.body.projectId
 	});
 
-	Project.createProjectOfCourse(newCourseProject,function (err,newCourseProject) {
+	ProjectOfCourse.createProjectOfCourse(newCourseProject,function (err,newCourseProject) {
 		if(err) throw err;
 	});
 
@@ -45,7 +46,7 @@ router.post('/createProjectOfCourse', function (req, res) {
 
 router.get('/getAllProjectOfCourse', function (req, res) {
 
-	Project.getAllProjectOfCourse(function(err,projects){
+	ProjectOfCourse.getAllProjectOfCourse(function(err,projects){
 		if(err) throw err;
 		res.send(projects);
 	});

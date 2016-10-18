@@ -114,16 +114,16 @@ app.get('/test', function (req, res) {
 
 
 	var newCourse = Course({
-		courseName: "ITA",
+		courseName: "DBMS",
 		image: "course_05.jpg",
-		enrollmentKey: "5",
-        lecturerIncharge: "Mr.Prageeth",
-        lecturerImage:"testi_04.png"
+		enrollmentKey: "1",
+        lecturerIncharge: "Mr.Prasanna",
+        lecturerImage:"testi_01.png"
 	});
 
 
 	Course.createCourse(newCourse,function (err,data) {
-		console.log(data);
+		//console.log(data);
     	if(err) throw err;
 	});
 });
@@ -139,7 +139,7 @@ app.get('/test2', function (req, res) {
 
 
 	Enroll.createNewEnroll(newEnrollment,function (err,data) {
-		console.log(data);
+		//console.log(data);
     	if(err) throw err;
 	});
 });
@@ -147,7 +147,7 @@ app.get('/test2', function (req, res) {
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
 		if(err) throw err;
-        console.log(courses);
+       // console.log(courses);
 		res.send(courses);
 	});
 });
@@ -245,12 +245,12 @@ app.post('/addNewEnrollment', function (req, res) {
     	if(err) throw err;
     	res.send("New Enrollment Added");
 	});
-//    console.log(enrollment.course_id)
 
 });
 
+
 app.post('/registerUser', function (req, res) {
-	console.log(req.body.name);
+	//console.log(req.body.name);
 
 	var newUser = new User({
 		name : req.body.name,
@@ -267,6 +267,28 @@ app.post('/registerUser', function (req, res) {
 	res.send("pass");
 });
 
+app.post('/acceptFriendRequest', function (req, res) {
+	console.log(req.body);
+
+	Request.acceptFriendRequest(req.body.id,function (err,user) {
+		if(err) throw err;
+	});
+//
+//
+	res.send("Accepted");
+});
+
+
+app.post('/diclineFriendRequest', function (req, res) {
+	console.log(req.body);
+
+	Request.diclineFriendRequest(req.body.id,function (err,user) {
+		if(err) throw err;
+	});
+//
+//
+	res.send("Dicline");
+});
 
 app.post('/sendRequestToFriend', function (req, res) {
 
@@ -274,7 +296,8 @@ app.post('/sendRequestToFriend', function (req, res) {
 		requestFrom : req.body.from,
 		requestTo : req.body.to,
 		status : req.body.status,
-		requestFromName : req.body.fromName
+		requestFromName : req.body.fromName,
+        acceptStatus: req.body.acceptStatus
 	});
 
 	Request.createRequest(newRequest,function (err,request) {
@@ -292,6 +315,16 @@ app.post('/getReceivedRequests', function (req, res) {
 		res.send(data)
 	})
 });
+
+app.post('/getMyFriendsRequests', function (req, res) {
+//	console.log(req.body);
+	Request.getMyFriendsRequests(req.body.userId, function(err,data){
+		if(err) throw err
+		res.send(data)
+//        console.log(data);
+	})
+});
+
 
 app.get('/getAllLecturers', function (req, res) {
 	User.getAllLecturers(function(err,lecturers){
