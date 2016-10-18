@@ -26,4 +26,29 @@ router.get('/getAllProjects', function (req, res) {
 	});
 });
 
+
+router.post('/createProjectOfCourse', function (req, res) {
+
+	var newCourseProject = new Project({
+		courseName: req.body.courseName,
+	    projectName: req.body.projectName,
+	    projectId: req.body.projectId
+	});
+
+	Project.createProjectOfCourse(newCourseProject,function (err,newCourseProject) {
+		if(err) throw err;
+	});
+
+	res.send("pass");
+});
+
+
+router.get('/getAllProjectOfCourse', function (req, res) {
+
+	Project.getAllProjectOfCourse(function(err,projects){
+		if(err) throw err;
+		res.send(projects);
+	});
+});
+
 module.exports = router;

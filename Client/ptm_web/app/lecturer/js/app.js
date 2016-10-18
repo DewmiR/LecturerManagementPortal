@@ -1,4 +1,4 @@
-var lectApp = angular.module('lectApp', ['ngRoute']);
+var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial','ngMessages']);
 
 lectApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
@@ -17,6 +17,10 @@ lectApp.config(['$routeProvider', function($routeProvider) {
     when('/assignProjects', {
       templateUrl: 'views/assignProjects.html',
       controller: 'AssignProjectsController'
+    }).
+    when('/myProjects', {
+      templateUrl: 'views/myProjects.html',
+      controller: 'MyProjectsController'
     }).
     otherwise({
       redirectTo: '/lecturer'
