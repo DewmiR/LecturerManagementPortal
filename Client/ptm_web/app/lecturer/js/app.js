@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var lectApp = angular.module('lectApp', ['ngRoute']);
 
-myApp.config(['$routeProvider', function($routeProvider) {
+lectApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/lecturer', {
       templateUrl: 'views/courses.html',
@@ -9,6 +9,10 @@ myApp.config(['$routeProvider', function($routeProvider) {
   when('/assignLecturer', {
     templateUrl: 'views/assignLecturer.html',
     controller: 'lecturerController'
+  }).
+  when('/supervisorView', {
+    templateUrl: 'views/supervisorView.html',
+    controller: 'supervisorController'
   }).
     otherwise({
       redirectTo: '/lecturer'

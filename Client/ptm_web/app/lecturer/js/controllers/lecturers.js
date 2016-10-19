@@ -2,7 +2,7 @@
  * Created by DewmiR on 9/26/2016.
  */
 
-myApp.controller('lecturerController', ['$scope','$http','$location', function($scope,$http,$location) {
+lectApp.controller('lecturerController', ['$scope','$http','$location', function($scope,$http,$location) {
 
 
     $scope.init = function () {
@@ -53,7 +53,7 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
     };
 
 
-    $scope.getAssignLecs = function(courseName) {
+    $scope.assignLecturer = function() {
         // console.log(courseName);
         //
         // $http.post('/getAssigenedLecturers', {
