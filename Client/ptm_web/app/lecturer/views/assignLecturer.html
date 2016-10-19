@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-w-m btn-primary">Assign Lecturer</button>
+    <button type="button" ng-click="assignLecturer()" class="btn btn-w-m btn-primary">Assign Lecturer</button>
 </div>
 
 
@@ -67,11 +67,11 @@
                                 <img class="img-circle" alt="image" src="img/a3.jpg">
                             </a>
                             <div class="media-body">
-                                <!--<div class="pull-right">
+                                <div class="pull-right">
                                     <div class="checkbox">
-                                        <label><input type="checkbox" value="" class=" i-checks icheckbox_square-green"></label>
+                                        <label><input type="checkbox" ng-model="sLec.selected" value={{lecturer.name}} class=" i-checks icheckbox_square-green"></label>
                                     </div>
-                                </div>-->
+                                </div>
                                 <strong>{{lecturer.name}}</strong>
 
                                 <br>

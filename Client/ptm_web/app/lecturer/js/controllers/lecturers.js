@@ -53,7 +53,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location', function
     };
 
 
-    $scope.getAssignLecs = function(courseName) {
+    $scope.assignLecturer = function() {
         // console.log(courseName);
         //
         // $http.post('/getAssigenedLecturers', {
