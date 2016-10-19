@@ -12,8 +12,9 @@ $scope.init = function () {
 
 
     //all method calls
-    $scope.loadCourses();
     $scope.getCurrentUser();
+    $scope.loadCourses();
+   
 
 
 }
@@ -35,13 +36,15 @@ $scope.loadCourses = function () {
                     }).success(
                         function(dataIsEnrolled){
                          console.log("isEnroll called");
-                           // console.log(dataIsEnrolled);
-
+                            console.log(dataIsEnrolled);
+                            
                             for(var i=0;i<dataIsEnrolled.length;i++){
                                 for(var x=0;x<response.data.length;x++){
-
+                                        console.log("x");
+                                    
                                     if(response.data[x]._id==dataIsEnrolled[i].courseId){
                                         response.data[x].enrolled= true;
+                                        console.log("Set True");
                                         //response.data.splice(x,1);
                                       //  console.log(dataIsEnrolled[i]);
                                         //console.log(response.data[x]);

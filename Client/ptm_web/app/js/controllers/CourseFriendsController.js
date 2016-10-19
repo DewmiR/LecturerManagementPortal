@@ -18,7 +18,7 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
             }).success(
                 function(data){
                     Array.prototype.push.apply($scope.friends, data);
-                    console.log($scope.friends)
+                    console.log(data)
                 }
             ).error(
                 function(error){

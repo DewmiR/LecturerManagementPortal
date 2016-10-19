@@ -157,7 +157,7 @@
                                         <li class="cartmenu"><i class="fa fa-bell"></i> <sup>{{ myRequests }}</sup></li>
                                       </md-button>
                                       <md-menu-content width="4">
-                                        <md-menu-item ng-repeat="item in requestFromNameArr">
+                                        <md-menu-item ng-repeat="item in requestFromNameArr" ng-if="item.status==0">
                                           <md-button ng-click="ctrl.announceClick($index)">
                                               <div layout="row" flex="" ng-click="test(item.requestFrom);">
                                                 <p flex="9" style="color:black">{{item.requestFromName}}</p>
@@ -189,7 +189,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="btn btn-default"><a title="Join for free" href="member-register.html">Join us</a></li>
+                                
                             </ul>
                             <!-- end dropdown -->
                         </div>
