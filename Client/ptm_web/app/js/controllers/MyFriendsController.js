@@ -62,18 +62,6 @@ myApp.controller('MyfriendsController', ['$scope','$http','$location', '$routePa
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     $scope.init();
 
 
