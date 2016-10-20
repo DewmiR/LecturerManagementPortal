@@ -13,6 +13,17 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
         $scope.mod = "modules";
         $scope.modules = [];
         $scope.displayAllModules();
+
+
+        $scope.posts = [ {post: 'lecturer'}, {post: 'Supervisor'}];
+        $scope.slectedCourse="";
+        $scope.selectedPost="";
+        $scope.lname="";
+        $scope.details=[];
+        $scope.displayAsgnDetails();
+
+
+
     };
 
 
@@ -53,24 +64,88 @@ myApp.controller('lecturerController', ['$scope','$http','$location', function($
     };
 
 
-    $scope.getAssignLecs = function(courseName) {
-        // console.log(courseName);
-        //
-        // $http.post('/getAssigenedLecturers', {
-        //     courseName: courseName
-        // }).success(
-        //     function(data){
-        //         Array.prototype.push.apply($scope.lecturers, data);
-        //     }
-        // ).error(
-        //     function(error){
-        //         console.log(error);
-        //     }
-        // );
-
+    $scope.update = function() {
+        slectedCourse=$scope.item.courseName;
+        console.log($scope.item.courseName);
+        console.log(slectedCourse);
 
 
     };
+
+    $scope.updateLec = function() {
+        selectedPost=$scope.lPost.post;
+        console.log($scope.lPost.post);
+        console.log(selectedPost);
+
+
+    };
+
+
+    $scope.getName = function () {
+            lname=$scope.lec.name;
+            console.log(lname)
+
+    };
+
+
+    $scope.assignLecs = function() {
+
+        $http.post('/assignLecturer', {
+            courseName: slectedCourse,
+            userName : lname,
+            post : selectedPost
+
+        }).success(
+            function(data){
+               console.log(data);
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+
+    };
+
+    $scope.displayAllModules = function () {
+        $http({
+            method: 'GET',
+            url:'/displayAllModules'
+        }).then(
+            function success(response) {
+                console.log(response.data);
+                Array.prototype.push.apply($scope.modules, response.data);
+                console.log($scope.modules);
+
+            },
+            function error(error) {
+                console.log('Failed to load modules');
+            }
+        );
+
+    };
+
+
+    $scope.displayAsgnDetails = function () {
+        $http({
+            method: 'GET',
+            url:'/getAllAssigenedLecturers'
+        }).then(
+            function success(response) {
+                console.log(response.data);
+                Array.prototype.push.apply($scope.details, response.data);
+                console.log($scope.details);
+
+            },
+            function error(error) {
+                console.log('Failed to load Lecturers');
+            }
+        );
+
+    };
+
+
+
 
     $scope.init();
 

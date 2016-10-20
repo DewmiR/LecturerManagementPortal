@@ -17,4 +17,10 @@ module.exports.getLecturersAssignedToCourse = function( courseName,callback){
     Asgnlec.find({courseName:courseName},callback);
 };
 
+module.exports.assignNewLecturer = function(newEnroll, callback){
+    newEnroll.save(callback);
+};
 
+module.exports.getLecturersAssigned = function( callback){
+    Asgnlec.find({},callback);
+};
