@@ -15,6 +15,9 @@ var Course = require("./models/course");
 var Enroll = require("./models/enroll");
 var Request = require("./models/request");
 var assignedLecs = require("./models/assignedLecturer");
+var Project = require("./models/project");
+
+var projects = require('./routes/projects');
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -34,7 +37,7 @@ app.use(function(req, res, next) {
 });
 app.use(express.static("./app"));
 app.use(cors());
-app.use(cookieParser());    
+app.use(cookieParser());
 app.use(session({
   secret: 'secret',
   saveUninitialized: true,
@@ -48,13 +51,13 @@ passport.use(new LocalStrategy(
 
 
      	User.getUserByUsername(username, function(err, user){
-	        
+
 	        if(err) throw err;
-	        
+
 	        if(!user){
 	        	console.log("User not found...");
 	          	return done(null, false, {message: 'Unknown User'});
-	        }else{ 
+	        }else{
 
 
 	            console.log("User found by username...");
@@ -64,7 +67,7 @@ passport.use(new LocalStrategy(
 	        // User.comparePassword(password, user.password, function(err, isMatch){
 
 	        //     if(err) throw err;
-	        
+
 	        //     if(isMatch){
 	        //         console.log("User found with username & password.");
 	        //         return done(null, user);
@@ -108,7 +111,7 @@ app.post("/getUser",function(req,res){
 });
 
 app.post('/login', passport.authenticate('local',
-    {   
+    {
     	successRedirect:'/pass',
         failureRedirect:'/fail'
     }), function(req, res) {
@@ -124,14 +127,16 @@ app.get('/test', function (req, res) {
 
 
 	var newCourse = Course({
-		courseName: "SETM",
-		image: "ima/sds",
-		enrollmentKey: "1"
+		courseName: "DBMS",
+		image: "course_05.jpg",
+		enrollmentKey: "1",
+        lecturerIncharge: "Mr.Prasanna",
+        lecturerImage:"testi_01.png"
 	});
 
 
 	Course.createCourse(newCourse,function (err,data) {
-		console.log(data);
+		//console.log(data);
     	if(err) throw err;
 	});
 });
@@ -147,7 +152,7 @@ app.get('/test2', function (req, res) {
 
 
 	Enroll.createNewEnroll(newEnrollment,function (err,data) {
-		console.log(data);
+		//console.log(data);
     	if(err) throw err;
 	});
 });
@@ -155,7 +160,7 @@ app.get('/test2', function (req, res) {
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
 		if(err) throw err;
-        console.log(courses);
+       // console.log(courses);
 		res.send(courses);
 	});
 });
@@ -215,13 +220,13 @@ app.post('/getUsersEnrolledInCourse', function (req, res) {
 app.post('/getEnrollmentkeyByCourseId', function (req, res) {
 	Course.getEnrollmentkeyByCourseId(req.body.cid,function (err,key) {
         if(err) throw err;
-        
+
        // console.log(key);
     	res.send(key);
-        
+
 	});
 
-   
+
 });
 
 app.post('/checkEnrollmentKey', function (req, res) {
@@ -231,7 +236,7 @@ app.post('/checkEnrollmentKey', function (req, res) {
     	// console.log("Count: "+ count);
     	res.sendStatus(count);
 	});
-	
+
 });
 
 app.post('/isEnrolled', function (req, res) {
@@ -258,7 +263,7 @@ app.post('/addNewEnrollment', function (req, res) {
 });
 
 app.post('/registerUser', function (req, res) {
-	console.log(req.body.name);
+	//console.log(req.body.name);
 
 	var newUser = new User({
 		name : req.body.name,
@@ -275,6 +280,28 @@ app.post('/registerUser', function (req, res) {
 	res.send("pass");
 });
 
+app.post('/acceptFriendRequest', function (req, res) {
+	console.log(req.body);
+
+	Request.acceptFriendRequest(req.body.id,function (err,user) {
+		if(err) throw err;
+	});
+//
+//
+	res.send("Accepted");
+});
+
+
+app.post('/diclineFriendRequest', function (req, res) {
+	console.log(req.body);
+
+	Request.diclineFriendRequest(req.body.id,function (err,user) {
+		if(err) throw err;
+	});
+//
+//
+	res.send("Dicline");
+});
 
 app.post('/sendRequestToFriend', function (req, res) {
 
@@ -282,7 +309,8 @@ app.post('/sendRequestToFriend', function (req, res) {
 		requestFrom : req.body.from,
 		requestTo : req.body.to,
 		status : req.body.status,
-		requestFromName : req.body.fromName
+		requestFromName : req.body.fromName,
+        acceptStatus: req.body.acceptStatus
 	});
 
 	Request.createRequest(newRequest,function (err,request) {
@@ -294,12 +322,22 @@ app.post('/sendRequestToFriend', function (req, res) {
 });
 
 app.post('/getReceivedRequests', function (req, res) {
-	var userId = 
+	var userId =
 	Request.getAllRequests(req.body.userId, req.body.status, function(err,data){
 		if(err) throw err
 		res.send(data)
 	})
 });
+
+app.post('/getMyFriendsRequests', function (req, res) {
+//	console.log(req.body);
+	Request.getMyFriendsRequests(req.body.userId, function(err,data){
+		if(err) throw err
+		res.send(data)
+//        console.log(data);
+	})
+});
+
 
 app.get('/getAllLecturers', function (req, res) {
 	User.getAllLecturers(function(err,lecturers){
@@ -326,13 +364,19 @@ app.post('/getAssigenedLecturers', function (req,res) {
 });
 
 
+
+
+app.use('/projects', projects);
+
+
+
 app.post('/assignLecturer', function (req,res) {
 	var newAsgnlec = new assignedLecs({
 		courseName : req.body.courseName,
 		userName : req.body.userName,
 		post : req.body.post
 	});
-	
+
 	assignedLecs.assignNewLecturer(newAsgnlec,function (err,lecturers) {
 		if(err) throw err;
 		res.send(lecturers);
