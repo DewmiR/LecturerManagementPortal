@@ -65,6 +65,19 @@ passport.use(new LocalStrategy(
 	            return done(null, user);
 	        }
 
+	        // User.comparePassword(password, user.password, function(err, isMatch){
+
+	        //     if(err) throw err;
+
+	        //     if(isMatch){
+	        //         console.log("User found with username & password.");
+	        //         return done(null, user);
+	        //     } else {
+	        //         console.log("User found with username, But password is wrong.");
+	        //         return done(null, false, {message: 'Invalid password'});
+	        //     }
+
+	        // });
      	});
   	}
 ));
@@ -260,9 +273,9 @@ app.post('/isEnrolled', function (req, res) {
     	if(err) throw err;
         res.send(courses);
 	});
-
+    
     //console.log(req.body);
-
+	
 });
 
 
@@ -273,9 +286,9 @@ app.post('/addNewEnrollment', function (req, res) {
     	if(err) throw err;
     	res.send("New Enrollment Added");
 	});
-
+//    console.log(enrollment.course_id)
+	
 });
-
 
 app.post('/registerUser', function (req, res) {
 	//console.log(req.body.name);
@@ -394,6 +407,33 @@ app.post('/getAssigenedLecturers', function (req,res) {
 
 
 app.use('/projects', projects);
+
+
+
+app.post('/assignLecturer', function (req,res) {
+	var newAsgnlec = new assignedLecs({
+		courseName : req.body.courseName,
+		userName : req.body.userName,
+		post : req.body.post
+	});
+
+	assignedLecs.assignNewLecturer(newAsgnlec,function (err,lecturers) {
+		if(err) throw err;
+		res.send(lecturers);
+	});
+});
+
+
+
+app.get('/getAllAssigenedLecturers', function (req,res) {
+	assignedLecs.getLecturersAssigned(function (err,lecturers) {
+		if(err) throw err;
+		res.send(lecturers);
+	});
+});
+
+
+
 
 
 
