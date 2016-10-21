@@ -51,6 +51,10 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/all-module-groups.html',
       controller: 'ModuleGroupController'
     }).
+    when('/test', {
+      templateUrl: 'views/test.html',
+      controller: 'testController'
+    }).
     otherwise({
       redirectTo: '/login'
     });
