@@ -37,3 +37,8 @@ module.exports.addNewEnrollment = function(enrollment,callback){
 module.exports.isEnrolled = function(userId, callback){
     Enroll.find({ userId: userId },callback);
 };
+
+module.exports.setRequestAcceptStatus = function(id,cid,callback){
+	Enroll.update({ userId:id,courseId:cid },{ $set:{ requestAcceptStatus:"1" }},callback);
+}
+

@@ -220,13 +220,13 @@
                                         <div class="panel panel-info">
                                             <div class="panel-body">
                                                 <ul class="media-list">
-                                                            <li class="media" ng-repeat="friend in friends" ng-if="user_id!=friend.userId && friend.requestAcceptStatus==0 ">
+                                                            <li class="media" ng-repeat="groupA in group">
                                                                 <div class="comment">
                                                                     <a href="#" class="pull-left">
                                                                         <img src="upload/team_03.png" alt="" class="img-circle">
                                                                     </a>
                                                                     <div class="media-body">
-                                                                        <strong class="text-success">{{ friend.userName }}</strong>
+                                                                        <strong class="text-success">{{ groupA.groupName }}</strong>
                                                                         <span class="text-muted">
                                                                                                         <small class="text-muted">15 minutes ago</small></span>
                                                                         <p>

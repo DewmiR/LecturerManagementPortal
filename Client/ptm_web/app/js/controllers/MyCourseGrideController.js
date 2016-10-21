@@ -79,7 +79,6 @@ $scope.loadCourses = function () {
 }
 
 $scope.showEnrollmentKeyPrompt = function(ev,cid) {
-
     var studentID=$scope.currentUser;
     var courseID=cid;
     console.log();

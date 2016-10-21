@@ -43,9 +43,13 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/my_friends_course.html',
       controller: 'CourseFriendsController'
     }).
-    when('/course_received_request/:id?', {
+    when('/course_received_request/:id?/:cid?', {
       templateUrl: 'views/course-received-request.html',
       controller: 'CourseReceivedRequestCintroller'
+    }).
+    when('/all_module_groups', {
+      templateUrl: 'views/all-module-groups.html',
+      controller: 'ModuleGroupController'
     }).
     otherwise({
       redirectTo: '/login'

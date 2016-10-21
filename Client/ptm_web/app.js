@@ -16,6 +16,7 @@ var Enroll = require("./models/enroll");
 var Request = require("./models/request");
 var assignedLecs = require("./models/assignedLecturer");
 var Project = require("./models/project");
+var courseModuleGroups = require("./models/courseModuleGroups");
 
 var projects = require('./routes/projects');
 
@@ -144,6 +145,24 @@ app.get('/test2', function (req, res) {
 	});
 });
 
+app.post('/createNewcourseModuleGroups', function (req, res) {
+
+
+    
+	var NewcourseModuleGroups = courseModuleGroups({
+		groupName: "Bingo",
+		userId: "580747f911fb4c046070956c",
+		userName: "prageeth",
+        userImage: "testi_01.png",
+        courseId: "58046638ad4aaa0020beadbb",
+	});
+
+	courseModuleGroups.createNewcourseModuleGroups(NewcourseModuleGroups,function (err,data) {
+		//console.log(data);
+    	if(err) throw err;
+	});
+});
+
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
 		if(err) throw err;
@@ -151,6 +170,15 @@ app.get('/getAllCourses', function (req, res) {
 		res.send(courses);
 	});
 });
+
+app.post('/getAllCourseGroups', function (req, res) {
+	courseModuleGroups.getAllCourseGroups(function(err,groups){
+		if(err) throw err;
+       // console.log(courses);
+		res.send(groups);
+	});
+});
+
 app.get('/getAllCoursesFirstYear', function (req, res) {
 	Course.getAllCoursesFirstYear(function(err,courses){
 		if(err) throw err;
@@ -272,6 +300,18 @@ app.post('/acceptFriendRequest', function (req, res) {
 
 	Request.acceptFriendRequest(req.body.id,function (err,user) {
 		if(err) throw err;
+	});
+//
+//
+	res.send("Accepted");
+});
+
+app.post('/setRequestAcceptStatus', function (req, res) {
+	console.log(req.body);
+
+	Enroll.setRequestAcceptStatus(req.body.id,req.body.cid,function (err,user) {
+		console.log(user)
+        if(err) throw err;
 	});
 //
 //

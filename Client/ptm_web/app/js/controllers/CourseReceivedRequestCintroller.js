@@ -4,7 +4,7 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
 
     $scope.init = function () {
       console.log("CourseReceivedRequestCintroller started");
-      console.log($routeParams.id);
+      console.log($routeParams.cid);
       $scope.loadRequest();
       $scope.myRequestsArr=[];
 
@@ -38,6 +38,7 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
        console.log("done");
        
        
+       
        $http.post('/acceptFriendRequest', {
                 status: "1",
                 acceptStatus: "1",
@@ -45,6 +46,20 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
             }).success(
                 function(data){
                     console.log(data);
+                    
+                     $http.post('/setRequestAcceptStatus', {
+                    id: $routeParams.id,
+                    cid: $routeParams.cid
+                    }).success(
+                        function(status){
+                            console.log(status);
+
+                        }
+                    ).error(
+                        function(error){
+                          console.log(error)
+                        }
+                    );
                    
                 }
             ).error(

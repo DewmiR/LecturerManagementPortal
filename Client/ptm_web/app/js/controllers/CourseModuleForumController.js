@@ -4,9 +4,13 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
 
     $scope.init = function () {
       console.log("CourseModuleForumController started");
-      $scope.courseId=$routeParams.id;
+      //$scope.courseId=$routeParams.id;
+      $scope.studentId=$routeParams.id;
       $scope.getReceivedRequests();
       $scope.requestFromNameArr=[];
+      $scope.getCurrentUser();
+     
+       
         
 //      /* $rootScope.$on('$routeChangeSuccess', function() {
 //    $route.reload();*/
@@ -40,13 +44,47 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
         	console.log(error)
       	}
     );
+         
     }
      
      
      $scope.test = function (id){
+         
          console.log(id+"dfgdf");
-         $location.url('/course_received_request/'+id);
+         $location.url('/course_received_request/'+id+'/'+$routeParams.id);
      }
+     
+     $scope.getCurrentUser = function(){
+       
+        $http.post('/getUser').success(
+        function(data){
+           $scope.currentUserId=data._id;
+        }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+         
+     };
+    
+    
+    $scope.isGroupFormed = function() {
+        
+        $http.post('/createNewcourseModuleGroups', {
+            userId: "o",
+            status: "0"
+        }).success(
+        function(data){
+           console.log(data);
+        }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+        
+    };
 
 
     $scope.init();
