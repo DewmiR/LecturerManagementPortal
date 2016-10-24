@@ -164,6 +164,8 @@ app.post('/createNewcourseModuleGroups', function (req, res) {
     
 	var NewcourseModuleGroups = courseModuleGroups({
 		groupName: "Bingo",
+        leaderStudentId: "it140",
+        cgpa: "3.50",
 		userId: "580747f911fb4c046070956c",
 		userName: "prageeth",
         userImage: "testi_01.png",

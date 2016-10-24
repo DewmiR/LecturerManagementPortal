@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 
 var courseModuleGroupsSchema = new mongoose.Schema({
     groupName:String,
+    leaderStudentId:String,
+    cgpa:String,
 	userId: String,
 	userName: String,
 	userImage: String,
