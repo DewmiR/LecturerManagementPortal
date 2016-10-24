@@ -3,13 +3,17 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
   //  $scope.$parent.body_class = "leftmenu memberprofile";
 
     $scope.init = function () {
-      $scope.leaderName="dsds";
+        $scope.n={};
+        $scope.groupFormedStatus=false;
+//      $scope.n.leaderName="dsds";
       console.log("CourseModuleForumController started");
       //$scope.courseId=$routeParams.id;
       $scope.studentId=$routeParams.id;
       $scope.getReceivedRequests();
       $scope.requestFromNameArr=[];
+      $scope.currentUserId="";
       $scope.getCurrentUser();
+      $scope.isGroupFormed();
      
        
         
@@ -60,6 +64,8 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
         $http.post('/getUser').success(
         function(data){
            $scope.currentUserId=data._id;
+//            console.log("userId");
+//            console.log($scope.currentUserId);
         }
         ).error(
             function(error){
@@ -72,18 +78,69 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
     
     $scope.isGroupFormed = function() {
         
-        $http.post('/createNewcourseModuleGroups', {
-            userId: "o",
-            status: "0"
+//        $http.post('/createNewcourseModuleGroups', {
+//            userId: "o",
+//            status: "0"
+//        }).success(
+//        function(data){
+//           console.log(data);
+//        }
+//        ).error(
+//            function(error){
+//                console.log(error)
+//            }
+//        );
+       
+        
+        
+          $http.post('/getUser').success(
+        function(data){
+            
+            
+        $http.post('/getGroupId', {
+        userId:data._id,
+        courseId:$scope.studentId
         }).success(
         function(data){
-           console.log(data);
+           console.log(data[0].gId);
+            
+            //
+            
+                $http.post('/getGroupCount',{
+                 gid: data[0].gId
+                }).success(
+                function(data){
+                   console.log(data);
+                    if(data=="1"){
+                        console.log("Group Formed");
+                        $scope.groupFormedStatus=true;
+                    }
+                    
+                }
+                ).error(
+                    function(error){
+                        console.log(error)
+                    }
+                );
+            //
         }
         ).error(
             function(error){
                 console.log(error)
             }
         );
+          
+        }
+    ).error(
+	    function(error){
+        	console.log(error)
+      	}
+    );
+//        
+//        
+      
+//        
+        
         
     };
     
@@ -104,7 +161,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
     .then(function(answer) {
 //      $scope.status = 'You said the information was "' + answer + '".';
         if(answer=='A'){
-            console.log($scope.leaderName);
+            console.log($scope.n);
         }else{
             console.log("cancelled");
         }

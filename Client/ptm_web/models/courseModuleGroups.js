@@ -19,7 +19,7 @@ module.exports.createNewcourseModuleGroups = function(newcourseModuleGroups, cal
     newcourseModuleGroups.save(callback);
 };
 
-module.exports.getAllCourseGroups = function(callback){
-    courseModuleGroups.find({},callback);
+module.exports.getAllCourseGroups = function(cid,callback){
+    courseModuleGroups.find({ courseId:cid },callback);
 }
 

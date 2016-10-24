@@ -306,7 +306,7 @@
                             </form>
                         </div><!-- end widget -->
                         
-                        <div class="widget clearfix">
+                        <div class="widget clearfix" ng-if="!groupFormedStatus">
                             <div class="widget-title">
                                 <h3>Friends Portal</h3>
                                 <hr>
@@ -315,7 +315,7 @@
                                 <a href="#/course_friends/{{ studentId }}">My Friends</a>
                                 <a href="" ng-click="showAdvanced($event)">Create Group</a>
 <!--                                <a href="#/all_module_groups">Create Group</a>-->
-                                <a href="#/all_module_groups">MemberShipe</a>
+                                <a href="#/all_module_groups/{{ studentId }}">MemberShipe</a>
                             </div><!-- end tags -->
                         </div><!-- end widget -->
                         <!-- ---->
@@ -326,7 +326,7 @@
 
                         <script type="text/ng-template" id="dialog1.tmpl.html">
                          <md-dialog aria-label="Mango (Fruit)">
-                          <form  ng-cloak>
+                          <form ng-submit="answer('A')">
                             <md-toolbar>
                               <div class="md-toolbar-tools">
                                 <h2 style="color:white">Create Group </h2>
@@ -345,12 +345,12 @@
                             <div>
                               <md-input-container>
                                 <label>Name</label>
-                                <input ng-model="leaderName">
+                                <input ng-model="n.leaderName">
                               </md-input-container>
 
                               <md-input-container>
                                 <label>Id Number</label>
-                                <input ng-model="IdNumber" type="email">
+                                <input ng-model="n.IdNumber" type="email">
                               </md-input-container>
                             </div>
                           </md-content>
@@ -360,28 +360,28 @@
                                 <div layout-gt-sm="row">
                                   <md-input-container class="md-block" flex-gt-sm="">
                                     <label>Group Name</label>
-                                    <input ng-model="groupName">
+                                    <input ng-model="n.groupName">
                                   </md-input-container>
                                 </div>
                                 <div layout-gt-sm="row">
                                   <md-input-container class="md-block" flex-gt-sm="">
                                     <label>CGPA</label>
-                                    <input ng-model="cgpa">
+                                    <input ng-model="n.cgpa">
                                   </md-input-container>
                                 </div>
                             </div>
                           </md-content>
                         </div>
                         </md-dialog-content>
-                            <md-dialog-actions layout="row">
+                            <md-dialog layout="row">
                               <span flex></span>
-                              <md-button class="md-raised md-primary" ng-click="answer('B')">
+                              <md-button class="md-raised md-primary" >
                                Cancel
                               </md-button>
-                              <md-button type="submit" ng-click="answer('A')" class="md-raised md-primary">
+                              <md-button   type="submit" class="md-raised md-primary">
                                 Create
                               </md-button>
-                            </md-dialog-actions>
+                            </md-dialog>
                           </form>
                         </md-dialog>
                         </script>

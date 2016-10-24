@@ -4,6 +4,7 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
       	
     $scope.init = function () {
       console.log("ModuleGroupController started");
+        $scope.courseId=$routeParams.id;
         $scope.group=[];
         $scope.getAllGroups();
     }
@@ -11,6 +12,7 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
     $scope.getAllGroups = function (){
         
         $http.post('/getAllCourseGroups', {
+            cid: $scope.courseId
             }).success(
                 function(data){
                     Array.prototype.push.apply($scope.group, data);
@@ -23,7 +25,7 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
         
     };
 
-    $scope.sendFriendRequest = function (id){
+    $scope.sendFriendRequest = function (id,gId){
         console.log(id);
         
         
@@ -35,6 +37,8 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
                     from: data._id,
                     fromName: data.name,
                     to: id,
+                    cid: $scope.courseId,
+                    gid: gId,
                     status: "0"
                 }).success(
                     function(data){

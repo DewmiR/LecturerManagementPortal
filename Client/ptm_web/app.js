@@ -187,9 +187,10 @@ app.get('/getAllCourses', function (req, res) {
 });
 
 app.post('/getAllCourseGroups', function (req, res) {
-	courseModuleGroups.getAllCourseGroups(function(err,groups){
+	courseModuleGroups.getAllCourseGroups(req.body.cid,function(err,groups){
 		if(err) throw err;
        // console.log(courses);
+        //console.log(groups);
 		res.send(groups);
 	});
 });
@@ -201,6 +202,7 @@ app.get('/getAllCoursesFirstYear', function (req, res) {
 		res.send(courses);
 	});
 });
+
 app.get('/getAllCoursesSecondYear', function (req, res) {
 	Course.getAllCoursesSecondYear(function(err,courses){
 		if(err) throw err;
@@ -208,6 +210,7 @@ app.get('/getAllCoursesSecondYear', function (req, res) {
 		res.send(courses);
 	});
 });
+
 app.get('/getAllCoursesThirdYear', function (req, res) {
 	Course.getAllCoursesThirdYear(function(err,courses){
 		if(err) throw err;
@@ -350,6 +353,8 @@ app.post('/sendRequestToFriend', function (req, res) {
 	var newRequest = new Request({
 		requestFrom : req.body.from,
 		requestTo : req.body.to,
+        courseId : req.body.cid,
+        gId: req.body.gid,
 		status : req.body.status,
 		requestFromName : req.body.fromName,
         acceptStatus: req.body.acceptStatus
@@ -369,6 +374,35 @@ app.post('/getReceivedRequests', function (req, res) {
 		if(err) throw err
 		res.send(data)
 	})
+});
+
+app.post('/getGroupCount', function (req, res) {
+	
+ //   console.log(req.body.gid);
+	Request.getGroupCount(req.body.gid, function(err,data){
+		if(err) throw err
+       // console.log(data);
+        
+		res.send(data.toString())
+	})
+});
+
+app.post('/getGroupId', function (req, res) {
+    
+	Request.getGroupId(req.body.userId, req.body.courseId, function(err,data){
+		if(err) throw err
+		res.send(data)
+	})
+});
+
+
+app.post('/isGroupFormed', function (req, res) {
+    
+    
+//	Request.isGroupFormed(req.body.userId, req.body.status, function(err,data){
+//		if(err) throw err
+//		res.send(data)
+//	})
 });
 
 app.post('/getMyFriendsRequests', function (req, res) {

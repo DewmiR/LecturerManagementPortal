@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var RequestSchema = new mongoose.Schema({
 	requestFrom: String,
 	requestTo: String,
+    courseId:String,
+    gId:String,
 	status: String,
 	requestFromName: String,
     acceptStatus: String
@@ -29,10 +31,18 @@ module.exports.getMyFriendsRequests = function(id,callback){
 	Request.find({ requestFrom:id },callback);
 }
 
+module.exports.getGroupId = function(userId,courseid,callback){
+	Request.find({ requestFrom:userId , courseId:courseid , acceptStatus:"1" },callback);
+}
 module.exports.acceptFriendRequest = function(id,callback){
 	Request.update({ _id:id },{ $set:{ status:"1",acceptStatus:"1"}},callback);
 }
 
 module.exports.diclineFriendRequest = function(id,callback){
 	Request.update({ _id:id },{ $set:{ status:"1"}},callback);
+}
+
+
+module.exports.getGroupCount = function(gid, callback){
+	Request.count( { gId:gid , acceptStatus:"1" },callback);
 }
