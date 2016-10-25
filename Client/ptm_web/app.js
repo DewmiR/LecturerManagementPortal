@@ -17,6 +17,7 @@ var Request = require("./models/request");
 var assignedLecs = require("./models/assignedLecturer");
 var Project = require("./models/project");
 var courseModuleGroups = require("./models/courseModuleGroups");
+var courseGroupMembers = require("./models/courseGroupMembers");
 
 var projects = require('./routes/projects');
 
@@ -160,16 +161,17 @@ app.get('/test2', function (req, res) {
 
 app.post('/createNewcourseModuleGroups', function (req, res) {
 
-
     
 	var NewcourseModuleGroups = courseModuleGroups({
-		groupName: "Bingo",
-        leaderStudentId: "it140",
+		groupName: "Clash",
+        leaderStudentId: "it141",
         cgpa: "3.50",
-		userId: "580747f911fb4c046070956c",
-		userName: "prageeth",
+		userId: "580f2873551e64166ccf1065",
+		userName: "test",
         userImage: "testi_01.png",
         courseId: "58046638ad4aaa0020beadbb",
+        lecturerAccepted: "0",
+        memberCount: 1
 	});
 
 	courseModuleGroups.createNewcourseModuleGroups(NewcourseModuleGroups,function (err,data) {
@@ -177,6 +179,28 @@ app.post('/createNewcourseModuleGroups', function (req, res) {
     	if(err) throw err;
 	});
 });
+
+
+app.post('/createNewcourseGroupMembers', function (req, res) {
+
+//    console.log(req.body.gid);
+//    console.log(req.body.courseid);
+//    console.log(req.body.userid);
+    
+	var NewcourseModuleGroupMembers = courseGroupMembers({
+        groupId: req.body.gid,
+        courseId: req.body.courseid,
+		userId: req.body.userid
+	});
+
+	courseGroupMembers.createNewcourseGroupMembers(NewcourseModuleGroupMembers,function (err,data) {
+		
+    	if(err) throw err;
+	});
+    
+    
+});
+
 
 app.get('/getAllCourses', function (req, res) {
 	Course.getAllCourses(function(err,courses){
@@ -314,7 +338,7 @@ app.post('/registerUser', function (req, res) {
 });
 
 app.post('/acceptFriendRequest', function (req, res) {
-	console.log(req.body);
+//	console.log(req.body);
 
 	Request.acceptFriendRequest(req.body.id,function (err,user) {
 		if(err) throw err;
@@ -325,10 +349,10 @@ app.post('/acceptFriendRequest', function (req, res) {
 });
 
 app.post('/setRequestAcceptStatus', function (req, res) {
-	console.log(req.body);
+	//console.log(req.body);
 
 	Enroll.setRequestAcceptStatus(req.body.id,req.body.cid,function (err,user) {
-		console.log(user)
+		//console.log(user)
         if(err) throw err;
 	});
 //
@@ -338,7 +362,7 @@ app.post('/setRequestAcceptStatus', function (req, res) {
 
 
 app.post('/diclineFriendRequest', function (req, res) {
-	console.log(req.body);
+	//console.log(req.body);
 
 	Request.diclineFriendRequest(req.body.id,function (err,user) {
 		if(err) throw err;
@@ -360,6 +384,7 @@ app.post('/sendRequestToFriend', function (req, res) {
         acceptStatus: req.body.acceptStatus
 	});
 
+    
 	Request.createRequest(newRequest,function (err,request) {
 		if(err) throw err;
 	});
@@ -383,7 +408,7 @@ app.post('/getGroupCount', function (req, res) {
 		if(err) throw err
        // console.log(data);
         
-		res.send(data.toString())
+		res.send( data.toString())
 	})
 });
 
@@ -469,8 +494,36 @@ app.get('/getAllAssigenedLecturers', function (req,res) {
 });
 
 
+//Student Services
+
+app.post('/getGroupCountMembers', function (req, res) {
+    
+	courseGroupMembers.getGroupCount(req.body.gid, function(err,data){
+		if(err) throw err
+		res.send({count:data.toString(),gid:req.body.gid})
+	})
+});
+
+app.post('/updateMemberCount', function (req, res) {
+    //console.log(req.body.gid);
+    
+	courseModuleGroups.updateMemberCount(req.body.gid, function(err,data){
+		if(err) throw err
+		//res.send("updated");
+	})
+});
 
 
+app.post('/getmemberCount', function (req, res) {
+    //console.log(req.body.gid);
+    
+	courseModuleGroups.getmemberCount(req.body.gid, function(err,data){
+		if(err) throw err
+       // console.log(data);
+		res.send(data.toString());
+	})
+    
+});
 
 
 /*************************

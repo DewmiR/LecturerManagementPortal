@@ -93,11 +93,11 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
        
         
         
-          $http.post('/getUser').success(
+        $http.post('/getUser').success( //to get the current logged user
         function(data){
             
             
-        $http.post('/getGroupId', {
+        $http.post('/getGroupId', { //to get tht group id from the userid and courseid
         userId:data._id,
         courseId:$scope.studentId
         }).success(
@@ -106,7 +106,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
             
             //
             
-                $http.post('/getGroupCount',{
+                $http.post('/getGroupCount',{ //to get the no of groups formed
                  gid: data[0].gId
                 }).success(
                 function(data){
@@ -137,9 +137,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
       	}
     );
 //        
-//        
-      
-//        
+       
         
         
     };
