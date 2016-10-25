@@ -5,6 +5,7 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
     $scope.init = function () {
       console.log("ModuleGroupController started");
         $scope.courseId=$routeParams.id;
+        $scope.isTeamLeader=true;
         $scope.getCurrentUser();
         $scope.group=[];
         $scope.getAllGroups();
@@ -19,45 +20,53 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
             }).success(
                 function(data){
                     //console.log(data);
-                    Array.prototype.push.apply($scope.group, data);
-                   // groupID=data[x]._id;
-                    gArr=data;
-                    for(var x=0 ;x<data.length;x++){
+                    for(var x=0;x<data.length;x++){
                         
-                        groupID=data[x]._id;
-                        //console.log(data[x]._id);
-                           $http.post('/getGroupCountMembers',{
-                             gid:data[x]._id
-                            }).success(
-                            function(data){
-                                
-                               
-                                 //console.log(data);
-                                arr.push(data);
-                                //console.log(arr)
-//                                if(groupID==data.gid){
-//                                    console.log("dfd");
-//                                }
-                                
-                                for (var i=0;i<arr.length;i++){
-                                   // console.log(arr[i]);
-                                    if(arr[i].gid==groupID){
-                                        //console.log("found");
-                                        break;
-                                    }
-                                    
-                                }
-                                
-                   
-                            }
-                            ).error(
-                                function(error){
-                                    console.log(error)
-                                }
-                            );
-                        
-                        
+                        console.log($scope.currentUserId);
+                        if(data[x].userId==$scope.currentUserId){
+                            $scope.isTeamLeader=false;
+                        }
+                       
                     }
+                    Array.prototype.push.apply($scope.group, data);
+                   
+//                    gArr=data;
+//                    for(var x=0 ;x<data.length;x++){
+//                        
+//                        groupID=data[x]._id;
+//                        //console.log(data[x]._id);
+//                           $http.post('/getGroupCountMembers',{
+//                             gid:data[x]._id
+//                            }).success(
+//                            function(data){
+//                                
+//                               
+//                                 //console.log(data);
+//                                arr.push(data);
+//                                //console.log(arr)
+////                                if(groupID==data.gid){
+////                                    console.log("dfd");
+////                                }
+//                                
+//                                for (var i=0;i<arr.length;i++){
+//                                   // console.log(arr[i]);
+//                                    if(arr[i].gid==groupID){
+//                                        //console.log("found");
+//                                        break;
+//                                    }
+//                                    
+//                                }
+//                                
+//                   
+//                            }
+//                            ).error(
+//                                function(error){
+//                                    console.log(error)
+//                                }
+//                            );
+//                        
+//                        
+//                    }
                 }
             ).error(
                 function(error){
@@ -81,7 +90,9 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
                     to: id,
                     cid: $scope.courseId,
                     gid: gId,
-                    status: "0"
+                    status: "0",
+                    acceptStatus: "0",
+                    pending: "1"
                 }).success(
                     function(data){
                         if(data == "pass"){
@@ -110,7 +121,7 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
         $http.post('/getUser').success(
         function(data){
            $scope.currentUserId=data._id;
-            console.log($scope.currentUserId);
+           // console.log($scope.currentUserId);
         }
         ).error(
             function(error){

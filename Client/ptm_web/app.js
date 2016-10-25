@@ -381,7 +381,8 @@ app.post('/sendRequestToFriend', function (req, res) {
         gId: req.body.gid,
 		status : req.body.status,
 		requestFromName : req.body.fromName,
-        acceptStatus: req.body.acceptStatus
+        acceptStatus: req.body.acceptStatus,
+        pending: req.body.pending
 	});
 
     

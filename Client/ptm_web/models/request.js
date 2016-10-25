@@ -9,7 +9,8 @@ var RequestSchema = new mongoose.Schema({
     gId:String,
 	status: String,
 	requestFromName: String,
-    acceptStatus: String
+    acceptStatus: String,
+    pending: String
 });
 
 var Request = module.exports = mongoose.model('Request',RequestSchema);
