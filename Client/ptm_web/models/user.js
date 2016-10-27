@@ -53,7 +53,4 @@ module.exports.getAllLecturers = function(callback){
     User.find({ type:type },callback);
 };
 
-module.exports.getAllLecturers = function(callback){
-    User.find( { userType:"lecturer" },callback);
-};
 
