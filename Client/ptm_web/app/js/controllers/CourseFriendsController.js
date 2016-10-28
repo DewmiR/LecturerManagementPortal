@@ -12,13 +12,14 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
     }
 
     $scope.loadFriends = function () {
+        console.log($routeParams.id);
 
             $http.post('/getUsersEnrolledInCourse', {
                 cid: $routeParams.id 
             }).success(
                 function(data){
                     Array.prototype.push.apply($scope.friends, data);
-                    console.log($scope.friends)
+                    console.log(data)
                 }
             ).error(
                 function(error){
@@ -27,8 +28,6 @@ myApp.controller('CourseFriendsController', ['$scope','$http','$location', '$rou
             );
 
         }
-    
-   
     
     $scope.sendFriendRequest = function(userId) {
         console.log(userId);

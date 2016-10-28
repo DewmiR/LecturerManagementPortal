@@ -1,7 +1,7 @@
  <!-- ******************************************
     START SITE HERE
     ********************************************** -->
-
+<link rel="stylesheet" type="text/css" href="test.css">
     <div id="wrapper">
         <header class="header normal-header default-header" data-spy="affix" data-offset-top="197">
             <div class="container">
@@ -157,7 +157,7 @@
                                         <li class="cartmenu"><i class="fa fa-bell"></i> <sup>{{ myRequests }}</sup></li>
                                       </md-button>
                                       <md-menu-content width="4">
-                                        <md-menu-item ng-repeat="item in requestFromNameArr">
+                                        <md-menu-item ng-repeat="item in requestFromNameArr" ng-if="item.status==0">
                                           <md-button ng-click="ctrl.announceClick($index)">
                                               <div layout="row" flex="" ng-click="test(item.requestFrom);">
                                                 <p flex="9" style="color:black">{{item.requestFromName}}</p>
@@ -189,7 +189,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="btn btn-default"><a title="Join for free" href="member-register.html">Join us</a></li>
+                                
                             </ul>
                             <!-- end dropdown -->
                         </div>
@@ -306,16 +306,87 @@
                             </form>
                         </div><!-- end widget -->
                         
-                        <div class="widget clearfix">
+                        <div class="widget clearfix" ng-if="!groupFormedStatus">
                             <div class="widget-title">
                                 <h3>Friends Portal</h3>
                                 <hr>
                             </div><!-- end widget-title -->
                             <div class="tags clearfix">
                                 <a href="#/course_friends/{{ studentId }}">My Friends</a>
+                                <a href="" ng-click="showAdvanced($event)">Create Group</a>
+<!--                                <a href="#/all_module_groups">Create Group</a>-->
+                                <a href="#/all_module_groups/{{ studentId }}">MemberShipe</a>
                             </div><!-- end tags -->
                         </div><!-- end widget -->
+                        <!-- ---->
                         
+                         
+                        <!--<link rel="stylesheet" type="text/css" href="test.css">-->
+                        <div  class="md-padding dialogdemoBasicUsage" id="popupContainer" ng-cloak="">
+
+                        <script type="text/ng-template" id="dialog1.tmpl.html">
+                         <md-dialog aria-label="Mango (Fruit)">
+                          <form ng-submit="answer('A')">
+                            <md-toolbar>
+                              <div class="md-toolbar-tools">
+                                <h2 style="color:white">Create Group {{ leaderName }}</h2>
+                                <span flex></span>
+                                <md-button class="md-icon-button" ng-click="cancel()">
+                                  <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                                </md-button>
+                              </div>
+                            </md-toolbar>
+
+                            <md-dialog-content>
+                            <div class="md-dialog-content">
+
+
+                            <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding="">
+                            <div>
+                              <md-input-container>
+                                <label>Name</label>
+                                <input ng-model="leaderName">
+                              </md-input-container>
+
+                              <md-input-container>
+                                <label>Id Number</label>
+                                <input ng-model="n.IdNumber" type="email">
+                              </md-input-container>
+                            </div>
+                          </md-content>
+
+                          <md-content layout-padding="">
+                            <div>
+                                <div layout-gt-sm="row">
+                                  <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>Group Name</label>
+                                    <input ng-model="n.groupName">
+                                  </md-input-container>
+                                </div>
+                                <div layout-gt-sm="row">
+                                  <md-input-container class="md-block" flex-gt-sm="">
+                                    <label>CGPA</label>
+                                    <input ng-model="n.cgpa">
+                                  </md-input-container>
+                                </div>
+                            </div>
+                          </md-content>
+                        </div>
+                        </md-dialog-content>
+                            <md-dialog layout="row">
+                              <span flex></span>
+                              <md-button class="md-raised md-primary" >
+                               Cancel
+                              </md-button>
+                              <md-button   type="submit" class="md-raised md-primary">
+                                Create
+                              </md-button>
+                            </md-dialog>
+                          </form>
+                        </md-dialog>
+                        </script>
+                        </div>
+           
                         <div class="widget clearfix">
                             <div class="widget-title">
                                 <h3>Related Courses</h3>

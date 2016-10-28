@@ -4,7 +4,7 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
 
     $scope.init = function () {
       console.log("CourseReceivedRequestCintroller started");
-      console.log($routeParams.id);
+      console.log($routeParams.cid);
       $scope.loadRequest();
       $scope.myRequestsArr=[];
 
@@ -34,9 +34,9 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
     );
    }
    
-   $scope.acceptRequest = function(rid){
-       console.log("done");
-       
+   $scope.acceptRequest = function(rid,gID,cID,rFromID){
+       console.log(gID);
+
        
        $http.post('/acceptFriendRequest', {
                 status: "1",
@@ -45,6 +45,56 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
             }).success(
                 function(data){
                     console.log(data);
+                    
+                    $http.post('/setRequestAcceptStatus', {
+                    id: $routeParams.id,
+                    cid: $routeParams.cid
+                    }).success(
+                        function(status){
+                            console.log(status);
+                            // first happens
+                            $http.post('/createNewcourseGroupMembers', {
+                            gid: gID,
+                            courseid: cID,
+                            userid:rFromID
+                            }).success(
+                                function(data){
+                                    console.log(data);
+                                }
+                            ).error(
+                                function(error){
+                                  console.log(error)
+                                }
+                            );
+                               
+                            //second request
+                            
+
+                                                
+                                                
+                                                   $http.post('/updateMemberCount', {
+                                                        gid:gID
+                                                    }).success(
+                                                        function(data){
+                                                            console.log(data);
+
+
+
+                                                        }
+                                                    ).error(
+                                                        function(error){
+                                                          console.log(error)
+                                                        }
+                                                    );
+
+
+                            //
+                        }
+                    ).error(
+                        function(error){
+                          console.log(error)
+                        }
+                    );
                    
                 }
             ).error(
@@ -52,6 +102,8 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location
                   console.log(error)
                 }
             );
+       
+       
        
    }
    

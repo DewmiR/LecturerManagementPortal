@@ -54,8 +54,3 @@ module.exports.getAllLecturers = function(callback){
 };
 
 
-
-module.exports.getAllLecturers = function(callback){
-    User.find( { userType:"lecturer" },callback);
-};
-
