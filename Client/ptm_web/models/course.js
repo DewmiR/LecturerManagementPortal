@@ -65,3 +65,6 @@ module.exports.displayAllCourses = function(callback){
     Course.find({},callback);
 };
 
+module.exports.getCourseNameById = function(cid,callback) {
+    Course.find({ _id:cid }, callback);
+}

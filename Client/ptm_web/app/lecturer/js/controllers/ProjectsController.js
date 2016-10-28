@@ -27,7 +27,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 
-    
+
     $http({
         method: 'GET',
         url:'/projects/getAllProjects'
@@ -69,7 +69,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
                     '<md-dialog-content>' +
                       '<div class="md-dialog-content">' +
                         '<h4>Description</h4>' +
-                        '<p>'+desciption+'</p>' +                        
+                        '<p>'+desciption+'</p>' +
                       '</div>' +
                     '</md-dialog-content>' +
                     '<md-dialog-actions layout="row">' +
@@ -91,7 +91,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
     }
 
 
-    $scope.assignProjet = function(ev,name,pId) {
+    $scope.assignProjet = function(ev,name,pId,project) {
         var parentEl = angular.element(document.body);
         $mdDialog.show({
             parent: parentEl,
@@ -105,8 +105,8 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
                             '<h3>'+name+'</h3>' +
                             '<p>Please Select the Course</p>' +
                              '<md-select ng-model="ctrl">' +
-                                '<md-option ng-repeat="course in courses" ng-value="course.courseName">{{course.courseName}}</md-option>' +
-                            '</md-select>' +                      
+                                '<md-option ng-repeat="course in courses" ng-value="course">{{course.courseName}}</md-option>' +
+                            '</md-select>' +
                           '</div>' +
                         '</md-dialog-content>' +
                         '<md-dialog-actions layout="row">' +
@@ -117,27 +117,29 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
             locals: {
                 courses: $scope.courses,
                 projectId: pId,
-                projectName: name
+                projectName: name,
+                project: project
             },
             controller: AsignController
         });
-        function AsignController($scope, $mdDialog, courses, projectId, projectName) {
+
+        function AsignController($scope, $mdDialog, courses, projectId, projectName,project) {
+
             $scope.courses = courses;
-            $scope.projectId = projectId;
+            //$scope.project = project;
+
             $scope.answer = function(ctrl) {
                 $mdDialog.hide();
 
-
                 $http.post('/projects/createProjectOfCourse', {
-                    courseName: ctrl,
-                    projectName: projectName,
-                    projectId: projectId
+                    course: ctrl,
+                    project: project
                 }).success(
                     function(data){
                         if(data == "pass"){
-                            $mdToast.show($mdToast.simple().textContent(projectName+ " successfuly assigned to "+ctrl+" Module!").position('bottom right').hideDelay(5000));
+                            $mdToast.show($mdToast.simple().textContent(projectName+ " successfuly assigned to "+ctrl.courseName).position('bottom right').hideDelay(5000));
                         }else{
-                            $mdToast.show($mdToast.simple().textContent("Project assign Failed!").position('bottom right').hideDelay(5000)); 
+                            $mdToast.show($mdToast.simple().textContent("Project assign Failed!").position('bottom right').hideDelay(5000));
                         }
                     }
                 ).error(
@@ -145,24 +147,106 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
                         console.log(error);
                     }
                 );
-                
+
+
+
             }
         }
     }
 
 
 }]).controller('MyProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
-    
-    $http({
-        method: 'GET',
-        url:'/projects/getAllProjectOfCourse'
-    }).then(
+
+    var getAllProjects = function(){
+
+        $http({
+            method: 'GET',
+            url:'/projects/getAllProjectOfCourse'
+        }).then(
             function success(response) {
                 $scope.projects = response.data
             },
             function error(error) {
                 console.log('Failed to load courses');
             }
-    );
-    
+        );
+    }
+
+    getAllProjects()
+
+
+    $scope.approve = function(bid,poc){
+        $http.post('/projects/approveBit', {
+            bid: bid,
+            poc: poc
+        }).success(
+            function(data){
+               getAllProjects()
+               $mdToast.show($mdToast.simple().textContent("Bid Successfuly Approved!").position('bottom right').hideDelay(5000));
+            }
+        ).error(
+            function(error){
+                console.log("Failed to decline bit");
+            }
+        );
+    }
+
+
+    $scope.decline = function(bid,poc){
+ 
+        $http.post('/projects/declineBit', {
+            bid: bid,
+            poc: poc
+        }).success(
+            function(data){
+               getAllProjects()
+               $mdToast.show($mdToast.simple().textContent("Bid Successfuly Rejected!").position('bottom right').hideDelay(5000));
+            }
+        ).error(
+            function(error){
+                console.log("Failed to decline bit");
+            }
+        );
+    }
+
+
+    $scope.recover = function(bid,poc){
+ 
+        $http.post('/projects/recoverBit', {
+            bid: bid,
+            poc: poc
+        }).success(
+            function(data){
+               getAllProjects()
+               $mdToast.show($mdToast.simple().textContent("Bid Successfuly Recovered!").position('bottom right').hideDelay(5000));
+            }
+        ).error(
+            function(error){
+                console.log("Failed to decline bit");
+            }
+        );
+    }
+
+
+    $scope.delete = function(bid,poc){
+
+        $http.post('/projects/removeBit', {
+            bid: bid,
+            poc: poc
+        }).success(
+            function(data){
+               getAllProjects()
+               $mdToast.show($mdToast.simple().textContent("Bid Successfuly Deleted!").position('bottom right').hideDelay(5000));
+            }
+        ).error(
+            function(error){
+                console.log("Failed to decline bit");
+            }
+        );
+    }
+
+
+
+
+
 }]);
