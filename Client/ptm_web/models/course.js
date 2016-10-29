@@ -68,3 +68,11 @@ module.exports.displayAllCourses = function(callback){
 module.exports.getCourseNameById = function(cid,callback) {
     Course.find({ _id:cid }, callback);
 }
+module.exports.assignLecturerForModule = function(moduleName,lecName,callback){
+    Course.update({courseName:moduleName}, {$set: { lecInCharge: lecName }}, {upsert: true}, callback);
+}
+
+module.exports.changeEnrolmentKey = function(moduleName,newKey,callback){
+    Course.update({courseName:moduleName}, {$set: { enrollmentKey: newKey }}, {upsert: true}, callback);
+}
+

@@ -38,6 +38,14 @@ lectApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'views/myProjects.html',
       controller: 'MyProjectsController'
     }).
+    when('/myProjects', {
+        templateUrl: 'views/myProjects.html',
+        controller: 'MyProjectsController'
+    }).
+    when('/add_module', {
+        templateUrl: 'views/add_module.html',
+        controller: 'moduleController'
+    }).
     otherwise({
       redirectTo: '/lecturer'
     });

@@ -26,8 +26,6 @@ lectApp.controller('lecturerController', ['$scope','$http','$location', function
 
     };
 
-//
-    //
     $scope.displayLecturers = function () {
         $http({
             method: 'GET',
