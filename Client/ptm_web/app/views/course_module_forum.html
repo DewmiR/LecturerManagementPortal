@@ -1,7 +1,7 @@
  <!-- ******************************************
     START SITE HERE
     ********************************************** -->
-<link rel="stylesheet" type="text/css" href="test.css">
+
     <div id="wrapper">
         <header class="header normal-header default-header" data-spy="affix" data-offset-top="197">
             <div class="container">
@@ -326,13 +326,13 @@
 
                         <script type="text/ng-template" id="dialog1.tmpl.html">
                          <md-dialog aria-label="Mango (Fruit)">
-                          <form ng-submit="answer('A')">
+                          <form >
                             <md-toolbar>
                               <div class="md-toolbar-tools">
                                 <h2 style="color:white">Create Group {{ leaderName }}</h2>
                                 <span flex></span>
                                 <md-button class="md-icon-button" ng-click="cancel()">
-                                  <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+<!--                                  <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
                                 </md-button>
                               </div>
                             </md-toolbar>
@@ -345,12 +345,12 @@
                             <div>
                               <md-input-container>
                                 <label>Name</label>
-                                <input ng-model="leaderName">
+                                <input ng-model="createGroup.name">
                               </md-input-container>
 
                               <md-input-container>
                                 <label>Id Number</label>
-                                <input ng-model="n.IdNumber" type="email">
+                                <input ng-model="createGroup.IdNumber" >
                               </md-input-container>
                             </div>
                           </md-content>
@@ -360,28 +360,28 @@
                                 <div layout-gt-sm="row">
                                   <md-input-container class="md-block" flex-gt-sm="">
                                     <label>Group Name</label>
-                                    <input ng-model="n.groupName">
+                                    <input ng-model="createGroup.groupName">
                                   </md-input-container>
                                 </div>
                                 <div layout-gt-sm="row">
                                   <md-input-container class="md-block" flex-gt-sm="">
                                     <label>CGPA</label>
-                                    <input ng-model="n.cgpa">
+                                    <input ng-model="createGroup.cgpa">
                                   </md-input-container>
                                 </div>
                             </div>
                           </md-content>
                         </div>
                         </md-dialog-content>
-                            <md-dialog layout="row">
+                            <md-dialog-actions layout="row">
                               <span flex></span>
-                              <md-button class="md-raised md-primary" >
+                              <md-button ng-click="cancel()" class="md-raised md-primary" >
                                Cancel
                               </md-button>
-                              <md-button   type="submit" class="md-raised md-primary">
+                              <md-button   ng-click="answer()" class="md-raised md-primary">
                                 Create
                               </md-button>
-                            </md-dialog>
+                            </md-dialog-actions>
                           </form>
                         </md-dialog>
                         </script>

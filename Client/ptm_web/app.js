@@ -180,6 +180,30 @@ app.post('/createNewcourseModuleGroups', function (req, res) {
 	});
 });
 
+app.post('/createGroups', function (req, res) {
+
+
+    
+	var NewcourseModuleGroups = courseModuleGroups({
+		groupName: req.body.groupname,
+        leaderStudentId: req.body.idno,
+        cgpa: req.body.cgpa,
+		userId: req.body.userid,
+		userName: req.body.name,
+        userImage: "testi_01.png",
+        courseId: req.body.courseid,
+        lecturerAccepted: "0",
+        memberCount: 1
+	});
+
+	courseModuleGroups.createNewcourseModuleGroups(NewcourseModuleGroups,function (err,data) {
+		//console.log(data);
+    	if(err) throw err;
+        
+        res.send("created");
+	});
+});
+
 
 app.post('/createNewcourseGroupMembers', function (req, res) {
 
@@ -414,8 +438,16 @@ app.post('/getGroupCount', function (req, res) {
 });
 
 app.post('/getGroupId', function (req, res) {
-    
+
 	Request.getGroupId(req.body.userId, req.body.courseId, function(err,data){
+		if(err) throw err
+		res.send(data)
+	})
+});
+
+app.post('/getGroupIdFromGroup', function (req, res) {
+
+	courseModuleGroups.getGroupIdFromGroup(req.body.userid, req.body.courseid, function(err,data){
 		if(err) throw err
 		res.send(data)
 	})

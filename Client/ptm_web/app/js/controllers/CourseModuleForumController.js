@@ -4,8 +4,10 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
 
     $scope.init = function () {
         $scope.n={};
+        $scope.userIdForCreateGroup;
+        $scope.getGroupIdFromGroupId;
         $scope.groupFormedStatus=false;
-//      $scope.n.leaderName="dsds";
+      $scope.createGroup={};
       console.log("CourseModuleForumController started");
       //$scope.courseId=$routeParams.id;
       $scope.studentId=$routeParams.id;
@@ -21,7 +23,10 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
 //    $route.reload();*/
 //});
         
-        setInterval(function(){ $scope.requestFromNameArr=[];$scope.getReceivedRequests(); }, 1000000);
+        setInterval(function(){ $scope.requestFromNameArr=[];$scope.getReceivedRequests() }, 2000);
+        
+         setInterval(function(){ $scope.isGroupFormed(); }, 2000);
+      
     }
     
      $scope.getReceivedRequests = function () {
@@ -98,10 +103,12 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
             
             
         $http.post('/getGroupId', { //to get tht group id from the userid and courseid
+//        $http.post('/getGroupIdFromGroup', { //to get tht group id from the userid and courseid
         userId:data._id,
         courseId:$scope.studentId
         }).success(
         function(data){
+            if(data[0]){
            console.log(data[0].gId);
             
             //
@@ -111,7 +118,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
                 }).success(
                 function(data){
                    console.log(data);
-                    if(data=="1"){
+                    if(data=="2"){
                         console.log("Group Formed");
                         $scope.groupFormedStatus=true;
                     }
@@ -123,6 +130,9 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
                     }
                 );
             //
+            }else{
+                console.log("cant get gid");
+            }
         }
         ).error(
             function(error){
@@ -158,13 +168,9 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
     })
     .then(function(answer) {
 //      $scope.status = 'You said the information was "' + answer + '".';
-        if(answer=='A'){
-            console.log($scope.n);
-        }else{
-            console.log("cancelled");
-        }
+    
     }, function() {
-      $scope.status = 'You cancelled the dialog.';
+     
     });
   };
 
@@ -181,6 +187,103 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
     };
 
     $scope.answer = function(answer) {
+        
+        console.log($scope.createGroup.name);
+        console.log($scope.createGroup.IdNumber);
+        console.log($scope.createGroup.cgpa);
+        console.log($scope.createGroup.groupName);
+        
+        
+        
+        $http.post('/getUser').success(
+        function(data){
+            console.log(data);
+            $scope.userIdForCreateGroup=data._id;
+            $http.post('/createGroups',{
+            name:$scope.createGroup.name,
+            idno:$scope.createGroup.IdNumber,
+            cgpa:$scope.createGroup.cgpa,
+            groupname:$scope.createGroup.groupName,
+            userid:data._id,
+            courseid:$routeParams.id
+                
+            }).success(
+            function(data){
+                console.log(data);
+                
+                        
+                        $http.post('/getGroupIdFromGroup',{
+                            userid:$scope.userIdForCreateGroup,
+                            courseid:$routeParams.id
+                        }).success(
+                        function(data){
+                            
+                            console.log(data[0]._id);
+                            $scope.getGroupIdFromGroupId=data[0]._id;
+                           
+                           // console.log(data);
+                                    //to create the member
+                                     $http.post('/createNewcourseGroupMembers', {
+                                    gid: $scope.getGroupIdFromGroupId,
+                                    courseid: $routeParams.id,
+                                    userid: $scope.userIdForCreateGroup
+                                    }).success(
+                                        function(data){
+                                            console.log(data);
+                                        }
+                                    ).error(
+                                        function(error){
+                                          console.log(error)
+                                        }
+                                    );
+                            
+                            //when loading forum to show the group formed
+                                    $http.post('/sendRequestToFriend', {
+                                    from: $scope.userIdForCreateGroup,
+                                    fromName: "Leader",
+                                    to: "Leader",
+                                    cid: $routeParams.id,
+                                    gid: $scope.getGroupIdFromGroupId,
+                                    status: "0",
+                                    acceptStatus: "1",
+                                    pending: "0"
+                                }).success(
+                                    function(data){
+                                       
+                                    }
+                                ).error(
+                                    function(error){
+                                        console.log(error);
+                                    }
+                                );
+                            
+                
+                        }
+                        ).error(
+                            function(error){
+                                console.log(error)
+                            }
+                        );
+    
+            }
+            ).error(
+                function(error){
+                    console.log(error)
+                }
+            );
+            
+        }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+        
+
+        
+        
+        
+        
       $mdDialog.hide(answer);
     };
   }
