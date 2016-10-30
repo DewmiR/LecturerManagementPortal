@@ -47,6 +47,10 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/course-received-request.html',
       controller: 'CourseReceivedRequestCintroller'
     }).
+    when('/projects_list/:id?', {
+      templateUrl: 'views/projects_list.html',
+      controller: 'ProjectsController'
+    }).
     when('/all_module_groups/:id?', {
       templateUrl: 'views/all-module-groups.html',
       controller: 'ModuleGroupController'

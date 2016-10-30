@@ -476,7 +476,7 @@ app.post('/getMyFriendsRequests', function (req, res) {
 app.get('/getAllLecturers', function (req, res) {
 	User.getAllLecturers(function(err,lecturers){
 		if(err) throw err;
-		//console.log(lecturers);
+		console.log(lecturers);
 		res.send(lecturers);
 	});
 });
@@ -557,6 +557,24 @@ app.post('/getmemberCount', function (req, res) {
 	})
     
 });
+
+app.post('/assignLecturerForModule', function (req, res) {
+    
+    Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+		if(err) throw err;
+        res.send("pass");
+	});
+
+});
+app.post('/changeEnrolmentKey', function (req, res) {
+
+    Course.changeEnrolmentKey(req.body.moduleName,req.body.newKey,function (err) {
+        if(err) throw err;
+        res.send("pass");
+    });
+
+});
+
 
 
 /*************************

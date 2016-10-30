@@ -10,6 +10,7 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         $scope.moduleId = $routeParams.id;
         $scope.moduleDetails = [];
         $scope.lecturers = [];
+        $scope.curLecName;
         $scope.lecturersDiv=false;
         $scope.loadSingleModules();
         $scope.loadLecturers();
@@ -24,6 +25,7 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
             function(data){
                 console.log(data);
                 $scope.moduleDetails = data;
+                //$scope.currentModuleLecInCharge=data.lecInCharge;
             }
         ).error(
             function(error){
@@ -61,6 +63,53 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    $scope.lecName = function (name) {
+        $scope.curLecName = name;
+    }
+
+    $scope.assignLecturerForModule = function (moduleName, lecName) {
+
+        $http.post('/assignLecturerForModule', {
+            moduleName: moduleName,
+            lecName: lecName,
+            
+        }).success(
+            function(data){
+                if(data == "pass"){
+                    $scope.moduleDetails.lecInCharge = lecName;
+
+                }else{
+                    
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+    }
+
+    $scope.changeEnrolmentKey = function (moduleName,newKey) {
+        console.log(newKey);
+        $http.post('/changeEnrolmentKey', {
+            newKey: newKey,
+            moduleName: moduleName,
+        }).success(
+            function(data){
+                if(data == "pass"){
+                    $scope.moduleDetails.enrollmentKey = newKey;
+
+                }else{
+
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+    }
+    
     $scope.init();
 
 }]);
