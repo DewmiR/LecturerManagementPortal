@@ -34,3 +34,7 @@ module.exports.updateMemberCount = function(gid,callback){
 module.exports.getmemberCount = function(gid,callback){
     courseModuleGroups.count({ _id:gid },callback);
 }
+
+module.exports.getGroupIdFromGroup = function(userId,courseid,callback){
+	courseModuleGroups.find({ userId:userId , courseId:courseid },callback);
+}

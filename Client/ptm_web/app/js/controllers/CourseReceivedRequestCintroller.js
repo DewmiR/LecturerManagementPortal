@@ -1,4 +1,4 @@
-myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location', '$routeParams', function($scope,$http,$location,$routeParams) {
+myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','toastr','$location', '$routeParams', function($scope,$http,$location,toastr,$routeParams) {
 
   //  $scope.$parent.body_class = "leftmenu memberprofile";
 
