@@ -49,8 +49,8 @@ module.exports.createUser = function(newUser, callback){
 }
 
 module.exports.getAllLecturers = function(callback){
-    var type = 'Lecturer';
-    User.find({ type:type },callback);
+    var userType = 'lecturer';
+    User.find({userType:userType},callback);
 };
 
 

@@ -18,7 +18,7 @@ var assignedLecs = require("./models/assignedLecturer");
 var Project = require("./models/project");
 var courseModuleGroups = require("./models/courseModuleGroups");
 var courseGroupMembers = require("./models/courseGroupMembers");
-
+var Meeting =  require("./models/meeting");
 var projects = require('./routes/projects');
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
@@ -541,6 +541,17 @@ app.post('/changeEnrolmentKey', function (req, res) {
         res.send("pass");
     });
 
+});
+
+
+/*
+ * API end point to get all meetings
+ * */
+app.get('/getMeetings', function (req,res) {
+	Meeting.getAllMeetings(function (err,meetings) {
+		if(err) throw err;
+		res.send(meetings);
+	});
 });
 
 
