@@ -8,6 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var nodemailer = require('nodemailer');
 
 //models
 var User = require("./models/user");
@@ -47,6 +48,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+//var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+var transporter = nodemailer.createTransport();
 
 passport.use(new LocalStrategy(
   	function(username, password, done) {
@@ -580,10 +584,58 @@ app.post('/changeEnrolmentKey', function (req, res) {
  * API end point to get all meetings
  * */
 app.get('/getMeetings', function (req,res) {
+
+
+
 	Meeting.getAllMeetings(function (err,meetings) {
 		if(err) throw err;
 		res.send(meetings);
 	});
+});
+
+/*
+* Send meeting requests
+* */
+
+app.get('/sendMeetingReq', function (req,res) {
+
+	transporter.sendMail({
+		from: 'dewmirandika@gmail.com',
+		to: "DewmiR@99x.lk",
+		subject: 'Hello ✔',
+		text: 'Hello world 🐴'
+	});
+
+	/*var transporter = nodemailer.createTransport({
+		service: 'Gmail',
+		auth: {
+			user: 'comtale.noreply@gmail.com',
+			pass: 'comtale@123'
+		}
+	});*/
+
+
+	/*var mailOptions = {
+		from: '"DewmiR 👥" <dewmirandika@gmail.com>', // sender address
+		to: 'sanadrudevmini@yahoo.com', // list of receivers
+		subject: 'Hello ✔', // Subject line
+		text: 'Hello world 🐴', // plaintext body
+		html: '<b>Hello world 🐴</b>' // html body
+	};
+
+
+	// send mail with defined transport object
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			return console.log(error);
+		}
+		console.log('Message sent: ' + info.response);
+	});
+
+	Meeting.sendMeetingReq(function (err,meetings) {
+		if(err) throw err;
+		res.send(meetings);
+	});*/
 });
 
 

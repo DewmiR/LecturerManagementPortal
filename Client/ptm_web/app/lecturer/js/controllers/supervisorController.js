@@ -2,7 +2,9 @@
  * Created by DewmiR on 10/17/2016.
  */
 
+
 lectApp.controller('supervisorController', ['$scope','$http','$location', function($scope,$http,$location) {
+
 
     $scope.init = function () {
         $scope.meetings = [];
@@ -34,8 +36,22 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
 
     };
 
+    $scope.sendMeetingAppoinment = function () {
+            console.log("blah");
 
+        $http({
+            method: 'GET',
+            url:'/sendMeetingReq'
+        }).then(
+            function success(response) {
 
+            },
+            function error(error) {
+                // console.log('Failed to load Lecturers');
+            }
+        );
+
+    };
     $scope.init();
 
 }]);

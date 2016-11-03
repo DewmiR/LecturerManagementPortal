@@ -21,11 +21,12 @@ module.exports.getAllMeetings = function(callback){
     Meeting.find({from:"user"},callback);
 };
 
-/*
-module.exports.assignNewLecturer = function(newEnroll, callback){
-    newEnroll.save(callback);
+
+module.exports.sendMeetingReq = function( callback){
+
 };
 
+/*
 module.exports.getLecturersAssigned = function( callback){
     Asgnlec.find({},callback);
 };
