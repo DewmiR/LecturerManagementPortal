@@ -579,6 +579,15 @@ app.post('/changeEnrolmentKey', function (req, res) {
 
 });
 
+app.post('/addNewLecturer', function (req, res) {
+
+	User.addNewLecturer(function (err) {
+		if(err) throw err;
+		res.send("pass");
+	});
+
+});
+
 
 /*
  * API end point to get all meetings
