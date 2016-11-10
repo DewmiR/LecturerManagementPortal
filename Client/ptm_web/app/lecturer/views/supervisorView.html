@@ -1,11 +1,77 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>My Profile</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="">Home</a>
+            </li>
+            <li class="active">
+                <strong>User Profile</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="wrapper wrapper-content">
             <div class="row">
 
-                <div class="col-lg-8">
-                    <div class="wrapper wrapper-content animated fadeInUp">
+                <div class="col-lg-8 ">
+                    <div class="col-lg-11">
+                        <div class="ibox-content" style="font-size: larger">
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <dl class="dl-horizontal">
 
+                                        <dt>Modules in Charge:</dt>
+                                        <dd class="ng-binding"></dd>
+                                        <dt>Modules Lecturing:</dt>
+                                        <dd class="ng-binding"></dd>
+                                        <dt>Modules Supervised:</dt>
+                                    </dl>
+                                </div>
+
+                                <!-- change enrolment key model-->
+                                <div class="modal inmodal fade" id="changeEnrolmentKey" tabindex="-1" role="dialog"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span
+                                                        aria-hidden="true">�</span><span class="sr-only">Close</span>
+                                                </button>
+                                                <h4 class="modal-title ng-binding"></h4>
+                                                <p class="font-bold" style="font-size: large">Enrolment Key</p>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group"><label></label> <input type="enrolmentKey"
+                                                                                               placeholder="Enter New Enrolment Key"
+                                                                                               class="form-control ng-pristine ng-untouched ng-valid"
+                                                                                               ng-model="newKey"
+                                                                                               aria-invalid="false">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end-->
+
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-6" id="cluster_info">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-11">
+                        <br>
+                    </div>
+
+                    <div class="col-lg-11 pre-scrollable ">
                         <div class="ibox">
                             <div class="ibox-title">
                                 <h5>All project teams assigned</h5>
@@ -13,11 +79,14 @@
                             <div class="ibox-content">
                                 <div class="row m-b-sm m-t-sm">
                                     <div class="col-md-1">
-                                        <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</button>
+                                        <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i
+                                                class="fa fa-refresh"></i> Refresh
+                                        </button>
                                     </div>
                                     <div class="col-md-11">
-                                        <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                                        <div class="input-group"><input type="text" placeholder="Search"
+                                                                        class="input-sm form-control"> <span
+                                                class="input-group-btn"></span></div>
                                     </div>
                                 </div>
 
@@ -48,8 +117,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a5.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -73,8 +144,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -82,7 +155,8 @@
                                                 <span class="label label-default">Unactive</span>
                                             </td>
                                             <td class="project-title">
-                                                <a href="project_detail.html">Many desktop publishing packages and web</a>
+                                                <a href="project_detail.html">Many desktop publishing packages and
+                                                    web</a>
                                                 <br>
                                                 <small>Created 10.08.2014</small>
                                             </td>
@@ -97,8 +171,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -123,8 +199,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a7.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -146,8 +224,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a4.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -172,8 +252,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a5.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -197,8 +279,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -206,7 +290,8 @@
                                                 <span class="label label-default">Unactive</span>
                                             </td>
                                             <td class="project-title">
-                                                <a href="project_detail.html">Many desktop publishing packages and web</a>
+                                                <a href="project_detail.html">Many desktop publishing packages and
+                                                    web</a>
                                                 <br>
                                                 <small>Created 10.08.2014</small>
                                             </td>
@@ -221,8 +306,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -246,8 +333,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a1.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -269,8 +358,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a4.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -294,8 +385,10 @@
                                                 <a href="#"><img alt="image" class="img-circle" src="img/a3.jpg"></a>
                                             </td>
                                             <td class="project-actions">
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>
+                                                    View </a>
+                                                <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i>
+                                                    Edit </a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -304,45 +397,61 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
 
                 <div class="col-lg-4 ">
                     <div class="ibox-content profile-content">
-                        <h4><strong>Schedule Meeting</strong></h4>
+                        <h4><strong>All Events</strong></h4>
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" ng-click="sendMeetingAppoinment()" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Add Appointment</button>
+                                    <button type="button" ng-click="sendMeetingAppoinment()"
+                                            class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>Add
+                                        Appointment
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="infont col-md-3 col-sm-4"><a href="#/supervisor_calendar"><i
+                                            class="fa fa-2x fa-calendar"></i>Calander</a></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="ibox float-e-margins">
 
-                        <div class="ibox-content ibox-heading" >
-                            <h3>Calender</h3>
+                        <div class="ibox-content ibox-heading">
+                            <h3>Monthly Schedule</h3>
                             <!--      <small><i class="fa fa-map-marker"></i> Meeting is on 6:00am. Check your schedule to see detail.</small>-->
                         </div>
-                        <div class="ibox-content inspinia-timeline">
+                        <div class="ibox-content inspinia-timeline pre-scrollable">
 
                             <div class="timeline-item">
                                 <div class="row">
                                     <div ng-repeat="meeting in meetings">
-                                    <div class="col-xs-3 date">
-                                        <i class="fa fa-briefcase"></i>
-                                        {{meeting.date}}
-                                        <br>
-                                        <small class="text-navy">{{meeting.time}}</small>
-                                    </div>
-                                    <div class="col-xs-7 content no-top-border">
-                                        <p class="m-b-xs"><strong>{{meeting.header}}</strong></p>
+                                        <div class="col-xs-3 date">
+                                            <i class="fa fa-briefcase"></i>
+                                            {{meeting.date}}
+                                            <br>
+                                            <small class="text-navy">{{meeting.time}}</small>
+                                        </div>
+                                        <div class="col-xs-7 content no-top-border">
+                                            <p class="m-b-xs"><strong>{{meeting.header}}</strong></p>
 
-                                        <p>{{meeting.body}}</p>
+                                            <p>{{meeting.body}}</p>
 
-                                        <p><span data-diameter="40" class="updating-chart" style="display: none;">4,1,9,3,8,7,1,8,3,6,10,9,4,3,3,10,6,0,6,5,6,3,4,1,6,10,3,1,7,5,9,1,2,9,3,5,1</span><svg class="peity" height="16" width="64"><polygon fill="#1ab394" points="0 15 0 9.5 1.7777777777777777 14 3.5555555555555554 2 5.333333333333333 11 7.111111111111111 3.5 8.88888888888889 5 10.666666666666666 14 12.444444444444443 3.5 14.222222222222221 11 16 6.5 17.77777777777778 0.5 19.555555555555554 2 21.333333333333332 9.5 23.11111111111111 11 24.888888888888886 11 26.666666666666664 0.5 28.444444444444443 6.5 30.22222222222222 15.5 32 6.5 33.77777777777778 8 35.55555555555556 6.5 37.33333333333333 11 39.11111111111111 9.5 40.888888888888886 14 42.666666666666664 6.5 44.44444444444444 0.5 46.22222222222222 11 48 14 49.77777777777777 5 51.55555555555555 8 53.33333333333333 2 55.11111111111111 14 56.888888888888886 12.5 58.666666666666664 2 60.44444444444444 11 62.22222222222222 8 64 14 64 15"></polygon><polyline fill="transparent" points="0 9.5 1.7777777777777777 14 3.5555555555555554 2 5.333333333333333 11 7.111111111111111 3.5 8.88888888888889 5 10.666666666666666 14 12.444444444444443 3.5 14.222222222222221 11 16 6.5 17.77777777777778 0.5 19.555555555555554 2 21.333333333333332 9.5 23.11111111111111 11 24.888888888888886 11 26.666666666666664 0.5 28.444444444444443 6.5 30.22222222222222 15.5 32 6.5 33.77777777777778 8 35.55555555555556 6.5 37.33333333333333 11 39.11111111111111 9.5 40.888888888888886 14 42.666666666666664 6.5 44.44444444444444 0.5 46.22222222222222 11 48 14 49.77777777777777 5 51.55555555555555 8 53.33333333333333 2 55.11111111111111 14 56.888888888888886 12.5 58.666666666666664 2 60.44444444444444 11 62.22222222222222 8 64 14" stroke="#169c81" stroke-width="1" stroke-linecap="square"></polyline></svg></p>
+                                            <p><span data-diameter="40" class="updating-chart" style="display: none;">4,1,9,3,8,7,1,8,3,6,10,9,4,3,3,10,6,0,6,5,6,3,4,1,6,10,3,1,7,5,9,1,2,9,3,5,1</span>
+                                                <svg class="peity" height="16" width="64">
+                                                    <polygon fill="#1ab394"
+                                                             points="0 15 0 9.5 1.7777777777777777 14 3.5555555555555554 2 5.333333333333333 11 7.111111111111111 3.5 8.88888888888889 5 10.666666666666666 14 12.444444444444443 3.5 14.222222222222221 11 16 6.5 17.77777777777778 0.5 19.555555555555554 2 21.333333333333332 9.5 23.11111111111111 11 24.888888888888886 11 26.666666666666664 0.5 28.444444444444443 6.5 30.22222222222222 15.5 32 6.5 33.77777777777778 8 35.55555555555556 6.5 37.33333333333333 11 39.11111111111111 9.5 40.888888888888886 14 42.666666666666664 6.5 44.44444444444444 0.5 46.22222222222222 11 48 14 49.77777777777777 5 51.55555555555555 8 53.33333333333333 2 55.11111111111111 14 56.888888888888886 12.5 58.666666666666664 2 60.44444444444444 11 62.22222222222222 8 64 14 64 15"></polygon>
+                                                    <polyline fill="transparent"
+                                                              points="0 9.5 1.7777777777777777 14 3.5555555555555554 2 5.333333333333333 11 7.111111111111111 3.5 8.88888888888889 5 10.666666666666666 14 12.444444444444443 3.5 14.222222222222221 11 16 6.5 17.77777777777778 0.5 19.555555555555554 2 21.333333333333332 9.5 23.11111111111111 11 24.888888888888886 11 26.666666666666664 0.5 28.444444444444443 6.5 30.22222222222222 15.5 32 6.5 33.77777777777778 8 35.55555555555556 6.5 37.33333333333333 11 39.11111111111111 9.5 40.888888888888886 14 42.666666666666664 6.5 44.44444444444444 0.5 46.22222222222222 11 48 14 49.77777777777777 5 51.55555555555555 8 53.33333333333333 2 55.11111111111111 14 56.888888888888886 12.5 58.666666666666664 2 60.44444444444444 11 62.22222222222222 8 64 14"
+                                                              stroke="#169c81" stroke-width="1"
+                                                              stroke-linecap="square"></polyline>
+                                                </svg>
+                                            </p>
+                                        </div>
                                     </div>
-                                   </div>
                                 </div>
                             </div>
 
@@ -354,4 +463,3 @@
         </div>
     </div>
 </div>
-

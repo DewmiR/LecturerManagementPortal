@@ -10,7 +10,6 @@ var UserSchema = new mongoose.Schema({
     itnum : String,
     userType : String,
     post : String,
-    profilePicture : String,
     type: String,
     phone:String,
     email: String,

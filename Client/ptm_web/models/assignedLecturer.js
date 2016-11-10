@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 var asgnlecSchema = new mongoose.Schema({
     courseName: String,
     userName: String,
-    post: String
+    post: String,
+    image : String
 });
 
 var Asgnlec = module.exports = mongoose.model('Asgnlec',asgnlecSchema);
@@ -21,6 +22,11 @@ module.exports.assignNewLecturer = function(newEnroll, callback){
     newEnroll.save(callback);
 };
 
-module.exports.getLecturersAssigned = function( callback){
+module.exports.getallLecturersAssigned = function( callback){
     Asgnlec.find({},callback);
+};
+
+
+module.exports.getLecturersAssigned = function(courseName,callback){
+    Asgnlec.find({courseName:courseName},callback);
 };

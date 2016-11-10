@@ -76,3 +76,4 @@ module.exports.changeEnrolmentKey = function(moduleName,newKey,callback){
     Course.update({courseName:moduleName}, {$set: { enrollmentKey: newKey }}, {upsert: true}, callback);
 }
 
+

@@ -111,8 +111,6 @@ app.get('/', function (req, res) {
 });
 
 app.post("/getUser",function(req,res){
-   // console.log(req.body);
-   // console.log(res);
     res.send(req.user);
 });
 
@@ -279,7 +277,7 @@ app.get('/getAllCoursesFourthYear', function (req, res) {
 });
 
 app.post('/getModulesSingle', function (req, res) {
-
+	console.log(req.body.id);
     Course.getModulesSingle(req.body.id,function (err,courseDetails) {
         if(err) throw err;
         res.send(courseDetails);
@@ -524,10 +522,17 @@ app.post('/assignLecturer', function (req,res) {
 
 
 app.get('/getAllAssigenedLecturers', function (req,res) {
-	assignedLecs.getLecturersAssigned(function (err,lecturers) {
+	assignedLecs.getallLecturersAssigned(function (err,lecturers) {
 		if(err) throw err;
 		res.send(lecturers);
 	});
+});
+
+app.post('/getAssignedLecturers', function (req, res) {
+	assignedLecs.getLecturersAssigned(req.body.courseName,function(err,lecturers){
+		if(err) throw err;
+		res.send(lecturers);
+	})
 });
 
 
