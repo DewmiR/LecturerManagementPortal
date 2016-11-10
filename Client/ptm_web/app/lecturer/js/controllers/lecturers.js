@@ -8,7 +8,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     $scope.init = function () {
         $scope.moduleId = $routeParams.id;
         $scope.moduleDetails = [];
-        $scope.moduleLecturers=[];
+      //  $scope.moduleLecturers=[];
         $scope.loadSingleModules();
 
         $scope.lec = "Lecturers";
@@ -20,12 +20,16 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
         $scope.displayAllModules();
 
 
-        $scope.posts = [ {post: 'lecturer'}, {post: 'Supervisor'}];
-        $scope.slectedCourse="";
+        $scope.posts = [ {post: 'Lecturer'}, {post: 'Supervisor'}];
+        $scope.moduleName="";
         $scope.selectedPost="";
         $scope.lname="";
         $scope.details=[];
         $scope.displayAsgnDetails();
+        $scope.image="";
+
+        $scope.error="false";
+        $scope.errorMsg = "";
 
     };
 
@@ -51,6 +55,10 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     $scope.getLecturersForModule = function () {
 
         angular.forEach($scope.moduleDetails, function(value) {
+
+            $scope.moduleName= value.courseName;
+
+            $scope.moduleLecturers=[];
 
             $http.post('/getAssignedLecturers', {
                 courseName: value.courseName
@@ -106,58 +114,61 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
     };
 
-
-    $scope.update = function() {
-        slectedCourse=$scope.item.courseName;
-       // console.log($scope.item.courseName);
-       // console.log(slectedCourse);
-
-
-    };
-
     $scope.updateLec = function() {
-        selectedPost=$scope.lPost.post;
-      //  console.log($scope.lPost.post);
-       // console.log(selectedPost);
-
 
     };
-
-
-   /* $scope.getName = function () {
-            lname=$scope.lec.name;
-            console.log(lname)
-
-    };*/
-
 
     $scope.assignLecs = function() {
 
         //get all selected lecturers
         $scope.getSelectedLecturer = function(){
             $scope.nameArr = [];
-            angular.forEach($scope.lecturers, function(lecturer){
-                if (lecturer.selected)
-                    $scope.nameArr.push(lecturer.name);
-                //console.log( $scope.nameArr);
+            angular.forEach($scope.lecturers, function(lecturer) {
+                if (lecturer.selected) {
+
+                $scope.nameArr.push(lecturer.name);
+                $scope.image = lecturer.image;
+                console.log($scope.image);
+                  }
             });
         };
 
 
         $scope.getSelectedLecturer();
 
+          if($scope.nameArr.length == 0){
+              $scope.error="true";
+              $scope.errorMsg="* Please select one or more Lecturers";
+
+          }else if(angular.isUndefined($scope.lPost)){
+
+              $scope.error="";
+              $scope.errorMsg="";
+
+              $scope.error="true";
+              $scope.errorMsg="* Please select a post";
+
+         }else{
+
+             $scope.error="";
+             $scope.errorMsg="";
+
+        //get selected post
+        $scope.selectedPost=$scope.lPost.post;
+
        //for each selected lecturer , add a new record to db
         angular.forEach($scope.nameArr, function(value) {
-          //  console.log(value);
 
         $http.post('/assignLecturer', {
-            courseName: slectedCourse,
+            courseName: $scope.moduleName,
             userName : value,
-            post : selectedPost
+            post : $scope.selectedPost,
+            image: $scope.image
 
         }).success(
             function(data){
-               $scope.displayAsgnDetails();
+               //$scope.getLecturersForModule();
+                $scope.moduleLecturers.push(data);
                console.log(data);
             }
         ).error(
@@ -168,6 +179,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
        });
 
+         }
     };
 
     $scope.displayAllModules = function () {
@@ -205,27 +217,6 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
         );
 
     };
-
-    $scope.addNewLecturer = function () {
-        console.log();
-        $http.post('/addNewLecturer', {
-
-        }).success(
-            function(data){
-                if(data == "pass"){
-
-
-                }else{
-
-                }
-            }
-        ).error(
-            function(error){
-                console.log(error);
-            }
-        );
-    }
-
 
     $scope.init();
 

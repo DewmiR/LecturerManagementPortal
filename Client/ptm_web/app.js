@@ -510,7 +510,8 @@ app.post('/assignLecturer', function (req,res) {
 	var newAsgnlec = new assignedLecs({
 		courseName : req.body.courseName,
 		userName : req.body.userName,
-		post : req.body.post
+		post : req.body.post,
+		image : req.body.image
 	});
 
 	assignedLecs.assignNewLecturer(newAsgnlec,function (err,lecturers) {
