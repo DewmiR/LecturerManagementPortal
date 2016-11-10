@@ -206,7 +206,25 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
     };
 
+    $scope.addNewLecturer = function () {
+        console.log();
+        $http.post('/addNewLecturer', {
 
+        }).success(
+            function(data){
+                if(data == "pass"){
+
+
+                }else{
+
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+    }
 
 
     $scope.init();

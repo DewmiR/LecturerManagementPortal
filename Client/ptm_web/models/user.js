@@ -52,4 +52,9 @@ module.exports.getAllLecturers = function(callback){
     User.find({userType:userType},callback);
 };
 
+module.exports.addNewLecturer = function(callback){
+
+    
+};
+
 
