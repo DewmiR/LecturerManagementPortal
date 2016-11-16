@@ -7,51 +7,193 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
 
 
     $scope.init = function () {
+
+        $scope.date = new Date();
+        $scope.time = new Date();
+        $scope.dateTime = new Date();
+        $scope.minDate = moment().subtract(1, 'month');
+        $scope.maxDate = moment().add(1, 'month');
+
+
+        $scope.modInChg=false;
+        $scope.getCurrentUser();
+        $scope.name="";
+        $scope.lecInchg=[];
+        $scope.modInChgName=[];
+
+        $scope.alllecModules=[];
+        $scope.alllecModulesDetails=[];
+        $scope.supModDetails=[];
+        $scope.allSupervisorModules=[];
+        $scope.lec=false;
+        $scope.mod=false;
+
         $scope.meetings = [];
         $scope.getMeetingAppoinments();
+
+        $scope.to="";
     };
 
+
+
+    /*
+    * Get Current User
+    * */
+    $scope.getCurrentUser=function () {
+
+        $http.post('/getUser').success(
+            function(data){
+                $scope.name=data.name;
+                $scope.getModulesInCharge();
+                $scope.getLecturingModulesAssigned();
+                $scope.getSupModulesAssigned();
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+
+    };
+
+
+    /*
+     * Get Modules in charge
+     * */
+    $scope.getModulesInCharge=function () {
+        $http.post('/getModulesInCharge',{
+            lecName : $scope.name
+        }).success(
+            function(data){
+                if(data==""){
+                    $scope.modInChg="true";
+                }else{
+                    Array.prototype.push.apply($scope.lecInchg, data);
+                    angular.forEach($scope.lecInchg, function(value){
+                        $scope.modInChgName.push(value.courseName);
+
+                     });
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+    /*
+    * Get all lecturing modules assigned
+    * */
+    $scope.getLecturingModulesAssigned=function () {
+        $http.post('/getModulesAssignedForLecturer',{
+            lecName : $scope.name
+        }).success(
+            function(data){
+                if(data==""){
+                    $scope.lec="true";
+                }else{
+                    Array.prototype.push.apply($scope.alllecModulesDetails, data);
+                    angular.forEach($scope.alllecModulesDetails, function(value){
+                        $scope.alllecModules.push(value.courseName);
+
+                    });
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+    /*
+     * Get all Supervisor modules assigned
+     * */
+    $scope.getSupModulesAssigned=function () {
+        $http.post('/getModulesAssignedForSupervisor',{
+            lecName : $scope.name
+        }).success(
+            function(data){
+                if(data==""){
+                    $scope.mod="true";
+                }else{
+                    Array.prototype.push.apply($scope.supModDetails, data);
+                    angular.forEach($scope.supModDetails, function(value){
+                        $scope.allSupervisorModules.push(value.courseName);
+
+                    });
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+
+    /*
+    * Get monthly meeting schedule
+    * */
     $scope.getMeetingAppoinments = function () {
         $http({
             method: 'GET',
             url:'/getMeetings'
         }).then(
             function success(response) {
-                //console.log(response.data);
                 Array.prototype.push.apply($scope.meetings, response.data);
-                //console.log($scope.meetings);
-
-              /*  var today = new Date();
-                var dd = today.getDate();
-                var timeInMss = Date.now()
-
-                console.log(today);*/
-
-
             },
             function error(error) {
-                // console.log('Failed to load Lecturers');
+                console.log('Failed to load Lecturers');
             }
         );
 
     };
 
-    $scope.sendMeetingAppoinment = function () {
-            console.log("blah");
 
-        $http({
-            method: 'GET',
-            url:'/sendMeetingReq'
-        }).then(
-            function success(response) {
+    /*
+    * Send meeting request
+    * */
+    $scope.sendMeetingRequest = function () {
 
-            },
-            function error(error) {
-                // console.log('Failed to load Lecturers');
+
+        $http.post('/getUser').success(
+            function(data){
+                $scope.name=data.name;
+            }
+        ).error(
+            function(error){
+                console.log(error)
             }
         );
-
     };
+
+
+    $scope.getMeetingDetails=function () {
+
+        $http.post('/sendMeetingReq',{
+
+        }).success(
+            function(data){
+                $scope.name=data.name;
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+    };
+
     $scope.init();
 
 }]);

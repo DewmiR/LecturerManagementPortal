@@ -568,14 +568,42 @@ app.post('/getmemberCount', function (req, res) {
     
 });
 
-app.post('/assignLecturerForModule', function (req, res) {
+app.post('/getModulesInCharge', function (req, res) {
     
-    Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+    Course.getModulesInCharge(req.body.lecName,function (err,data) {
 		if(err) throw err;
-        res.send("pass");
+        res.send(data);
 	});
 
 });
+
+app.post('/getModulesAssignedForLecturer', function (req, res) {
+
+	assignedLecs.getModulesAssignedForLecturer(req.body.lecName,function (err,data) {
+		if(err) throw err;
+		res.send(data);
+	});
+
+});
+
+app.post('/getModulesAssignedForSupervisor', function (req, res) {
+
+	assignedLecs.getModulesAssignedForSupervisor(req.body.lecName,function (err,data) {
+		if(err) throw err;
+		res.send(data);
+	});
+
+});
+
+app.post('/assignLecturerForModule', function (req, res) {
+
+	Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+		if(err) throw err;
+		res.send("pass");
+	});
+
+});
+
 app.post('/changeEnrolmentKey', function (req, res) {
 
     Course.changeEnrolmentKey(req.body.moduleName,req.body.newKey,function (err) {
@@ -600,8 +628,6 @@ app.post('/addNewLecturer', function (req, res) {
  * */
 app.get('/getMeetings', function (req,res) {
 
-
-
 	Meeting.getAllMeetings(function (err,meetings) {
 		if(err) throw err;
 		res.send(meetings);
@@ -621,36 +647,6 @@ app.get('/sendMeetingReq', function (req,res) {
 		text: 'Hello world 🐴'
 	});
 
-	/*var transporter = nodemailer.createTransport({
-		service: 'Gmail',
-		auth: {
-			user: 'comtale.noreply@gmail.com',
-			pass: 'comtale@123'
-		}
-	});*/
-
-
-	/*var mailOptions = {
-		from: '"DewmiR 👥" <dewmirandika@gmail.com>', // sender address
-		to: 'sanadrudevmini@yahoo.com', // list of receivers
-		subject: 'Hello ✔', // Subject line
-		text: 'Hello world 🐴', // plaintext body
-		html: '<b>Hello world 🐴</b>' // html body
-	};
-
-
-	// send mail with defined transport object
-	transporter.sendMail(mailOptions, function(error, info){
-		if(error){
-			return console.log(error);
-		}
-		console.log('Message sent: ' + info.response);
-	});
-
-	Meeting.sendMeetingReq(function (err,meetings) {
-		if(err) throw err;
-		res.send(meetings);
-	});*/
 });
 
 

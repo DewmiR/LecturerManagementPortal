@@ -12,7 +12,10 @@ var MeetingSchema = new mongoose.Schema({
     date: String,
     time : String,
     from : String,
-    to : String
+    to : String,
+    year :String,
+    month:String,
+    status:String
 });
 
 var Meeting = module.exports = mongoose.model('Meeting',MeetingSchema);

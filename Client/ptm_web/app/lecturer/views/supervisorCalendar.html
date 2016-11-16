@@ -1,17 +1,13 @@
-<script>
-    $(document).ready(function(){
-        $('#calendar').fullCalendar({
-        })
-    });
-</script>
+    <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" href="/Client/ptm_web/app/lecturer/css/jquery-ui.css">
+  <!--  <link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
 
-<p>This is a paragraph.</p>
-
-<button>Toggle between slide up and slide down for a p element</button>
-
-<div class="row">
-    <div class="col-lg-12">
-        <div id='calendar'></div>
-    </div>
-</div>
+<p>Date: <input type="text" id="datepicker"></p>
 

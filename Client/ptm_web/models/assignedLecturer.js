@@ -30,3 +30,11 @@ module.exports.getallLecturersAssigned = function( callback){
 module.exports.getLecturersAssigned = function(courseName,callback){
     Asgnlec.find({courseName:courseName},callback);
 };
+
+module.exports.getModulesAssignedForLecturer = function(userName,callback){
+    Asgnlec.find({userName:userName,post:"Lecturer"},callback);
+};
+
+module.exports.getModulesAssignedForSupervisor = function(userName,callback){
+    Asgnlec.find({userName:userName,post:"Supervisor"},callback);
+};
