@@ -38,3 +38,7 @@ module.exports.getmemberCount = function(gid,callback){
 module.exports.getGroupIdFromGroup = function(userId,courseid,callback){
 	courseModuleGroups.find({ userId:userId , courseId:courseid },callback);
 }
+
+module.exports.getLecturerAcceptStaus = function(gid,callback){
+    courseModuleGroups.findById(gid,callback);
+}
