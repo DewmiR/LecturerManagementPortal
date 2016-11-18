@@ -8,6 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var nodemailer = require('nodemailer');
 
 //models
 var User = require("./models/user");
@@ -18,7 +19,7 @@ var assignedLecs = require("./models/assignedLecturer");
 var Project = require("./models/project");
 var courseModuleGroups = require("./models/courseModuleGroups");
 var courseGroupMembers = require("./models/courseGroupMembers");
-
+var Meeting =  require("./models/meeting");
 var projects = require('./routes/projects');
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
@@ -47,6 +48,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+//var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+var transporter = nodemailer.createTransport();
 
 passport.use(new LocalStrategy(
   	function(username, password, done) {
@@ -107,8 +111,6 @@ app.get('/', function (req, res) {
 });
 
 app.post("/getUser",function(req,res){
-   // console.log(req.body);
-   // console.log(res);
     res.send(req.user);
 });
 
@@ -275,7 +277,7 @@ app.get('/getAllCoursesFourthYear', function (req, res) {
 });
 
 app.post('/getModulesSingle', function (req, res) {
-
+	console.log(req.body.id);
     Course.getModulesSingle(req.body.id,function (err,courseDetails) {
         if(err) throw err;
         res.send(courseDetails);
@@ -517,7 +519,8 @@ app.post('/assignLecturer', function (req,res) {
 	var newAsgnlec = new assignedLecs({
 		courseName : req.body.courseName,
 		userName : req.body.userName,
-		post : req.body.post
+		post : req.body.post,
+		image : req.body.image
 	});
 
 	assignedLecs.assignNewLecturer(newAsgnlec,function (err,lecturers) {
@@ -529,10 +532,17 @@ app.post('/assignLecturer', function (req,res) {
 
 
 app.get('/getAllAssigenedLecturers', function (req,res) {
-	assignedLecs.getLecturersAssigned(function (err,lecturers) {
+	assignedLecs.getallLecturersAssigned(function (err,lecturers) {
 		if(err) throw err;
 		res.send(lecturers);
 	});
+});
+
+app.post('/getAssignedLecturers', function (req, res) {
+	assignedLecs.getLecturersAssigned(req.body.courseName,function(err,lecturers){
+		if(err) throw err;
+		res.send(lecturers);
+	})
 });
 
 
@@ -567,20 +577,84 @@ app.post('/getmemberCount', function (req, res) {
     
 });
 
-app.post('/assignLecturerForModule', function (req, res) {
+app.post('/getModulesInCharge', function (req, res) {
     
-    Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+    Course.getModulesInCharge(req.body.lecName,function (err,data) {
 		if(err) throw err;
-        res.send("pass");
+        res.send(data);
 	});
 
 });
+
+app.post('/getModulesAssignedForLecturer', function (req, res) {
+
+	assignedLecs.getModulesAssignedForLecturer(req.body.lecName,function (err,data) {
+		if(err) throw err;
+		res.send(data);
+	});
+
+});
+
+app.post('/getModulesAssignedForSupervisor', function (req, res) {
+
+	assignedLecs.getModulesAssignedForSupervisor(req.body.lecName,function (err,data) {
+		if(err) throw err;
+		res.send(data);
+	});
+
+});
+
+app.post('/assignLecturerForModule', function (req, res) {
+
+	Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+		if(err) throw err;
+		res.send("pass");
+	});
+
+});
+
 app.post('/changeEnrolmentKey', function (req, res) {
 
     Course.changeEnrolmentKey(req.body.moduleName,req.body.newKey,function (err) {
         if(err) throw err;
         res.send("pass");
     });
+
+});
+
+app.post('/addNewLecturer', function (req, res) {
+
+	User.addNewLecturer(function (err) {
+		if(err) throw err;
+		res.send("pass");
+	});
+
+});
+
+
+/*
+ * API end point to get all meetings
+ * */
+app.get('/getMeetings', function (req,res) {
+
+	Meeting.getAllMeetings(function (err,meetings) {
+		if(err) throw err;
+		res.send(meetings);
+	});
+});
+
+/*
+* Send meeting requests
+* */
+
+app.get('/sendMeetingReq', function (req,res) {
+
+	transporter.sendMail({
+		from: 'dewmirandika@gmail.com',
+		to: "DewmiR@99x.lk",
+		subject: 'Hello ✔',
+		text: 'Hello world 🐴'
+	});
 
 });
 

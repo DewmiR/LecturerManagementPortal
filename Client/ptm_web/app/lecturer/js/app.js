@@ -22,7 +22,7 @@ lectApp.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/supervisorView.html',
     controller: 'supervisorController'
   }).
-    when('/assignLecturer', {
+    when('/assignLecturer/:id?', {
       templateUrl: 'views/assignLecturer.html',
       controller: 'lecturerController'
     }).
@@ -43,8 +43,12 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         controller: 'MyProjectsController'
     }).
     when('/add_module', {
-        templateUrl: 'views/add_module.html',
+        templateUrl: 'views/add_lecturer.html',
         controller: 'moduleController'
+    }).
+    when('/supervisor_calendar', {
+        templateUrl: 'views/supervisorCalendar.html',
+        controller: 'supervisorController'
     }).
     otherwise({
       redirectTo: '/lecturer'
