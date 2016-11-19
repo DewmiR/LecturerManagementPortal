@@ -49,42 +49,56 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
-var transporter = nodemailer.createTransport();
+//var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
+
+/*
+var transporter = nodemailer.createTransport('direct',{
+	debug: true,
+});
+*/
+
+var transporter = nodemailer.createTransport({
+	service: 'Gmail',
+	auth: {
+		user: 'dewDevops@gmail.com',
+		pass: 'intel@123'
+	}
+});
+
 
 passport.use(new LocalStrategy(
-  	function(username, password, done) {
+	function(username, password, done) {
 
 
-     	User.getUserByUsername(username, function(err, user){
+		User.getUserByUsername(username, function(err, user){
 
-	        if(err) throw err;
+			if(err) throw err;
 
-	        if(!user){
-	        	console.log("User not found...");
-	          	return done(null, false, {message: 'Unknown User'});
-	        }else{
+			if(!user){
+				console.log("User not found...");
+				return done(null, false, {message: 'Unknown User'});
+			}else{
 
 
-	            console.log("User found by username...");
-	            return done(null, user);
-	        }
+				console.log("User found by username...");
+				return done(null, user);
+			}
 
-	        // User.comparePassword(password, user.password, function(err, isMatch){
+			// User.comparePassword(password, user.password, function(err, isMatch){
 
-	        //     if(err) throw err;
+			//     if(err) throw err;
 
-	        //     if(isMatch){
-	        //         console.log("User found with username & password.");
-	        //         return done(null, user);
-	        //     } else {
-	        //         console.log("User found with username, But password is wrong.");
-	        //         return done(null, false, {message: 'Invalid password'});
-	        //     }
+			//     if(isMatch){
+			//         console.log("User found with username & password.");
+			//         return done(null, user);
+			//     } else {
+			//         console.log("User found with username, But password is wrong.");
+			//         return done(null, false, {message: 'Invalid password'});
+			//     }
 
-	        // });
-     	});
-  	}
+			// });
+		});
+	}
 ));
 
 passport.serializeUser(function(user, done) {
@@ -624,30 +638,67 @@ app.post('/addNewLecturer', function (req, res) {
 
 
 /*
+ * Send meeting requests
+ * */
+app.post('/sendMeetingReq', function (req,res) {
+    console.log(req.body.body);
+
+	var newMeeting = new Meeting({
+		header: req.body.subject,
+		body: req.body.body,
+		date: req.body.date,
+		time : req.body.time,
+		from : req.body.from,
+		to : req.body.to,
+		venue:req.body.venue,
+		year :req.body.year,
+		month:req.body.month,
+		status:"Pending"
+	});
+
+	Meeting.createMeeting(newMeeting,function (err,data) {
+		console.log(data);
+		if(err) throw err;
+	});
+
+	/*var mailOptions = {
+		from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
+		to: req.body.to, // list of receivers
+		subject: req.body.subject, // Subject line
+		text: req.body.body, // plaintext body
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			return console.log(error);
+		}
+		console.log('Message sent: ' + info.response);
+	});*/
+
+});
+
+
+/*
  * API end point to get all meetings
  * */
-app.get('/getMeetings', function (req,res) {
-
-	Meeting.getAllMeetings(function (err,meetings) {
+app.post('/getMeetings', function (req,res) {
+	console.log(req.body.user);
+	Meeting.getAllMeetings(req.body.user,req.body.year	,function (err,meetings) {
 		if(err) throw err;
 		res.send(meetings);
 	});
 });
 
-/*
-* Send meeting requests
-* */
-
-app.get('/sendMeetingReq', function (req,res) {
-
-	transporter.sendMail({
-		from: 'dewmirandika@gmail.com',
-		to: "DewmiR@99x.lk",
-		subject: 'Hello ✔',
-		text: 'Hello world 🐴'
+app.post('/getMeetingsForMonth', function (req,res) {
+	
+	Meeting.getMeetingsForMonth(req.body.user,req.body.year	,req.body.month,function (err,meetings) {
+		if(err) throw err;
+		res.send(meetings);
 	});
-
 });
+
+
+
 
 
 
