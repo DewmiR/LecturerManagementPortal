@@ -497,6 +497,15 @@ app.get('/getAllLecturers', function (req, res) {
 	});
 });
 
+app.post('/getLecturerAcceptStaus', function (req, res) {
+    //console.log(req.body.gid);
+	courseModuleGroups.getLecturerAcceptStaus(req.body.gid,function(err,lecturers){
+		if(err) throw err;
+        console.log(lecturers);
+		res.send(lecturers);
+	});
+});
+
 
 app.get('/displayAllModules', function (req,res) {
    Course.displayAllCourses(function (err,courses) {

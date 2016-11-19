@@ -4,8 +4,10 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
 
     $scope.init = function () {
         $scope.n={};
+        $scope.groupIdForLec;
         $scope.userIdForCreateGroup;
         $scope.getGroupIdFromGroupId;
+        $scope.lecturerAcceptStatus=false;
         $scope.groupFormedStatus=false;
       $scope.createGroup={};
       console.log("CourseModuleForumController started");
@@ -110,7 +112,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
         function(data){
             if(data[0]){
            console.log(data[0].gId);
-            
+            $scope.groupIdForLec=data[0].gId;
             //
             
                 $http.post('/getGroupCount',{ //to get the no of groups formed
@@ -121,6 +123,23 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
                     if(data=="2"){
                         console.log("Group Formed");
                         $scope.groupFormedStatus=true;
+                        console.log($scope.groupIdForLec);
+                        
+                                $http.post('/getLecturerAcceptStaus',{
+                                    gid: $scope.groupIdForLec
+                                }).success(
+                                function(data){
+                                console.log(data);
+                                    if(data.lecturerAccepted=="0"){
+                                        console.log("done");
+                                        $scope.lecturerAcceptStatus=true;
+                                    }
+                                }
+                                ).error(
+                                    function(error){
+                                        console.log(error)
+                                    }
+                                );
                     }
                     
                 }
