@@ -37,10 +37,12 @@ module.exports.sendMeetingReq = function( callback){
 
 };
 
-/*
-module.exports.getLecturersAssigned = function( callback){
-    Asgnlec.find({},callback);
+module.exports.findMeetingByID = function(id,callback){
+    Meeting.findById(id,callback);
 };
-*/
+
+module.exports.updateAppointment = function(_id,header,body,date,time,venue,callback){
+    Meeting.update({ _id:_id},{ $set:{ header:header,body:body,date:date,time:time,venue:venue,status:"updated" }},callback);
+};
 
 

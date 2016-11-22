@@ -708,7 +708,22 @@ app.post('/getMeetingsForMonth', function (req,res) {
 
 
 
+app.post('/findMeetingById', function (req,res) {
 
+	Meeting.findMeetingByID(req.body.id,function (err,meeting) {
+		if(err) throw err;
+		res.send(meeting);
+	});
+});
+
+
+app.post('/updateMeetingAppointment', function (req, res) {
+	//console.log(req.body);
+
+	Meeting.updateAppointment(req.body._id,req.body.header,req.body.body,req.body.date,req.body.time,req.body.venue,function (err,meeting) {
+		if(err) throw err;
+	});
+});
 
 
 /*************************

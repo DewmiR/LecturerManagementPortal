@@ -46,6 +46,16 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
 
         $scope.allMeetings=[];
         $scope.getAllMeetings();
+
+        $scope.appoinment=[];
+
+        $scope.appTo="";
+        $scope.appDate="";
+        $scope.appTime="";
+        $scope.appVenue="";
+        $scope.appHeader="";
+        $scope.appBody="";
+
     };
 
 
@@ -328,6 +338,58 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
 
     };
 
+    
+    $scope.getAppDeatils=function (id) {
+        console.log(id);
+        $http.post('/findMeetingById',{
+            id : id
+        }).success(
+            function(data){
+                $scope.appoinment=data;
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+    $scope.updateAppoinment=function (id) {
+      /*  console.log(id);
+       console.log($scope.appoinment.header);
+            console.log($scope.appoinment.body);
+            console.log($scope.appoinment.date);
+            console.log($scope.appoinment.time);
+            console.log($scope.appoinment.venue);
+*/
+
+         $http.post('/updateMeetingAppointment',{
+             _id : id,
+             header:$scope.appoinment.header,
+             body:$scope.appoinment.body,
+             date:$scope.appoinment.date,
+             time : $scope.appoinment.time,
+             venue:$scope.appoinment.venue
+
+
+         }).success(
+             function(data){
+                 console.log(data);
+             }
+         ).error(
+             function(error){
+                 console.log(error)
+             }
+
+         );
+
+
+
+    };
+    
 
     $scope.init();
 
