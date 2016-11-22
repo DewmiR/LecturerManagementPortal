@@ -46,7 +46,7 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/add_lecturer.html',
         controller: 'moduleController'
     }).
-    when('/supervisor_calendar', {
+    when('/supervisorCal', {
         templateUrl: 'views/supervisorCalendar.html',
         controller: 'supervisorController'
     }).

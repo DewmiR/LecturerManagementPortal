@@ -20,8 +20,16 @@ var MeetingSchema = new mongoose.Schema({
 
 var Meeting = module.exports = mongoose.model('Meeting',MeetingSchema);
 
-module.exports.getAllMeetings = function(callback){
-    Meeting.find({from:"user"},callback);
+module.exports.createMeeting = function(meeting, callback){
+    meeting.save(callback);
+};
+
+module.exports.getAllMeetings = function(from,year,callback){
+    Meeting.find({from:from,year:year},callback);
+};
+
+module.exports.getMeetingsForMonth = function(user,year,month,callback){
+    Meeting.find({from:user,year:year,month:month},callback);
 };
 
 

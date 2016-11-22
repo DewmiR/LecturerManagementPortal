@@ -29,9 +29,23 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
         $scope.mod=false;
 
         $scope.meetings = [];
-        $scope.getMeetingAppoinments();
+        $scope.meetingsForMonth = [];
+        $scope.getAllMeetingsForMonths();
 
+        $scope.from="";
         $scope.to="";
+        $scope.date="";
+        $scope.time="";
+        $scope.venue="";
+        $scope.subject="";
+        $scope.body="";
+        var d = new Date();
+        $scope.month = d.getMonth()+1;
+        $scope.year = d.getFullYear();
+        $scope.status="Pending";
+
+        $scope.allMeetings=[];
+        $scope.getAllMeetings();
     };
 
 
@@ -54,7 +68,7 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
             }
         );
 
-    };
+};
 
 
     /*
@@ -164,28 +178,65 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
     /*
     * Send meeting request
     * */
-    $scope.sendMeetingRequest = function () {
+   /* $scope.sendMeetingRequest = function () {
 
-
-        $http.post('/getUser').success(
+        /!*$http.post('/getUser').success(
             function(data){
-                $scope.name=data.name;
+                $scope.from=data.email;
+                console.log($scope.from);
+
+                $scope.getMeetingDetails();
             }
         ).error(
             function(error){
                 console.log(error)
             }
-        );
+        );*!/
+           console.log("called");
+
+        $http({
+                  method: 'post',
+                  url:'/sendMeetingReq'
+             }).then(
+                    function success(response) {
+                         console.log(response);
+                     },
+                       function error(error) {
+                                console.log(error);
+                             }
+                );
     };
+*/
+    $scope.sendMeetingRequest=function () {
 
+        $scope.to=$scope.mailto;
+        $scope.date=$scope.maildate;
+        $scope.time=$scope.mailtime;
+        $scope.venue=$scope.mailvenue;
+        $scope.subject=$scope.mailsubject;
+        $scope.body=$scope.mailbody;
 
-    $scope.getMeetingDetails=function () {
+        console.log($scope.maildate);
+        console.log($scope.mailtime);
 
         $http.post('/sendMeetingReq',{
+            
+           from:$scope.from,
+           to:$scope.to,
+           date:$scope.date,
+           time:$scope.time,
+           venue:$scope.venue,
+           subject:$scope.subject,
+           body:$scope.body,
+           month:$scope.month,
+           year:$scope.year,
+           status:$scope.status 
+
 
         }).success(
             function(data){
-                $scope.name=data.name;
+               // $scope.name=data.name;
+                console.log(data);
             }
         ).error(
             function(error){
@@ -194,6 +245,91 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
         );
     };
 
+
+
+    /*
+     * Get Current User
+     * */
+     $scope.getAllMeetings=function () {
+
+         $http.post('/getUser').success(
+             function(data){
+                 $scope.name=data.name;
+                 console.log($scope.name);
+
+                 $http.post('/getMeetings',{
+                     user : $scope.name,
+                     year :$scope.year
+                 }).success(
+                     function(data){
+                         Array.prototype.push.apply($scope.allMeetings, data);
+                         console.log($scope.allMeetings);
+                         /*angular.forEach($scope.allMeetings, function(value){
+                          $scope.allSupervisorModules.push(value.courseName);
+
+                          });*/
+
+                     }
+                 ).error(
+                     function(error){
+                         console.log(error)
+                     }
+
+                 );
+
+
+             }
+         ).error(
+             function(error){
+                 console.log(error)
+             }
+         );
+
+     };
+
+
+    $scope.getAllMeetingsForMonths=function () {
+        $http.post('/getUser').success(
+            function(data){
+                $scope.name=data.name;
+                console.log($scope.year);
+                console.log($scope.name);
+                console.log($scope.month);
+
+                $http.post('/getMeetingsForMonth',{
+                    user : $scope.name,
+                    year :$scope.year,
+                    month:$scope.month
+                }).success(
+                    function(data){
+                        Array.prototype.push.apply($scope.meetings, data);
+                        console.log($scope.meetings);
+                        angular.forEach($scope.meetings, function(value){
+                         $scope.meetingsForMonth.push(value.courseName);
+                            console.log($scope.meetingsForMonth);
+
+                         });
+
+                    }
+                ).error(
+                    function(error){
+                        console.log(error)
+                    }
+
+                );
+
+
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+
+    };
+
+
     $scope.init();
+
 
 }]);

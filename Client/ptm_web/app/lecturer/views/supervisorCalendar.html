@@ -1,13 +1,36 @@
-    <title>jQuery UI Datepicker - Default functionality</title>
-    <link rel="stylesheet" href="/Client/ptm_web/app/lecturer/css/jquery-ui.css">
-  <!--  <link rel="stylesheet" href="/resources/demos/style.css">-->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
-    </script>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>All Events</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index-2.html">All Events</a>
+            </li>
+            <li>
+                App Views
+            </li>
+            <li class="active">
+                <strong>All Events</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 
-<p>Date: <input type="text" id="datepicker"></p>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <ul class="notes">
+                <li ng-repeat="allMeetings in allMeetings">
+                    <div>
+                        <small>{{allMeetings.time}} {{allMeetings.date}}</small>
+                        <h4>{{allMeetings.header}}</h4>
+                        <p>{{allMeetings.body}}</p>
+                        <h5><B>Date : {{allMeetings.date}}</B></h5>
+                        <h5><B>Date : {{allMeetings.time}}</B></h5>
+                        <a href="#"><i class="fa fa-trash-o "></i></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
