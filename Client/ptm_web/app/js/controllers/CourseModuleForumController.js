@@ -7,6 +7,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
         $scope.groupIdForLec;
         $scope.userIdForCreateGroup;
         $scope.getGroupIdFromGroupId;
+        $scope.groupForumStatus=false;
         $scope.lecturerAcceptStatus=false;
         $scope.groupFormedStatus=false;
       $scope.createGroup={};
@@ -120,7 +121,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
                 }).success(
                 function(data){
                    console.log(data);
-                    if(data=="2"){
+                    if(data=="2" || data > 2){
                         console.log("Group Formed");
                         $scope.groupFormedStatus=true;
                         console.log($scope.groupIdForLec);
@@ -132,6 +133,8 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
                                 console.log(data);
                                     if(data.lecturerAccepted=="0"){
                                         console.log("done");
+                                        $scope.groupForumStatus=true;
+                                    }else {
                                         $scope.lecturerAcceptStatus=true;
                                     }
                                 }

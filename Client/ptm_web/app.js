@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var nodemailer = require('nodemailer');
+//var nodemailer = require('nodemailer');
 
 //models
 var User = require("./models/user");
@@ -48,6 +48,10 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+//var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+//var transporter = nodemailer.createTransport();
 
 //var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
 
