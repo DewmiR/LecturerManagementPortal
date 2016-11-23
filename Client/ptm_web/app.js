@@ -61,13 +61,13 @@ var transporter = nodemailer.createTransport('direct',{
 });
 */
 
-var transporter = nodemailer.createTransport({
-	service: 'Gmail',
-	auth: {
-		user: 'dewDevops@gmail.com',
-		pass: 'intel@123'
-	}
-});
+// var transporter = nodemailer.createTransport({
+// 	service: 'Gmail',
+// 	auth: {
+// 		user: 'dewDevops@gmail.com',
+// 		pass: 'intel@123'
+// 	}
+// });
 
 
 passport.use(new LocalStrategy(
