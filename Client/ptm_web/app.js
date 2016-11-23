@@ -731,6 +731,16 @@ app.post('/updateMeetingAppointment', function (req, res) {
 });
 
 
+app.post('/deleteMeeting', function (req,res) {
+
+	console.log(req.body._id);
+	Meeting.DeleteAppointment(req.body._id,function (err,meeting) {
+		if(err) throw err;
+		res.send(meeting);
+	});
+});
+
+
 /*************************
         Server
 *************************/

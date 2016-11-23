@@ -3,7 +3,7 @@
  */
 
 
-lectApp.controller('supervisorController', ['$scope','$http','$location', function($scope,$http,$location) {
+lectApp.controller('supervisorController', ['$scope','$http','$location','sweet', function($scope,$http,$location, sweet) {
 
 
     $scope.init = function () {
@@ -282,13 +282,12 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
                      year :$scope.year
                  }).success(
                      function(data){
+                         $scope.allMeetings=[];
                          Array.prototype.push.apply($scope.allMeetings, data);
                          console.log($scope.allMeetings);
                          /*angular.forEach($scope.allMeetings, function(value){
                           $scope.allSupervisorModules.push(value.courseName);
-
                           });*/
-
                      }
                  ).error(
                      function(error){
@@ -430,6 +429,7 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
          }).success(
              function(data){
                  console.log(data);
+                 $scope.getAllMeetings();
              }
          ).error(
              function(error){
@@ -442,8 +442,48 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
           $('#myModal5').modal('hide')
 
     }
-    
+
 };
+
+
+    $scope.confirmCancel = function(id) {
+
+
+        console.log(id);
+
+        sweet.show({
+            title: 'Confirm',
+            text: 'Cancel Appointment?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, cancel Appointment!',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                console.log(id);
+                $http.post('/deleteMeeting',{
+                    _id : id
+                }).success(
+                    function(data){
+                        console.log(data);
+                        $scope.getAllMeetings();
+                    }
+                ).error(
+                    function(error){
+                        console.log(error)
+                    }
+
+                );
+
+                sweet.show('Deleted!', 'The appointment has been cancelled.', 'success');
+            } else {
+                sweet.show('Cancelled', ' ', 'error');
+            }
+        });
+    };
+
     $scope.init();
 
 

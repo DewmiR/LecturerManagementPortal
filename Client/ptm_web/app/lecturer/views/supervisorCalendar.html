@@ -27,7 +27,8 @@
                         <h5><B>Date : {{allMeetings.date}}</B></h5>
                         <h5><B>Date : {{allMeetings.time}}</B></h5>
                         <button type="button" ng-click="getAppDeatils(allMeetings._id)"  data-toggle="modal" data-target="#myModal5"><B><small>Edit</small></B></button>
-                        <a href="#"><i class="fa fa-trash-o "></i></a>
+                        <!--<a data-toggle="modal" data-target="#myModal6"><i class="fa fa-trash-o "></i></a>-->
+                        <a ng-click="confirmCancel(allMeetings._id)"><i class="fa fa-trash-o "></i></a>
                     </div>
                 </li>
             </ul>
@@ -80,7 +81,7 @@
                         <div class="form-group"><label class="col-lg-2 control-label">Subject</label>
                             <div class="col-lg-10"><input type="text"class="form-control" ng-model="appoinment.header" >
                             </div>
-                            <div class="error_msgs col-md-12" ng-show="errorSub" style="color:red;font-size: small;margin-left: 95px">{{errorMsgSub}}</div>
+                            <div class="error_msgs col-md-12" ng-show="errorSub" style="color:red;font-size: small;margin-left: 30px">{{errorMsgSub}}</div>
                         </div>
 
                             <div class="form-group">
@@ -105,8 +106,29 @@
 </div>
 
 
+<!--Delete Appointment Dialog Pop up-->
+<!--<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="border-color: seagreen">
+                    <h5>Cancel Appointment</h5>
+                </div>
+                <div class="ibox-content">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
 <script>
     $( function() {
         $( "#datepicker" ).datepicker();
     } );
 </script>
+
+
+
+
