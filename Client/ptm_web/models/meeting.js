@@ -13,6 +13,7 @@ var MeetingSchema = new mongoose.Schema({
     time : String,
     from : String,
     to : String,
+    venue : String,
     year :String,
     month:String,
     status:String

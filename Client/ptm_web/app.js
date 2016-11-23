@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-//var nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
 
 //models
 var User = require("./models/user");
@@ -722,10 +722,11 @@ app.post('/findMeetingById', function (req,res) {
 
 
 app.post('/updateMeetingAppointment', function (req, res) {
-	//console.log(req.body);
+	console.log(req.body.venue);
 
 	Meeting.updateAppointment(req.body._id,req.body.header,req.body.body,req.body.date,req.body.time,req.body.venue,function (err,meeting) {
 		if(err) throw err;
+		res.send(meeting);
 	});
 });
 

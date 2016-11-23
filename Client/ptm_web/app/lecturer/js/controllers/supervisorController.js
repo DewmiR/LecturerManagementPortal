@@ -56,6 +56,16 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
         $scope.appHeader="";
         $scope.appBody="";
 
+        $scope.errorMsg="";
+        $scope.error="false";
+        $scope.errorTime="false";
+        $scope.errorMsgTime="";
+        $scope.errorVenue="false";
+        $scope.errorMsgVenue="";
+        $scope.errorSub="false";
+        $scope.errorMsgSub="";
+        $scope.errorBody="false";
+        $scope.errorMsgBody="";
     };
 
 
@@ -356,15 +366,57 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
 
     };
 
-
     $scope.updateAppoinment=function (id) {
-      /*  console.log(id);
-       console.log($scope.appoinment.header);
-            console.log($scope.appoinment.body);
-            console.log($scope.appoinment.date);
-            console.log($scope.appoinment.time);
-            console.log($scope.appoinment.venue);
-*/
+    //Validation
+
+       if($scope.appoinment.date.length==0 || $scope.appoinment.time.length ==0 || $scope.appoinment.venue.length ==0 ||$scope.appoinment.header.length ==0 || $scope.appoinment.body.length ==0) {
+
+     if($scope.appoinment.date.length == 0){
+         $scope.error="true";
+         $scope.errorMsg="* Invalid date";
+     }else{
+         $scope.error="false";
+         $scope.errorMsg="";
+     }
+      if($scope.appoinment.time.length == 0){
+         $scope.errorTime="true";
+         $scope.errorMsgTime="* Invalid Time";
+     }else{
+          $scope.errorTime="false";
+          $scope.errorMsgTime="";
+      }
+      if($scope.appoinment.venue.length == 0){
+          $scope.errorVenue="true";
+          $scope.errorMsgVenue= "*Invalid venue";
+     }else{
+          $scope.errorVenue="false";
+          $scope.errorMsgVenue="";
+         }
+     if($scope.appoinment.header.length == 0){
+          console.log($scope.appoinment.header.length);
+          $scope.errorSub="true";
+          $scope.errorMsgSub="*Message without subject";
+    }else{
+          $scope.errorSub="false";
+         $scope.errorMsgSub="";
+         }
+    if($scope.appoinment.body.length == 0){
+         console.log($scope.appoinment.body.length);
+          $scope.errorBody="true";
+          $scope.errorMsgBody="*Message without body";
+    }else{
+          $scope.errorBody="false";
+           $scope.errorMsgBody="";
+           }
+       }
+     else {
+
+         $scope.error="false";
+         $scope.errorMsg="";
+         $scope.errorTime="false";
+         $scope.errorMsgTime="";
+         $scope.errorVenue="false";
+         $scope.errorMsgVenue="";
 
          $http.post('/updateMeetingAppointment',{
              _id : id,
@@ -385,12 +437,13 @@ lectApp.controller('supervisorController', ['$scope','$http','$location', functi
              }
 
          );
+            $scope.error="false";
+            $scope.errorMsg="";
+          $('#myModal5').modal('hide')
 
-
-
-    };
+    }
     
-
+};
     $scope.init();
 
 
