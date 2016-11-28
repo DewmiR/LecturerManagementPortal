@@ -22,8 +22,54 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
                 console.log(error);
             }
         );
-
 	}
+
+
+    $http({
+        method: 'GET',
+        url:'/projects/getAllProjects'
+    }).then(
+            function success(response) {
+                console.log(response)
+                $scope.projects = response.data
+                $scope.selectedOption = $scope.projects[0];
+            },
+            function error(error) {
+                console.log('Failed to load courses');
+            }
+    );
+
+    $scope.postNoticeFormSubmit = function() {
+
+        console.log($scope.selectedOption)
+        
+        $http.post('/getUser').success(
+            function(user){
+
+                $http.post('/projects/postNoticeForProject', {
+                    user: user,
+                    project: $scope.selectedOption,
+                    title: $scope.formData.notice_title,
+                    description: $scope.formData.notice_desc
+                }).success(
+                    function(data){
+                       console.log(data)
+                    }
+                ).error(
+                    function(error){
+
+                    }
+                );
+
+            }
+        ).error(
+          function(error){
+            console.log(error)
+          }
+        );
+    }
+
+
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 
