@@ -1,4 +1,4 @@
-var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial']);
+var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial','hSweetAlert']);
 
 lectApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.

@@ -77,62 +77,7 @@ $scope.getCurrentUser = function (){
     
 };
 
-$scope.showEnrollmentKeyPrompt = function(ev,cid) {
-    
-    var studentID=$scope.currentUser;
-    var courseID=cid;
 
-    var confirm = $mdDialog.prompt()
-      .title()
-      .textContent()
-      .placeholder('Enrollment Key')
-      .ariaLabel('Enrollment Key')
-//      .initialValue('Buddy')
-      .targetEvent(ev)
-      .ok('Ok')
-      .cancel('Cancel\'');
-    $mdDialog.show(confirm).then(function(result) {
-     // console.log(studentID);
-        console.log(courseID);
-        
-        $http.post('/getEnrollmentkeyByCourseId', {
-        cid: courseID
-        }).success(
-            function(data){
-                console.log(data[0].enrollmentKey);
-                if(data[0].enrollmentKey==result){
-                    console.log("Matched");
-                    
-                       $http.post('/addNewEnrollment', {
-                        course_id: courseID,
-                        student_id: studentID
-                    }).success(
-                        function(data){
-                           console.log(data);
-                           $location.url('/single_course/'+courseID); 
-                        }
-                    ).error(
-                        function(error){
-                            console.log(error);
-                        }
-                    );
-                     
-                }
-            
-            }
-        ).error(
-            function(error){
-              console.log(error)
-            }
-        );
-            
-        
-     }, function() {
-        console.log("Don't");
-    });   
-   
-  };
-    
 $scope.checkIsEnrolled = function(userId){
 $scope.enrolledCourses={};
     $http.post('/isEnrolled', {
