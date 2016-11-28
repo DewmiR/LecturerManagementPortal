@@ -40,5 +40,5 @@ module.exports.isEnrolled = function(userId, callback){
 
 module.exports.setRequestAcceptStatus = function(id,cid,callback){
 	Enroll.update({ userId:id,courseId:cid },{ $set:{ requestAcceptStatus:"1" }},callback);
-}
+};
 

@@ -3,55 +3,488 @@
  */
 
 
-lectApp.controller('supervisorController', ['$scope','$http','$location', function($scope,$http,$location) {
+lectApp.controller('supervisorController', ['$scope','$http','$location','sweet', function($scope,$http,$location, sweet) {
 
 
     $scope.init = function () {
+
+        $scope.date = new Date();
+        $scope.time = new Date();
+        $scope.dateTime = new Date();
+        $scope.minDate = moment().subtract(1, 'month');
+        $scope.maxDate = moment().add(1, 'month');
+
+
+        $scope.modInChg=false;
+        $scope.getCurrentUser();
+        $scope.name="";
+        $scope.lecInchg=[];
+        $scope.modInChgName=[];
+
+        $scope.alllecModules=[];
+        $scope.alllecModulesDetails=[];
+        $scope.supModDetails=[];
+        $scope.allSupervisorModules=[];
+        $scope.lec=false;
+        $scope.mod=false;
+
         $scope.meetings = [];
-        $scope.getMeetingAppoinments();
+        $scope.meetingsForMonth = [];
+        $scope.getAllMeetingsForMonths();
+
+        $scope.from="";
+        $scope.to="";
+        $scope.date="";
+        $scope.time="";
+        $scope.venue="";
+        $scope.subject="";
+        $scope.body="";
+        var d = new Date();
+        $scope.month = d.getMonth()+1;
+        $scope.year = d.getFullYear();
+        $scope.status="Pending";
+
+        $scope.allMeetings=[];
+        $scope.getAllMeetings();
+
+        $scope.appoinment=[];
+
+        $scope.appTo="";
+        $scope.appDate="";
+        $scope.appTime="";
+        $scope.appVenue="";
+        $scope.appHeader="";
+        $scope.appBody="";
+
+        $scope.errorMsg="";
+        $scope.error="false";
+        $scope.errorTime="false";
+        $scope.errorMsgTime="";
+        $scope.errorVenue="false";
+        $scope.errorMsgVenue="";
+        $scope.errorSub="false";
+        $scope.errorMsgSub="";
+        $scope.errorBody="false";
+        $scope.errorMsgBody="";
     };
 
+
+
+    /*
+    * Get Current User
+    * */
+    $scope.getCurrentUser=function () {
+
+        $http.post('/getUser').success(
+            function(data){
+                $scope.name=data.name;
+                $scope.getModulesInCharge();
+                $scope.getLecturingModulesAssigned();
+                $scope.getSupModulesAssigned();
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+
+};
+
+
+    /*
+     * Get Modules in charge
+     * */
+    $scope.getModulesInCharge=function () {
+        $http.post('/getModulesInCharge',{
+            lecName : $scope.name
+        }).success(
+            function(data){
+                if(data==""){
+                    $scope.modInChg="true";
+                }else{
+                    Array.prototype.push.apply($scope.lecInchg, data);
+                    angular.forEach($scope.lecInchg, function(value){
+                        $scope.modInChgName.push(value.courseName);
+
+                     });
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+    /*
+    * Get all lecturing modules assigned
+    * */
+    $scope.getLecturingModulesAssigned=function () {
+        $http.post('/getModulesAssignedForLecturer',{
+            lecName : $scope.name
+        }).success(
+            function(data){
+                if(data==""){
+                    $scope.lec="true";
+                }else{
+                    Array.prototype.push.apply($scope.alllecModulesDetails, data);
+                    angular.forEach($scope.alllecModulesDetails, function(value){
+                        $scope.alllecModules.push(value.courseName);
+
+                    });
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+    /*
+     * Get all Supervisor modules assigned
+     * */
+    $scope.getSupModulesAssigned=function () {
+        $http.post('/getModulesAssignedForSupervisor',{
+            lecName : $scope.name
+        }).success(
+            function(data){
+                if(data==""){
+                    $scope.mod="true";
+                }else{
+                    Array.prototype.push.apply($scope.supModDetails, data);
+                    angular.forEach($scope.supModDetails, function(value){
+                        $scope.allSupervisorModules.push(value.courseName);
+
+                    });
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+
+
+    /*
+    * Get monthly meeting schedule
+    * */
     $scope.getMeetingAppoinments = function () {
         $http({
             method: 'GET',
             url:'/getMeetings'
         }).then(
             function success(response) {
-                //console.log(response.data);
                 Array.prototype.push.apply($scope.meetings, response.data);
-                //console.log($scope.meetings);
-
-              /*  var today = new Date();
-                var dd = today.getDate();
-                var timeInMss = Date.now()
-
-                console.log(today);*/
-
-
             },
             function error(error) {
-                // console.log('Failed to load Lecturers');
+                console.log('Failed to load Lecturers');
             }
         );
 
     };
 
-    $scope.sendMeetingAppoinment = function () {
-            console.log("blah");
+
+    /*
+    * Send meeting request
+    * */
+   /* $scope.sendMeetingRequest = function () {
+
+        /!*$http.post('/getUser').success(
+            function(data){
+                $scope.from=data.email;
+                console.log($scope.from);
+
+                $scope.getMeetingDetails();
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );*!/
+           console.log("called");
 
         $http({
-            method: 'GET',
-            url:'/sendMeetingReq'
-        }).then(
-            function success(response) {
+                  method: 'post',
+                  url:'/sendMeetingReq'
+             }).then(
+                    function success(response) {
+                         console.log(response);
+                     },
+                       function error(error) {
+                                console.log(error);
+                             }
+                );
+    };
+*/
+    $scope.sendMeetingRequest=function () {
 
-            },
-            function error(error) {
-                // console.log('Failed to load Lecturers');
+        $scope.to=$scope.mailto;
+        $scope.date=$scope.maildate;
+        $scope.time=$scope.mailtime;
+        $scope.venue=$scope.mailvenue;
+        $scope.subject=$scope.mailsubject;
+        $scope.body=$scope.mailbody;
+
+        console.log($scope.maildate);
+        console.log($scope.mailtime);
+
+        $http.post('/sendMeetingReq',{
+            
+           from:$scope.from,
+           to:$scope.to,
+           date:$scope.date,
+           time:$scope.time,
+           venue:$scope.venue,
+           subject:$scope.subject,
+           body:$scope.body,
+           month:$scope.month,
+           year:$scope.year,
+           status:$scope.status 
+
+
+        }).success(
+            function(data){
+               // $scope.name=data.name;
+                console.log(data);
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+    };
+
+
+
+    /*
+     * Get Current User
+     * */
+     $scope.getAllMeetings=function () {
+
+         $http.post('/getUser').success(
+             function(data){
+                 $scope.name=data.name;
+                 console.log($scope.name);
+
+                 $http.post('/getMeetings',{
+                     user : $scope.name,
+                     year :$scope.year
+                 }).success(
+                     function(data){
+                         $scope.allMeetings=[];
+                         Array.prototype.push.apply($scope.allMeetings, data);
+                         console.log($scope.allMeetings);
+                         /*angular.forEach($scope.allMeetings, function(value){
+                          $scope.allSupervisorModules.push(value.courseName);
+                          });*/
+                     }
+                 ).error(
+                     function(error){
+                         console.log(error)
+                     }
+
+                 );
+
+
+             }
+         ).error(
+             function(error){
+                 console.log(error)
+             }
+         );
+
+     };
+
+
+    $scope.getAllMeetingsForMonths=function () {
+        $http.post('/getUser').success(
+            function(data){
+                $scope.name=data.name;
+                console.log($scope.year);
+                console.log($scope.name);
+                console.log($scope.month);
+
+                $http.post('/getMeetingsForMonth',{
+                    user : $scope.name,
+                    year :$scope.year,
+                    month:$scope.month
+                }).success(
+                    function(data){
+                        Array.prototype.push.apply($scope.meetings, data);
+                        console.log($scope.meetings);
+                        angular.forEach($scope.meetings, function(value){
+                         $scope.meetingsForMonth.push(value.courseName);
+                            console.log($scope.meetingsForMonth);
+
+                         });
+
+                    }
+                ).error(
+                    function(error){
+                        console.log(error)
+                    }
+
+                );
+
+
+            }
+        ).error(
+            function(error){
+                console.log(error)
             }
         );
 
     };
+
+    
+    $scope.getAppDeatils=function (id) {
+        console.log(id);
+        $http.post('/findMeetingById',{
+            id : id
+        }).success(
+            function(data){
+                $scope.appoinment=data;
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+
+        );
+
+    };
+
+    $scope.updateAppoinment=function (id) {
+    //Validation
+
+       if($scope.appoinment.date.length==0 || $scope.appoinment.time.length ==0 || $scope.appoinment.venue.length ==0 ||$scope.appoinment.header.length ==0 || $scope.appoinment.body.length ==0) {
+
+     if($scope.appoinment.date.length == 0){
+         $scope.error="true";
+         $scope.errorMsg="* Invalid date";
+     }else{
+         $scope.error="false";
+         $scope.errorMsg="";
+     }
+      if($scope.appoinment.time.length == 0){
+         $scope.errorTime="true";
+         $scope.errorMsgTime="* Invalid Time";
+     }else{
+          $scope.errorTime="false";
+          $scope.errorMsgTime="";
+      }
+      if($scope.appoinment.venue.length == 0){
+          $scope.errorVenue="true";
+          $scope.errorMsgVenue= "*Invalid venue";
+     }else{
+          $scope.errorVenue="false";
+          $scope.errorMsgVenue="";
+         }
+     if($scope.appoinment.header.length == 0){
+          console.log($scope.appoinment.header.length);
+          $scope.errorSub="true";
+          $scope.errorMsgSub="*Message without subject";
+    }else{
+          $scope.errorSub="false";
+         $scope.errorMsgSub="";
+         }
+    if($scope.appoinment.body.length == 0){
+         console.log($scope.appoinment.body.length);
+          $scope.errorBody="true";
+          $scope.errorMsgBody="*Message without body";
+    }else{
+          $scope.errorBody="false";
+           $scope.errorMsgBody="";
+           }
+       }
+     else {
+
+         $scope.error="false";
+         $scope.errorMsg="";
+         $scope.errorTime="false";
+         $scope.errorMsgTime="";
+         $scope.errorVenue="false";
+         $scope.errorMsgVenue="";
+
+         $http.post('/updateMeetingAppointment',{
+             _id : id,
+             header:$scope.appoinment.header,
+             body:$scope.appoinment.body,
+             date:$scope.appoinment.date,
+             time : $scope.appoinment.time,
+             venue:$scope.appoinment.venue
+
+
+         }).success(
+             function(data){
+                 console.log(data);
+                 $scope.getAllMeetings();
+             }
+         ).error(
+             function(error){
+                 console.log(error)
+             }
+
+         );
+            $scope.error="false";
+            $scope.errorMsg="";
+          $('#myModal5').modal('hide')
+
+    }
+
+};
+
+
+    $scope.confirmCancel = function(id) {
+
+
+        console.log(id);
+
+        sweet.show({
+            title: 'Confirm',
+            text: 'Cancel Appointment?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, cancel Appointment!',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                console.log(id);
+                $http.post('/deleteMeeting',{
+                    _id : id
+                }).success(
+                    function(data){
+                        console.log(data);
+                        $scope.getAllMeetings();
+                    }
+                ).error(
+                    function(error){
+                        console.log(error)
+                    }
+
+                );
+
+                sweet.show('Deleted!', 'The appointment has been cancelled.', 'success');
+            } else {
+                sweet.show('Cancelled', ' ', 'error');
+            }
+        });
+    };
+
     $scope.init();
+
 
 }]);

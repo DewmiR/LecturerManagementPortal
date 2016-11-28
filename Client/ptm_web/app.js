@@ -49,42 +49,60 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 //var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
-var transporter = nodemailer.createTransport();
+//var transporter = nodemailer.createTransport();
+
+//var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
+
+/*
+var transporter = nodemailer.createTransport('direct',{
+	debug: true,
+});
+*/
+
+// var transporter = nodemailer.createTransport({
+// 	service: 'Gmail',
+// 	auth: {
+// 		user: 'dewDevops@gmail.com',
+// 		pass: 'intel@123'
+// 	}
+// });
+
 
 passport.use(new LocalStrategy(
-  	function(username, password, done) {
+	function(username, password, done) {
 
 
-     	User.getUserByUsername(username, function(err, user){
+		User.getUserByUsername(username, function(err, user){
 
-	        if(err) throw err;
+			if(err) throw err;
 
-	        if(!user){
-	        	console.log("User not found...");
-	          	return done(null, false, {message: 'Unknown User'});
-	        }else{
+			if(!user){
+				console.log("User not found...");
+				return done(null, false, {message: 'Unknown User'});
+			}else{
 
 
-	            console.log("User found by username...");
-	            return done(null, user);
-	        }
+				console.log("User found by username...");
+				return done(null, user);
+			}
 
-	        // User.comparePassword(password, user.password, function(err, isMatch){
+			// User.comparePassword(password, user.password, function(err, isMatch){
 
-	        //     if(err) throw err;
+			//     if(err) throw err;
 
-	        //     if(isMatch){
-	        //         console.log("User found with username & password.");
-	        //         return done(null, user);
-	        //     } else {
-	        //         console.log("User found with username, But password is wrong.");
-	        //         return done(null, false, {message: 'Invalid password'});
-	        //     }
+			//     if(isMatch){
+			//         console.log("User found with username & password.");
+			//         return done(null, user);
+			//     } else {
+			//         console.log("User found with username, But password is wrong.");
+			//         return done(null, false, {message: 'Invalid password'});
+			//     }
 
-	        // });
-     	});
-  	}
+			// });
+		});
+	}
 ));
 
 passport.serializeUser(function(user, done) {
@@ -111,8 +129,6 @@ app.get('/', function (req, res) {
 });
 
 app.post("/getUser",function(req,res){
-   // console.log(req.body);
-   // console.log(res);
     res.send(req.user);
 });
 
@@ -279,7 +295,7 @@ app.get('/getAllCoursesFourthYear', function (req, res) {
 });
 
 app.post('/getModulesSingle', function (req, res) {
-
+	console.log(req.body.id);
     Course.getModulesSingle(req.body.id,function (err,courseDetails) {
         if(err) throw err;
         res.send(courseDetails);
@@ -485,6 +501,15 @@ app.get('/getAllLecturers', function (req, res) {
 	});
 });
 
+app.post('/getLecturerAcceptStaus', function (req, res) {
+    //console.log(req.body.gid);
+	courseModuleGroups.getLecturerAcceptStaus(req.body.gid,function(err,lecturers){
+		if(err) throw err;
+        console.log(lecturers);
+		res.send(lecturers);
+	});
+});
+
 
 app.get('/displayAllModules', function (req,res) {
    Course.displayAllCourses(function (err,courses) {
@@ -512,7 +537,8 @@ app.post('/assignLecturer', function (req,res) {
 	var newAsgnlec = new assignedLecs({
 		courseName : req.body.courseName,
 		userName : req.body.userName,
-		post : req.body.post
+		post : req.body.post,
+		image : req.body.image
 	});
 
 	assignedLecs.assignNewLecturer(newAsgnlec,function (err,lecturers) {
@@ -524,10 +550,17 @@ app.post('/assignLecturer', function (req,res) {
 
 
 app.get('/getAllAssigenedLecturers', function (req,res) {
-	assignedLecs.getLecturersAssigned(function (err,lecturers) {
+	assignedLecs.getallLecturersAssigned(function (err,lecturers) {
 		if(err) throw err;
 		res.send(lecturers);
 	});
+});
+
+app.post('/getAssignedLecturers', function (req, res) {
+	assignedLecs.getLecturersAssigned(req.body.courseName,function(err,lecturers){
+		if(err) throw err;
+		res.send(lecturers);
+	})
 });
 
 
@@ -562,14 +595,42 @@ app.post('/getmemberCount', function (req, res) {
     
 });
 
-app.post('/assignLecturerForModule', function (req, res) {
+app.post('/getModulesInCharge', function (req, res) {
     
-    Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+    Course.getModulesInCharge(req.body.lecName,function (err,data) {
 		if(err) throw err;
-        res.send("pass");
+        res.send(data);
 	});
 
 });
+
+app.post('/getModulesAssignedForLecturer', function (req, res) {
+
+	assignedLecs.getModulesAssignedForLecturer(req.body.lecName,function (err,data) {
+		if(err) throw err;
+		res.send(data);
+	});
+
+});
+
+app.post('/getModulesAssignedForSupervisor', function (req, res) {
+
+	assignedLecs.getModulesAssignedForSupervisor(req.body.lecName,function (err,data) {
+		if(err) throw err;
+		res.send(data);
+	});
+
+});
+
+app.post('/assignLecturerForModule', function (req, res) {
+
+	Course.assignLecturerForModule(req.body.moduleName,req.body.lecName,function (err) {
+		if(err) throw err;
+		res.send("pass");
+	});
+
+});
+
 app.post('/changeEnrolmentKey', function (req, res) {
 
     Course.changeEnrolmentKey(req.body.moduleName,req.body.newKey,function (err) {
@@ -590,63 +651,94 @@ app.post('/addNewLecturer', function (req, res) {
 
 
 /*
- * API end point to get all meetings
+ * Send meeting requests
  * */
-app.get('/getMeetings', function (req,res) {
+app.post('/sendMeetingReq', function (req,res) {
+    console.log(req.body.body);
 
+	var newMeeting = new Meeting({
+		header: req.body.subject,
+		body: req.body.body,
+		date: req.body.date,
+		time : req.body.time,
+		from : req.body.from,
+		to : req.body.to,
+		venue:req.body.venue,
+		year :req.body.year,
+		month:req.body.month,
+		status:"Pending"
+	});
 
-
-	Meeting.getAllMeetings(function (err,meetings) {
+	Meeting.createMeeting(newMeeting,function (err,data) {
+		console.log(data);
 		if(err) throw err;
-		res.send(meetings);
 	});
-});
-
-/*
-* Send meeting requests
-* */
-
-app.get('/sendMeetingReq', function (req,res) {
-
-	transporter.sendMail({
-		from: 'dewmirandika@gmail.com',
-		to: "DewmiR@99x.lk",
-		subject: 'Hello ✔',
-		text: 'Hello world 🐴'
-	});
-
-	/*var transporter = nodemailer.createTransport({
-		service: 'Gmail',
-		auth: {
-			user: 'comtale.noreply@gmail.com',
-			pass: 'comtale@123'
-		}
-	});*/
-
 
 	/*var mailOptions = {
-		from: '"DewmiR 👥" <dewmirandika@gmail.com>', // sender address
-		to: 'sanadrudevmini@yahoo.com', // list of receivers
-		subject: 'Hello ✔', // Subject line
-		text: 'Hello world 🐴', // plaintext body
-		html: '<b>Hello world 🐴</b>' // html body
+		from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
+		to: req.body.to, // list of receivers
+		subject: req.body.subject, // Subject line
+		text: req.body.body, // plaintext body
 	};
 
-
-	// send mail with defined transport object
 	transporter.sendMail(mailOptions, function(error, info){
 		if(error){
 			return console.log(error);
 		}
 		console.log('Message sent: ' + info.response);
-	});
-
-	Meeting.sendMeetingReq(function (err,meetings) {
-		if(err) throw err;
-		res.send(meetings);
 	});*/
+
 });
 
+
+/*
+ * API end point to get all meetings
+ * */
+app.post('/getMeetings', function (req,res) {
+	console.log(req.body.user);
+	Meeting.getAllMeetings(req.body.user,req.body.year	,function (err,meetings) {
+		if(err) throw err;
+		res.send(meetings);
+	});
+});
+
+app.post('/getMeetingsForMonth', function (req,res) {
+	
+	Meeting.getMeetingsForMonth(req.body.user,req.body.year	,req.body.month,function (err,meetings) {
+		if(err) throw err;
+		res.send(meetings);
+	});
+});
+
+
+
+app.post('/findMeetingById', function (req,res) {
+
+	Meeting.findMeetingByID(req.body.id,function (err,meeting) {
+		if(err) throw err;
+		res.send(meeting);
+	});
+});
+
+
+app.post('/updateMeetingAppointment', function (req, res) {
+	console.log(req.body.venue);
+
+	Meeting.updateAppointment(req.body._id,req.body.header,req.body.body,req.body.date,req.body.time,req.body.venue,function (err,meeting) {
+		if(err) throw err;
+		res.send(meeting);
+	});
+});
+
+
+app.post('/deleteMeeting', function (req,res) {
+
+	console.log(req.body._id);
+	Meeting.DeleteAppointment(req.body._id,function (err,meeting) {
+		if(err) throw err;
+		res.send(meeting);
+	});
+});
 
 
 /*************************

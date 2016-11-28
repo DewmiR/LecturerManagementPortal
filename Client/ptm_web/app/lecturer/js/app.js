@@ -1,4 +1,4 @@
-var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial']);
+var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial','hSweetAlert']);
 
 lectApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
@@ -22,7 +22,7 @@ lectApp.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/supervisorView.html',
     controller: 'supervisorController'
   }).
-    when('/assignLecturer', {
+    when('/assignLecturer/:id?', {
       templateUrl: 'views/assignLecturer.html',
       controller: 'lecturerController'
     }).
@@ -45,6 +45,10 @@ lectApp.config(['$routeProvider', function($routeProvider) {
     when('/add_module', {
         templateUrl: 'views/add_lecturer.html',
         controller: 'moduleController'
+    }).
+    when('/supervisorCal', {
+        templateUrl: 'views/supervisorCalendar.html',
+        controller: 'supervisorController'
     }).
     otherwise({
       redirectTo: '/lecturer'

@@ -10,7 +10,6 @@ var UserSchema = new mongoose.Schema({
     itnum : String,
     userType : String,
     post : String,
-    profilePicture : String,
     type: String,
     phone:String,
     email: String,
@@ -52,6 +51,11 @@ module.exports.getAllLecturers = function(callback){
     var userType = 'lecturer';
     User.find({userType:userType},callback);
 };
+
+module.exports.getUserByUserName = function(callback){
+
+};
+
 
 module.exports.addNewLecturer = function(callback){
 
