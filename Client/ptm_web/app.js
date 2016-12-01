@@ -640,14 +640,14 @@ app.post('/changeEnrolmentKey', function (req, res) {
 
 });
 
-app.post('/addNewLecturer', function (req, res) {
+/*app.post('/addNewLecturer', function (req, res) {
 
 	User.addNewLecturer(function (err) {
 		if(err) throw err;
 		res.send("pass");
 	});
 
-});
+});*/
 
 
 /*
@@ -737,6 +737,28 @@ app.post('/deleteMeeting', function (req,res) {
 	Meeting.DeleteAppointment(req.body._id,function (err,meeting) {
 		if(err) throw err;
 		res.send(meeting);
+	});
+});
+
+app.post('/addLecturerFormSubmit', function (req, res) {
+	var randomPassword = Math.random().toString(36).slice(-8);
+
+	var newUser = new User({
+		name: req.body.firstname+" "+req.body.lastname,
+		phone: req.body.phone,
+		email : req.body.email,
+		staffNumber: req.body.staffNumber,
+		post : req.body.post,
+        type:"lecturer",
+		username:req.body.username,
+		password: randomPassword,
+		image:"img/lecturers/default.jpg"
+	});
+
+	User.createLecturer(newUser,function (err,data) {
+		//console.log(data);
+		if(err) throw err;
+        res.send("pass");
 	});
 });
 

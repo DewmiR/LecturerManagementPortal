@@ -1,30 +1,28 @@
 <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="css/plugins/steps/jquery.steps.css" rel="stylesheet">
+<link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
 
-
-
-<div class="col-lg-10">
-    <h2>Wizard</h2>
-    <ol class="breadcrumb">
-        <li>
-            <a href="index-2.html">Home</a>
-        </li>
-        <li>
-            <a>Forms</a>
-        </li>
-        <li class="active">
-            <strong>Wizard</strong>
-        </li>
-    </ol>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Add lecturer</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="">Home</a>
+            </li>
+            <li class="active">
+                <strong>Add lecturer</strong>
+            </li>
+        </ol>
+    </div>
 </div>
-
-
 
 <div class="row">
     <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInUp">
+
         <div class="ibox">
             <div class="ibox-title">
-                <h5>Wizard with Validation</h5>
+                <h5>Add new lecturer to the system</h5>
                 <div class="ibox-tools">
                     <a class="collapse-link">
                         <i class="fa fa-chevron-up"></i>
@@ -44,15 +42,9 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <h2>
-                    Validation Wizard Form
-                </h2>
-                <p>
-                    This example show how to use Steps with jQuery Validation plugin.
-                </p>
 
-                <form id="form" action="#" class="wizard-big">
-                    <h1>Account</h1>
+                <form id="form" role="form" ng-controller="lecturerController" class="wizard-big">
+                    <!--<h1>Account</h1>
                     <fieldset>
                         <h2>Account Information</h2>
                         <div class="row">
@@ -79,48 +71,76 @@
                             </div>
                         </div>
 
-                    </fieldset>
+                    </fieldset>-->
                     <h1>Profile</h1>
                     <fieldset>
-                        <h2>Profile Information</h2>
+                        <h2>Basic Information</h2>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>First name *</label>
-                                    <input id="name" name="name" type="text" class="form-control required">
+                                    <input id="firstname" name="firstname" type="text" class="form-control required" ng-model="formData.firstname">
                                 </div>
                                 <div class="form-group">
                                     <label>Last name *</label>
-                                    <input id="surname" name="surname" type="text" class="form-control required">
+                                    <input id="lastname" name="lastname" type="text" class="form-control required" ng-model="formData.lastname">
                                 </div>
+
+
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Email *</label>
-                                    <input id="email" name="email" type="text" class="form-control required email">
+                                    <input id="email" name="email" type="text" class="form-control required email" ng-model="formData.email">
                                 </div>
                                 <div class="form-group">
-                                    <label>Address *</label>
-                                    <input id="address" name="address" type="text" class="form-control">
+                                    <label>Telephone *</label>
+                                    <input id="phone" name="phone" type="text" class="form-control required" placeholder="" ng-model="formData.phone">
+                                    <span class="help-block">999-9999999</span>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
 
-                    <h1>Warning</h1>
+                    <h1>Work</h1>
                     <fieldset>
-                        <div class="text-center" style="margin-top: 120px">
-                            <h2>You did it Man :-)</h2>
+                        <h2>Work information</h2>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Staff number *</label>
+                                <input id="staffNumber" name="staffNumber" type="text" class="form-control required" ng-model="formData.staffNumber">
+                            </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Position *</label>
+                                <select id="post" name="post" class="form-control required" ng-model="formData.post">
+                                    <option disabled selected value> -- select a position -- </option>
+                                    <option>Dean</option>
+                                    <option>Senior lecturer</option>
+                                    <option>Lecturer</option>
+                                    <option>Assistant lecturer</option>
+                                    <option>Instructor</option>
+                                </select>
+                            </div>
+                            </div>
+
                     </fieldset>
 
                     <h1>Finish</h1>
                     <fieldset>
-                        <h2>Terms and Conditions</h2>
-                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required"> <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                        <h2>Login credentials and notification e-mail</h2>
+                        <p style="font-size: medium">Lecturer will get an email containing following username and an auto generated temporary password. </p>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Temporary username *</label>
+                                <input id="username" name="username" type="text" class="form-control required" ng-model="formData.username">
+                            </div>
+                            </div>
                     </fieldset>
                 </form>
             </div>
+        </div>
         </div>
     </div>
 
@@ -133,6 +153,9 @@
 
 <!-- Jquery Validate -->
 <script src="js/plugins/validate/jquery.validate.min.js"></script>
+
+<!-- Input Mask-->
+<script src="js/plugins/jasny/jasny-bootstrap.min.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -199,7 +222,8 @@
                 var form = $(this);
 
                 // Submit form input
-                form.submit();
+                //form.submit();
+                angular.element(document.getElementById('form')).scope().addLecturerFormSubmit();
             }
         }).validate({
             errorPlacement: function (error, element)
@@ -209,6 +233,12 @@
             rules: {
                 confirm: {
                     equalTo: "#password"
+                },
+                phone:{
+                    regexp: {
+                        regexp: /([0-9])+/g,
+                        message: 'The E-Mail ID is not a valid E-Mail'
+                    }
                 }
             }
         });

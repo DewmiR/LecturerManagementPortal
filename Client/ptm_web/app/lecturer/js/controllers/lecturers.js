@@ -218,6 +218,31 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
     };
 
+    $scope.addLecturerFormSubmit = function () {
+        /*$http.post('/addLecturerFormSubmit', {
+            firstname: $scope.formData.firstname,
+            lastname: $scope.formData.lastname,
+            email: $scope.formData.email,
+            phone: $scope.formData.phone,
+            staffNumber: $scope.formData.staffNumber,
+            post: $scope.formData.post,
+            username: $scope.formData.username
+        }).success(
+            function(data){
+                if(data == "pass"){
+                    console.log("created")
+                }else{
+                    console.log("failed")
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );*/
+        console.log($scope.formData.phone);
+    }
+    
     $scope.init();
 
 }]);
