@@ -27,8 +27,9 @@ module.exports.getAllProjectOfCourse = function(callback){
 	ProjectOfCourse.find({}).populate('bids.by').populate('course').populate('project').exec(callback)
 }
 
-module.exports.getProjectsByCourseID = function(cid,callback){
-    ProjectOfCourse.find({'course':cid}).populate('bids.by').populate('course').populate('project').exec(callback)
+module.exports.getProjectsByCourseID = function(user,cid,callback){
+    ProjectOfCourse.find({'course':cid, 'bids.by': { $ne: user } }).populate('bids.by').populate('course').populate('project').exec(callback)
+    //entrants.find({ pincode: { $ne: null } })
 }
 
 module.exports.addNewBids = function(poc,bidUser,callback){
@@ -112,3 +113,16 @@ module.exports.removeBit = function(bid,poc,callback){
     callback
     )
 }
+
+module.exports.getAllMyProjects = function(user,callback){
+    ProjectOfCourse.find({'bids.by':user,'bids.status':true}).populate('bids.by').populate('course').populate('project').exec(callback)
+}
+
+module.exports.getAllMyPendingProjects = function(user,callback){
+    ProjectOfCourse.find({'bids.by':user,'bids.status':false,'bids.active':true}).populate('bids.by').populate('course').populate('project').exec(callback)
+}
+
+module.exports.getAllMyRejectedProjects = function(user,callback){
+    ProjectOfCourse.find({'bids.by':user,'bids.status':false,'bids.active':false}).populate('bids.by').populate('course').populate('project').exec(callback)
+}
+

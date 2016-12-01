@@ -1061,7 +1061,7 @@ a img.aligncenter {
 
 
 /******************************************
-    BUTTONS
+    BUTTONS     
 ******************************************/
 
 .btn-default,
@@ -1073,6 +1073,43 @@ a img.aligncenter {
     padding: 10px 15px;
     border: 0;
 }
+
+.btn-pending {
+    border-radius: 0 !important;
+    background-color: #FFA07A;
+    color: #ffffff !important;
+    padding: 10px 15px;
+    border: 0;
+}
+
+.btn-pending:hover {
+     color: #ffffff !important;
+}
+
+.btn-bidnow {
+    border-radius: 0 !important;
+    background-color: #FFA500;
+    color: #ffffff !important;
+    padding: 10px 15px;
+    border: 0;
+}
+
+.btn-bidnow:hover {
+     color: #ffffff !important;
+}
+
+.btn-rejected {
+    border-radius: 0 !important;
+    background-color: #DC143C;
+    color: #ffffff !important;
+    padding: 10px 15px;
+    border: 0;
+}
+
+.btn-rejected:hover {
+     color: #ffffff !important;
+}
+
 
 .btn-inverse:hover,
 .btn-inverse:focus {

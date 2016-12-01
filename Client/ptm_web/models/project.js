@@ -1,17 +1,22 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var ProjectSchema = new mongoose.Schema({
 	name: String,
-    description: String
+    description: String,
+    notices: [{
+        title: String,
+        description: String,
+        by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        created_at: { type: Date, default: Date.now },
+        name: String
+    }],
+    created: { type: Date, default: Date.now }
 });
 
-// var ProjectOfCourseSchema = new mongoose.Schema({
-// 	courseName: String,
-//     projectName: String,
-//     projectId: String
-// });
+
 
 var Project = module.exports = mongoose.model('Project',ProjectSchema);
 //var ProjectOfCourse = module.exports = mongoose.model('ProjectOfCourse',ProjectOfCourseSchema);
@@ -26,12 +31,28 @@ module.exports.getAllPrpjects = function(callback){
 	Project.find({},callback);
 }
 
+module.exports.getProjectData = function(pid,callback){
+	Project.find({'_id':pid},callback);
+}
 
-// module.exports.createProjectOfCourse = function(newProjectOfCourse, callback){
-//     newProjectOfCourse.save(callback);
-// }
-
-
-// module.exports.getAllProjectOfCourse = function(callback){
-// 	ProjectOfCourse.find({},callback);
-// }
+module.exports.postNoticeForProject = function(user,project,title,description,callback){
+	Project.findByIdAndUpdate(
+        project,
+        { 
+            $push: {
+                "notices": {
+                    "title": title,
+                    "description": description,
+                    "by": user,
+                    "name": user.name            
+                }
+            }
+        },
+        {
+            safe: true, 
+            upsert: true, 
+            new : true
+        },
+        callback
+    );
+}
