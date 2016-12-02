@@ -2,6 +2,16 @@
 <link href="css/plugins/steps/jquery.steps.css" rel="stylesheet">
 <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
 
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
+    }
+    </style>
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
         <h2>Add lecturer</h2>
@@ -95,8 +105,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Telephone *</label>
-                                    <input id="phone" name="phone" type="text" class="form-control required" placeholder="" ng-model="formData.phone">
-                                    <span class="help-block">999-9999999</span>
+                                    <input id="phone" name="phone" type="number" class="form-control required" placeholder="" ng-model="formData.phone" minlength="10" maxlength="10" onkeypress="phoneno()">
+
                                 </div>
                             </div>
                         </div>
@@ -147,7 +157,6 @@
 </div>
 </div>
 
-
 <!-- Steps -->
 <script src="js/plugins/staps/jquery.steps.min.js"></script>
 
@@ -157,7 +166,10 @@
 <!-- Input Mask-->
 <script src="js/plugins/jasny/jasny-bootstrap.min.js"></script>
 
+
 <script>
+
+
     $(document).ready(function(){
         $("#wizard").steps();
         $("#form").steps({
@@ -224,6 +236,7 @@
                 // Submit form input
                 //form.submit();
                 angular.element(document.getElementById('form')).scope().addLecturerFormSubmit();
+
             }
         }).validate({
             errorPlacement: function (error, element)
@@ -233,14 +246,27 @@
             rules: {
                 confirm: {
                     equalTo: "#password"
-                },
-                phone:{
+                }
+                /*phone:{
                     regexp: {
                         regexp: /([0-9])+/g,
                         message: 'The E-Mail ID is not a valid E-Mail'
                     }
-                }
+                }*/
             }
         });
     });
+
+    function phoneno(){
+        $('#phone').keypress(function(e) {
+            var a = [];
+            var k = e.which;
+
+            for (i = 48; i < 58; i++)
+                a.push(i);
+
+            if (!(a.indexOf(k)>=0))
+                e.preventDefault();
+        });
+    }
 </script>

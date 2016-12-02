@@ -50,24 +50,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-//var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
-//var transporter = nodemailer.createTransport();
+/*var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+var transporter = nodemailer.createTransport();
 
-//var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
+var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
 
-/*
+
 var transporter = nodemailer.createTransport('direct',{
 	debug: true,
-});
-*/
+});*/
 
-// var transporter = nodemailer.createTransport({
-// 	service: 'Gmail',
-// 	auth: {
-// 		user: 'dewDevops@gmail.com',
-// 		pass: 'intel@123'
-// 	}
-// });
+
+var transporter = nodemailer.createTransport({
+	service: 'Gmail',
+	auth: {
+		user: 'dewDevops@gmail.com',
+		pass: 'intel@123'
+ 	}
+});
 
 
 passport.use(new LocalStrategy(
@@ -759,6 +759,21 @@ app.post('/addLecturerFormSubmit', function (req, res) {
 		//console.log(data);
 		if(err) throw err;
         res.send("pass");
+	});
+
+	//send mail to newly added lecturer
+	var mailOptions = {
+		from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
+		to: req.body.email, // list of receivers
+		subject: 'Temporary username and password for SLIIT TM portal login', // Subject line
+		text: 'You have been added to SLIIT TM portal as a lecturer.\nYour temporary username - '+req.body.username+' and password - '+randomPassword, // plaintext body
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			return console.log(error);
+		}
+		console.log('Message sent: ' + info.response);
 	});
 });
 

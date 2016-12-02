@@ -1,18 +1,5 @@
 var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial','hSweetAlert']);
 
-/*lectApp.directive('data-mask', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, el, attrs){
-            $(el).inputmask(scope.$eval(attrs.inputMask));
-            $(el).on('change', function(){
-                scope.$eval(attrs.ngModel + "='" + el.val() + "'");
-                // or scope[attrs.ngModel] = el.val() if your expression doesn't contain dot.
-            });
-        }
-    };
-});*/
-
 lectApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
     when('/lecturer', {
