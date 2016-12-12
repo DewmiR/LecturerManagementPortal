@@ -1,4 +1,4 @@
-lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialog','$routeParams', function($scope,$http,$location,$routeParams,$mdDialog) {
+lectApp.controller('ProjectsController', ['$scope','$http','$location','$routeParams','$mdToast', function($scope,$http,$location,$routeParams,$mdToast) {
 
     $http.post('/getUser').success(
         function(user){
@@ -19,8 +19,14 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
         }).success(
             function(data){
                 if(data == "pass"){
+
+                    $scope.formData.pname="";
+                    $scope.formData.pdes="";
+
+                    $mdToast.show($mdToast.simple().textContent("Project Successfully Created!").position('bottom right').hideDelay(5000));
                     console.log("created")
                 }else{
+                    $mdToast.show($mdToast.simple().textContent("Failed!").position('bottom right').hideDelay(5000));
                     console.log("failed")
                 }
             }
