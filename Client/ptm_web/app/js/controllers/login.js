@@ -1,4 +1,4 @@
-myApp.controller('LoginController', ['$scope','$http','$location','toastr', function($scope,$http,$location,toastr) {
+myApp.controller('LoginController', ['$scope','$http','$location','$window','toastr', function($scope,$http,$location,$window,toastr) {
 
     $scope.$parent.body_class = "";
     $scope.init = function(){
@@ -19,8 +19,24 @@ myApp.controller('LoginController', ['$scope','$http','$location','toastr', func
       }).success(
         function(data){
           if(data == "pass"){
-              //$location.url('/profile');
-              $location.url('/my_coursee_grid');
+
+            $http.post('/getUser').success(
+                function(data){
+                    if(data.userType == 'lecturer'){
+                        //console.log("lecturer logged!!!")
+                        $window.open('http://localhost:3000/lecturer/#/lecturer','_self');
+                        //$location.path('lecturer/#/lecturer');
+                    }else{
+                        $location.url('/my_coursee_grid');
+                    }
+
+                }
+            ).error(
+                function(error){
+                    console.log(error)
+                }
+            );
+
           }else{
             $location.url('/login');
           }

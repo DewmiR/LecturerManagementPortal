@@ -1,7 +1,14 @@
 lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialog','$routeParams', function($scope,$http,$location,$routeParams,$mdDialog) {
 
-    $scope.message = "Adooooo"
-
+    $http.post('/getUser').success(
+        function(user){
+            console.log("Logged user Id: "+ user._id);
+        }
+    ).error(
+      function(error){
+        console.log(error)
+      }
+    );
 
 	$scope.addProjectFormSubmit = function() {
 
