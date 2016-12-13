@@ -742,14 +742,14 @@ app.post('/deleteMeeting', function (req,res) {
 
 app.post('/addLecturerFormSubmit', function (req, res) {
 	var randomPassword = Math.random().toString(36).slice(-8);
-
+	console.log(req.body.phone);
 	var newUser = new User({
 		name: req.body.firstname+" "+req.body.lastname,
 		phone: req.body.phone,
 		email : req.body.email,
 		staffNumber: req.body.staffNumber,
 		post : req.body.post,
-        type:"lecturer",
+        userType:"lecturer",
 		username:req.body.username,
 		password: randomPassword,
 		image:"img/lecturers/default.jpg"
@@ -775,6 +775,55 @@ app.post('/addLecturerFormSubmit', function (req, res) {
 		}
 		console.log('Message sent: ' + info.response);
 	});
+});
+
+app.get('/getAllLecturersNames', function (req, res) {
+	User.getAllLecturersNames(function(err,lecturers){
+		if(err) throw err;
+		res.send(lecturers);
+	});
+});
+
+app.post('/createModuleFormSubmit', function (req, res) {
+
+	var newCourse = new Course({
+		courseName: req.body.name,
+        abbreviation: req.body.abbr,
+		description : req.body.description,
+        enrollmentKey: req.body.enkey,
+		year : req.body.year,
+		semester:req.body.semester,
+        lecInCharge:req.body.lecInCharge,
+		status:"Active"
+	});
+
+	Course.createCourse(newCourse,function (err,data) {
+		//console.log(data);
+		if(err) throw err;
+		res.send("pass");
+	});
+
+
+    User.getEmailOfUserByName(req.body.lecInCharge,function (err,data) {
+       
+        var email=data.email;
+        var mailOptions = {
+            from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
+            to: email, // list of receivers
+            subject: 'Lecturer in Charge', // Subject line
+            text: 'You have been assigned as the lecturer in charge of '+req.body.name+' module', // plaintext body
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+        });
+    });
+
+	//send mail to newly added lecturer
+
 });
 
 

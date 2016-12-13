@@ -248,7 +248,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
                     $scope.formData.staffNumber="";
                     $scope.formData.username="";
                 }else{
-                    console.log("failed")
+                    console.log("failed");
                 }
             }
         ).error(
