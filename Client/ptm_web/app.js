@@ -168,8 +168,8 @@ app.get('/test', function (req, res) {
 
 app.post('/postNotice', function (req, res) {
 
-    var datetime = new Date();
-	var newLecturerNotices = lecturerNotices({
+    var datetime = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+	var newLecturerNotices = lecturerNotices({  
 		courseId: req.body.id,
         title: req.body.title,
 		notice: req.body.notice,

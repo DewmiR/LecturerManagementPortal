@@ -199,7 +199,7 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         }).success(
             function(data){
                 if(data == "pass"){
-                    
+                    $scope.loadAllNotices();
                     $mdToast.show($mdToast.simple().textContent("Notice added successfully!").position('bottom right').hideDelay(5000));
 
                 }else{
