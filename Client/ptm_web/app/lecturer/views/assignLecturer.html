@@ -86,10 +86,10 @@
             <div class="ibox-content pre-scrollable">
 
                 <div class="feed-activity-list">
-                    <div ng-repeat="lecturer in lecturers">
+                    <div ng-repeat="lecturer in lecturers track by $index">
                         <div class="feed-element">
                             <a class="pull-left" href="profile.html">
-                                <img class="img-circle" alt="image" src="img/a3.jpg">
+                                <img class="img-circle" alt="image" src="img/{{lecturer.image}}">
                             </a>
                             <div class="media-body">
                                 <div class="pull-right">

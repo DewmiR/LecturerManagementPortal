@@ -25,12 +25,12 @@ module.exports.createMeeting = function(meeting, callback){
     meeting.save(callback);
 };
 
-module.exports.getAllMeetings = function(from,year,callback){
-    Meeting.find({from:from,year:year},callback);
+module.exports.getAllMeetings = function(from,date,callback){
+    Meeting.find({from:from, date : { $gt :  date}},callback);
 };
 
-module.exports.getMeetingsForMonth = function(user,year,month,callback){
-    Meeting.find({from:user,year:year,month:month},callback);
+module.exports.getMeetingsForMonth = function(user,date,month,callback){
+    Meeting.find({from:user,date:{ $gt : date},month:month},callback);
 };
 
 

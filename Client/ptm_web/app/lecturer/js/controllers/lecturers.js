@@ -2,7 +2,7 @@
  * Created by DewmiR on 9/26/2016.
  */
 
-lectApp.controller('lecturerController', ['$scope','$http','$location','$routeParams', function($scope,$http,$location,$routeParams) {
+lectApp.controller('lecturerController', ['$scope','$http','$location','$routeParams','sweet', function($scope,$http,$location,$routeParams, sweet) {
 
 
     $scope.init = function () {
@@ -13,6 +13,12 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
         $scope.lec = "Lecturers";
         $scope.lecturers = [];
+        $scope.matchLecturers = [];
+        $scope.count=0;
+        $scope.temp=[];
+        $scope.t=[];
+        $scope.namesArr=[];
+        $scope.match=[];
         $scope.displayLecturers();
 
         $scope.mod = "modules";
@@ -30,6 +36,8 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
         $scope.error="false";
         $scope.errorMsg = "";
+        $scope.counter = 0;
+        $scope.matchLect();
 
     };
 
@@ -65,7 +73,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
             }).success(
                 function(data){
                     Array.prototype.push.apply($scope.moduleLecturers, data);
-                    console.log($scope.moduleLecturers);
+                    //console.log($scope.moduleLecturers);
                 }
             ).error(
                 function(error){
@@ -78,23 +86,6 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     };
 
 
-    //Display all lecturers to be selected
-    $scope.displayLecturers = function () {
-        $http({
-            method: 'GET',
-            url:'/getAllLecturers'
-        }).then(
-            function success(response) {
-                Array.prototype.push.apply($scope.lecturers, response.data);
-                //console.log($scope.lecturers);
-
-            },
-            function error(error) {
-               console.log('Failed to load Lecturers');
-            }
-        );
-
-    };
 
     $scope.displayAllModules = function () {
         $http({
@@ -128,14 +119,17 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
                 $scope.nameArr.push(lecturer.name);
                 $scope.image = lecturer.image;
-                console.log($scope.image);
+              //  $scope.success();
                   }
             });
         };
 
 
+        /*
+        * Get all seleted Lecturers
+        * */
         $scope.getSelectedLecturer();
-
+         //validations
           if($scope.nameArr.length == 0){
               $scope.error="true";
               $scope.errorMsg="* Please select one or more Lecturers";
@@ -168,8 +162,13 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
         }).success(
             function(data){
                //$scope.getLecturersForModule();
+                $scope.lecturers=[];
+                $scope.match=[];
+                $scope.t=[];
                 $scope.moduleLecturers.push(data);
-               console.log(data);
+                $scope.success();
+                $scope.displayLecturers();
+
             }
         ).error(
             function(error){
@@ -208,7 +207,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
             function success(response) {
                 //console.log(response.data);
                 Array.prototype.push.apply($scope.details, response.data);
-               // console.log($scope.details);
+                // console.log($scope.details);
 
             },
             function error(error) {
@@ -218,6 +217,70 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
     };
 
+
+    //Display all lecturers to be selected
+    $scope.displayLecturers = function () {
+        $http({
+            method: 'GET',
+            url:'/getAllLecturers'
+        }).then(
+            function success(response) {
+
+                Array.prototype.push.apply($scope.match, response.data);
+
+                $http({
+                    method: 'GET',
+                    url:'/getAllAssigenedLecturers'
+                }).then(
+                    function success(response) {
+
+                        Array.prototype.push.apply($scope.t, response.data);
+
+                        angular.forEach($scope.match, function(value) {
+
+                            $scope.counter=0;
+
+                            angular.forEach($scope.t, function(name) {
+
+                                if(name.userName != value.name){
+                                    $scope.counter++;
+                                }
+                            });
+
+                            if($scope.counter == $scope.t.length){
+                                $scope.lecturers.push(value);
+                                console.log($scope.counter);
+                            }
+                        });
+
+                    },
+                    function error(error) {
+                        console.log('Failed to load Lecturers');
+                    }
+                );
+
+            },
+            function error(error) {
+                console.log('Failed to load Lecturers');
+            }
+        );
+
+    };
+
+
+    $scope.matchLect = function () {
+
+       // console.log(matchVal);
+
+    };
+
+
+    $scope.success = function() {
+        sweet.show('Assigned successfully');
+    };
     $scope.init();
+
+    
+
 
 }]);
