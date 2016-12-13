@@ -166,20 +166,21 @@ app.get('/test', function (req, res) {
 	});
 });
 
-app.get('/lec', function (req, res) {
+app.post('/postNotice', function (req, res) {
 
-
-	var newLecturerNotices = lecturerNotices({
-		courseId: "DBMS",
-        title: "3rd Year Students",
-		notice: "There will be a industrial Session for all the syudents at Auditorium",
-		time: "Jan 23 2016"
+    var datetime = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+	var newLecturerNotices = lecturerNotices({  
+		courseId: req.body.id,
+        title: req.body.title,
+		notice: req.body.notice,
+		time: datetime
 	});
 
 
 	lecturerNotices.createNotices(newLecturerNotices,function (err,data) {
 		//console.log(data);
     	if(err) throw err;
+        res.send("pass");
 	});
 });
 
@@ -340,13 +341,10 @@ app.post('/getAllCourseGroups', function (req, res) {
 });
 
 app.post('/getAllNotices', function (req, res) {
-   // console.log(req.body.cid);
-	lecturerNotices.getAllNotices(req.body.cid,function(err,notices){
-		if(err) throw err;
-       // console.log(courses);
-       // console.log(notices);
-		res.send(notices);
-	});
+	 lecturerNotices.getAllNotices(req.body.cid,function(err,notices){
+	 	if(err) throw err;
+	 	res.send(notices);
+	 });
 });
 
 app.get('/getAllCoursesFirstYear', function (req, res) {
@@ -981,7 +979,8 @@ app.post('/createModuleFormSubmit', function (req, res) {
 		semester:req.body.semester,
         lecInCharge:req.body.lecInCharge,
 		status:"Active",
-        maxGroupMembers:"4"
+        maxGroupMembers:"4",
+        assignmentCriteria:["not set","not set","not set"]
 	});
 
 	Course.createCourse(newCourse,function (err,data) {
@@ -1013,6 +1012,22 @@ app.post('/createModuleFormSubmit', function (req, res) {
 
 });
 
+
+app.post('/changeMaxGroupMembers', function (req, res) {
+
+    Course.changeMaxGroupMembers(req.body.moduleName,req.body.maxGroupMembers,function (err) {
+        if(err) throw err;
+        res.send("pass");
+    });
+});
+
+app.post('/changeAssignmentCriteria', function (req, res) {
+    //console.log(req.body.moduleName);
+    Course.changeAssignmentCriteria(req.body.moduleName,req.body.midEv,req.body.finalEv,req.body.finalDoc,function (err) {
+        if(err) throw err;
+        res.send("pass");
+    });
+});
 
 // app.get('*',ensureAuthenticated , function(req, res) {
 //   	console.log("access granted. secure stuff happens here");
