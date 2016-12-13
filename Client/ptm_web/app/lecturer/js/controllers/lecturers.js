@@ -200,6 +200,8 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
 
     $scope.displayAsgnDetails = function () {
+
+        $scope.details=[];
         $http({
             method: 'GET',
             url:'/getAllAssigenedLecturers'
@@ -220,6 +222,10 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
     //Display all lecturers to be selected
     $scope.displayLecturers = function () {
+        $scope.lecturers=[];
+        $scope.t=[];
+        $scope.match=[];
+
         $http({
             method: 'GET',
             url:'/getAllLecturers'
@@ -276,7 +282,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
 
     $scope.success = function() {
-        sweet.show('Assigned successfully');
+        $mdToast.show($mdToast.simple().textContent("Lecturer assigned successfully").position('bottom right').hideDelay(5000));
     };
     
     $scope.addLecturerFormSubmit = function () {
@@ -317,7 +323,28 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
             }
         );
 
-    }
+    };
+
+
+    $scope.removeLecturer=function (id) {
+        $http.post('/removeAssignLecturers', {
+            _id: id
+
+        }).success(
+            function(data){
+                $scope.displayAsgnDetails();
+                $scope.displayLecturers();
+                $scope.getLecturersForModule();
+                $mdToast.show($mdToast.simple().textContent("Lecturer removed successfully").position('bottom right').hideDelay(5000));
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+
+
+    };
     
     $scope.init();
 

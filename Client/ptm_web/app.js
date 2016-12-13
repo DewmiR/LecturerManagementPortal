@@ -770,6 +770,15 @@ app.post('/deleteMeeting', function (req,res) {
 	});
 });
 
+app.post('/removeAssignLecturers', function (req,res) {
+
+	assignedLecs.DeleteLecturer(req.body._id,function (err,lecturer) {
+		if(err) throw err;
+		res.send(lecturer);
+	});
+});
+
+
 app.post('/addLecturerFormSubmit', function (req, res) {
 	var randomPassword = Math.random().toString(36).slice(-8);
 
