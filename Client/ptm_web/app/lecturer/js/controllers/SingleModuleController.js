@@ -18,8 +18,12 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         $scope.finalEv=null;
         $scope.midEv=null;
         $scope.finalDoc=null;
+        $scope.notice;
+        $scope.title;
+        $scope.allNotices=[];
         $scope.loadSingleModules();
         $scope.loadLecturers();
+        //$scope.loadAllNotices();
 
     };
     
@@ -54,6 +58,7 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
                 $scope.finalEv=data.assignmentCriteria[1];
                 $scope.finalDoc=data.assignmentCriteria[2];
                 //$scope.currentModuleLecInCharge=data.lecInCharge;
+                $scope.loadAllNotices();
             }
         ).error(
             function(error){
@@ -183,10 +188,44 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
                 console.log(error);
             }
         );
+    }
 
+    $scope.postNotice = function () {
+        console.log($scope.title);
+        $http.post('/postNotice', {
+            id: $scope.moduleDetails._id,
+            title: $scope.title,
+            notice: $scope.notice
+        }).success(
+            function(data){
+                if(data == "pass"){
+                    
+                    $mdToast.show($mdToast.simple().textContent("Notice added successfully!").position('bottom right').hideDelay(5000));
 
+                }else{
 
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+    }
 
+    $scope.loadAllNotices = function () {
+        $http.post('/getAllNotices', {
+            cid: $scope.moduleDetails._id
+        }).success(
+            function(data){
+                Array.prototype.push.apply($scope.allNotices, data);
+                console.log(data);
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
     }
     
     $scope.init();

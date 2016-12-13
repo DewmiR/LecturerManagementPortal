@@ -166,20 +166,21 @@ app.get('/test', function (req, res) {
 	});
 });
 
-app.get('/lec', function (req, res) {
+app.post('/postNotice', function (req, res) {
 
-
+    var datetime = new Date();
 	var newLecturerNotices = lecturerNotices({
-		courseId: "DBMS",
-        title: "3rd Year Students",
-		notice: "There will be a industrial Session for all the syudents at Auditorium",
-		time: "Jan 23 2016"
+		courseId: req.body.id,
+        title: req.body.title,
+		notice: req.body.notice,
+		time: datetime
 	});
 
 
 	lecturerNotices.createNotices(newLecturerNotices,function (err,data) {
 		//console.log(data);
     	if(err) throw err;
+        res.send("pass");
 	});
 });
 
@@ -327,13 +328,10 @@ app.post('/getAllCourseGroups', function (req, res) {
 });
 
 app.post('/getAllNotices', function (req, res) {
-   // console.log(req.body.cid);
-	lecturerNotices.getAllNotices(req.body.cid,function(err,notices){
-		if(err) throw err;
-       // console.log(courses);
-       // console.log(notices);
-		res.send(notices);
-	});
+	 lecturerNotices.getAllNotices(req.body.cid,function(err,notices){
+	 	if(err) throw err;
+	 	res.send(notices);
+	 });
 });
 
 app.get('/getAllCoursesFirstYear', function (req, res) {

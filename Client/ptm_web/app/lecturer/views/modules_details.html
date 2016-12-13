@@ -122,7 +122,8 @@
                         <!--end-->
 
                     </div>
-                </div><div class="ibox float-e-margins">
+                </div>
+                <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h3 class="col-md-10" style="">Notices</h3>
                     <div class="ibox-tools">
@@ -131,24 +132,40 @@
                         </a>
                     </div>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content" id="content">
                     <div class="row">
-                        <form id="notice">
+                        <form id="noticeForm">
                          <div class="col-md-10">
-                            <textarea type="text" rows="3" placeholder="" class="form-control" ng-model="notice"></textarea>
+                             <input type="text" id="title" placeholder="Title" name="title" ng-model="title" class="form-control">
+                            <textarea type="text" rows="2" placeholder="Notice" style="margin-top: 5px;" id="notice" name="notice" class="form-control" ng-model="notice"></textarea>
                         </div>
                         <div class="col-md-2">
-                            <button type="button" class="btn btn-primary" ng-click="changeMaxGroupMembers(moduleDetails.courseName,maxGroupMembers)">Post</button>
+                            <button type="button" class="btn btn-primary" id="postNotice" style="margin-top: 50%">Post</button>
                         </div>
                         </form>
                     </div>
 
                     <hr>
+                    <h5>Earlier notices</h5>
+                    <div id="vertical-timeline" class="vertical-container dark-timeline" style="overflow-y: scroll;height: 300px">
 
+                        <div class="vertical-timeline-block" ng-repeat="allNotice in allNotices">
+                            <div class="vertical-timeline-icon gray-bg">
+                                <i class="fa fa-briefcase"></i>
+                            </div>
+                            <div class="vertical-timeline-content">
+                                <h5>{{ allNotice.title }}</h5>
+                                <p>{{ allNotice.notice }}
+                                </p>
+                                <span class="vertical-date small text-muted"> {{ allNotice.time }} </span>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
 
                 </div>
-            </div>
+
             </div>
         </div>
     </div>
@@ -267,27 +284,21 @@
             }
         });
 
-        $("#notice").validate({
+        $("#noticeForm").validate({
             rules: {
-                midEv: {
-                    required: true,
-                    digits: true
+                notice: {
+                    required: true
                 },
-                finalDoc: {
-                    required: true,
-                    digits: true
-                },
-                finalEv: {
-                    required: true,
-                    digits: true
+                title: {
+                    required: true
                 }
             },
             messages: {
-                midEv: "Invalid input",
-                finalDoc: "Invalid input",
-                finalEv: "Invalid input"
+                notice: "Notice cannot be empty",
+                title:"Title cannot be empty"
             }
         });
+
 
     });
 
@@ -295,6 +306,15 @@
         if($("#assignmentC").valid()){   // test for validity
            angular.element(document.getElementById('changeAssignmentCriteria')).scope().changeAssignmentCriteria();
             $('#changeAssignmentCriteria').modal('hide')
+        }
+        else {
+
+        }
+    });
+
+    $("#postNotice").click(function(){
+        if($("#noticeForm").valid()){   // test for validity
+            angular.element(document.getElementById('content')).scope().postNotice();
         }
         else {
 
