@@ -19,8 +19,10 @@ var assignedLecs = require("./models/assignedLecturer");
 var Project = require("./models/project");
 var courseModuleGroups = require("./models/courseModuleGroups");
 var courseGroupMembers = require("./models/courseGroupMembers");
+var groupMessages = require("./models/groupMessages");
 var Meeting =  require("./models/meeting");
 var projects = require('./routes/projects');
+var lecturerNotices = require("./models/lecturerNotices");
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
 
@@ -163,6 +165,23 @@ app.get('/test', function (req, res) {
 	});
 });
 
+app.get('/lec', function (req, res) {
+
+
+	var newLecturerNotices = lecturerNotices({
+		courseId: "DBMS",
+        title: "3rd Year Students",
+		notice: "There will be a industrial Session for all the syudents at Auditorium",
+		time: "Jan 23 2016"
+	});
+
+
+	lecturerNotices.createNotices(newLecturerNotices,function (err,data) {
+		//console.log(data);
+    	if(err) throw err;
+	});
+});
+
 app.get('/test2', function (req, res) {
 
 
@@ -199,6 +218,40 @@ app.post('/createNewcourseModuleGroups', function (req, res) {
     	if(err) throw err;
 	});
 });
+
+app.post('/createNewMessage', function (req, res) {
+
+//    console.log(req.body.gid);
+//    console.log(req.body.message);
+//    console.log(req.body.name);
+	var NewMessage = groupMessages({
+		groupId: req.body.gid,
+        message: req.body.message,
+        name: req.body.name,
+	});
+
+	groupMessages.createNewGroupMessage(NewMessage,function (err,data) {
+    	if(err) throw err;
+         res.send("created");
+	});
+});
+
+app.post('/getAllMessages', function (req, res) {
+	groupMessages.getAllMessages(req.body.gid,function(err,groups){
+		if(err) throw err;
+       // console.log(courses);
+		res.send(groups);
+	});
+});
+
+app.post('/getUsers', function (req, res) {
+	User.getUsers(req.body.id,function(err,groups){
+		if(err) throw err;
+       // console.log(courses);
+		res.send(groups);
+	});
+});
+
 
 app.post('/createGroups', function (req, res) {
 
@@ -263,6 +316,16 @@ app.post('/getAllCourseGroups', function (req, res) {
 	});
 });
 
+app.post('/getAllNotices', function (req, res) {
+   // console.log(req.body.cid);
+	lecturerNotices.getAllNotices(req.body.cid,function(err,notices){
+		if(err) throw err;
+       // console.log(courses);
+       // console.log(notices);
+		res.send(notices);
+	});
+});
+
 app.get('/getAllCoursesFirstYear', function (req, res) {
 	Course.getAllCoursesFirstYear(function(err,courses){
 		if(err) throw err;
@@ -270,6 +333,8 @@ app.get('/getAllCoursesFirstYear', function (req, res) {
 		res.send(courses);
 	});
 });
+
+
 
 app.get('/getAllCoursesSecondYear', function (req, res) {
 	Course.getAllCoursesSecondYear(function(err,courses){
@@ -341,9 +406,48 @@ app.post('/checkEnrollmentKey', function (req, res) {
 });
 
 app.post('/isEnrolled', function (req, res) {
-
 	Enroll.isEnrolled(req.body.user_id,function (err,courses) {
     	if(err) throw err;
+        res.send(courses);
+	});
+    
+    //console.log(req.body);
+	
+});
+
+app.post('/isPending', function (req, res) {
+   // console.log(req.body.uid);
+    //console.log(req.body.cid);
+	Enroll.isPending(req.body.uid,req.body.cid,function (err,courses) {
+    	if(err) throw err;
+        console.log(courses);
+        res.send(courses);
+	});
+    
+    //console.log(req.body);
+	
+});
+
+app.post('/updatePendingStatus', function (req, res) {
+   // console.log(req.body.uid);
+    //console.log(req.body.cid);
+	Enroll.updatePendingStatus(req.body.uid,req.body.cid,function (err,courses) {
+    	if(err) throw err;
+        console.log(courses);
+        res.send(courses);
+	});
+    
+    //console.log(req.body);
+	
+});
+
+
+app.post('/updatePendingStatusInv', function (req, res) {
+    console.log(req.body.uid);
+    console.log(req.body.cid);
+	Enroll.updatePendingStatusInv(req.body.uid,req.body.cid,function (err,courses) {
+    	if(err) throw err;
+        console.log(courses);
         res.send(courses);
 	});
     
@@ -354,7 +458,7 @@ app.post('/isEnrolled', function (req, res) {
 
 app.post('/addNewEnrollment', function (req, res) {
     var enrollment = req.body;
-
+    //console.log(req.body.student_id);
 	Enroll.addNewEnrollment(enrollment,function (err,count) {
     	if(err) throw err;
     	res.send("New Enrollment Added");
@@ -370,7 +474,9 @@ app.post('/registerUser', function (req, res) {
 		name : req.body.name,
 		username : req.body.username,
 		password : req.body.password,
-		itnum : req.body.itnum
+		itnum : req.body.itnum,
+        email : req.body.username,
+        gpa : "3.45"
 	});
 
 	User.createUser(newUser,function (err,user) {
@@ -432,6 +538,7 @@ app.post('/sendRequestToFriend', function (req, res) {
     
 	Request.createRequest(newRequest,function (err,request) {
 		if(err) throw err;
+        //res.send("sucess");
 	});
 
 
@@ -458,7 +565,8 @@ app.post('/getGroupCount', function (req, res) {
 });
 
 app.post('/getGroupId', function (req, res) {
-
+console.log(req.body.userId);
+console.log(req.body.courseId);
 	Request.getGroupId(req.body.userId, req.body.courseId, function(err,data){
 		if(err) throw err
 		res.send(data)
@@ -505,7 +613,7 @@ app.post('/getLecturerAcceptStaus', function (req, res) {
     //console.log(req.body.gid);
 	courseModuleGroups.getLecturerAcceptStaus(req.body.gid,function(err,lecturers){
 		if(err) throw err;
-        console.log(lecturers);
+       // console.log(lecturers);
 		res.send(lecturers);
 	});
 });
@@ -574,12 +682,29 @@ app.post('/getGroupCountMembers', function (req, res) {
 	})
 });
 
+app.post('/getGroupMembers', function (req, res) {
+    
+	courseGroupMembers.getGroupMembers(req.body.gid, function(err,data){
+		if(err) throw err
+		res.send(data)
+	})
+});
+
 app.post('/updateMemberCount', function (req, res) {
     //console.log(req.body.gid);
     
 	courseModuleGroups.updateMemberCount(req.body.gid, function(err,data){
 		if(err) throw err
 		//res.send("updated");
+	})
+});
+
+app.post('/getAcceptedStatus', function (req, res) {
+    //console.log(req.body.gid);
+    
+	Request.getAcceptedStatus(req.body.uid,req.body.cid, function(err,data){
+		if(err) throw err
+		res.send(data);
 	})
 });
 

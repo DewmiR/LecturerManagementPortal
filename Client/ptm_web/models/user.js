@@ -13,6 +13,7 @@ var UserSchema = new mongoose.Schema({
     type: String,
     phone:String,
     email: String,
+    gpa:String,
     lecturerPosition: String,
     image: String
 });
@@ -62,4 +63,9 @@ module.exports.addNewLecturer = function(callback){
     
 };
 
+
+
+module.exports.getUsers = function(id, callback){
+    User.findById(id, callback);
+}
 

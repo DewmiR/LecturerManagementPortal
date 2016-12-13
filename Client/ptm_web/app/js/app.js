@@ -59,9 +59,13 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/test.html',
       controller: 'testController'
     }).
-    when('/courseGroupForum', {
+    when('/courseGroupForum/:gid?', {
       templateUrl: 'views/groupForum.html',
       controller: 'GroupModuleForumController'
+    }).
+     when('/viewAllTeamMembers/:cid?', {
+      templateUrl: 'views/allTeamMembers.html',
+      controller: 'teamMembersController'
     }).
     otherwise({
       redirectTo: '/login'

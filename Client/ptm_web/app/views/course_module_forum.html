@@ -14,12 +14,15 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand with-text" title="PSD to HTML" href="index.html">EduPress.</a>
+                            <img src="upload/sliit.png">
+                            
                         </div>
+                        <a class="navbar-brand with-text" title="PSD to HTML" href="index.html">SLIIT</a>
                         <!-- end navbar header -->
 
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
+<!--
                                 <li class="dropdown yamm-fw"><a href="#" data-toggle="dropdown" class="dropdown-toggle active">Home <b class="fa fa-angle-down"></b></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -44,6 +47,8 @@
                                                     <div class="col-md-2 col-sm-4 col-xs-12">
                                                         <p>Course Pages</p>
                                                         <hr>
+-->
+<!--
                                                         <ul class="menu-item">
                                                             <li><a href="course-list.html">Courses List View</a></li>
                                                             <li><a href="course-grid.html">Courses Grid View</a></li>
@@ -73,7 +78,9 @@
                                                             <li><a href="blog-archive.html">Member Blog Archive</a></li>
                                                         </ul>
                                                     </div>
+-->
 
+<!--
                                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                                         <p>Popular Courses</p>
                                                         <hr>
@@ -95,6 +102,8 @@
                                                                     </a>
                                                                 </div>  
                                               
+-->
+<!--
                                                                 <div class="post clearfix">
                                                                     <a href="course-single.html">
                                                                         <img alt="" src="upload/pager_06.jpg" class="img-responsive alignleft">
@@ -105,7 +114,7 @@
 
                                                                 <a href="#" class="btn btn-primary">View all courses</a>
                                                             </div>   
-                                                        </div><!-- end postpager -->
+                                                        </div>
                                                     </div>
 
 
@@ -117,6 +126,8 @@
                                                 </div>
                                             </div>
                                         </li>
+-->
+<!--
                                     </ul>
                                 </li>
                                 <li><a title="" href="page-about.html">About</a></li>
@@ -149,7 +160,9 @@
                                     </ul>
                                 </li>
                                 <li><a title="" href="page-contact.html">Contact</a></li>
+-->
                             </ul>
+<!--                            klklkk-->
                             <ul class="nav navbar-nav navbar-right">
                                 
                                 <md-menu md-position-mode="target-right target">
@@ -223,16 +236,16 @@
                 <div class="row">
                     <hr class="invis">
                     <div class="content col-md-9 col-sm-12">
-                        <div class="blog-list course-list normal-list">
+                        <div class="blog-list course-list normal-list" ng-repeat="notice in noticesArray">
                             <div class="video-wrapper course-widget clearfix">
                                 <div class="row">
                                     <div class="col-md-0"> 
                                     </div><!-- end col-->
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" >
                                         <div class="widget-title clearfix">
-                                            <h3><a href="blog-single.html">Welcome to the EduPress Blog.</a></h3>
+                                            <h3><a href="blog-single.html">{{ notice.title }}</a></h3>
                                             <hr>
-                                            <p style="color:black">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                                            <p style="color:black">{{ notice.notice}}</p>
                                             <hr>
 
                                             <div class="bottom-line clearfix">
@@ -247,7 +260,7 @@
                                         
                                         <div class="course-meta clearfix">
                                             <div class="pull-left">
-                                                <p><i class="fa fa-clock-o"></i> 21 Jan 2016</p>
+                                                <p><i class="fa fa-clock-o"></i>{{notice.time }}</p>
                                             </div>
                                             <div class="pull-right">
                                                 <p><a href="blog-single.html"><i class="fa fa-comments-o"></i> 12</a></p>
@@ -267,6 +280,9 @@
                                 </div>
                             </div>
                         </div><!-- end row -->
+                        
+                         
+                        
 
                         <div class="row text-center">
                             <div class="col-md-12">
@@ -306,13 +322,13 @@
                             </form>
                         </div><!-- end widget -->
                         
-                        <div class="widget clearfix" ng-if="!groupFormedStatus">
+                        <div class="widget clearfix" ng-if="!groupFormedStatus && !pending && !accepted">
                             <div class="widget-title">
                                 <h3>Friends Portal</h3>
                                 <hr>
                             </div><!-- end widget-title -->
                             <div class="tags clearfix">
-                                <a href="#/course_friends/{{ studentId }}">My Friends</a>
+<!--                                <a href="#/course_friends/{{ studentId }}">My Friends</a>-->
                                 <a href="" ng-click="showAdvanced($event)">Create Group</a>
 <!--                                <a href="#/all_module_groups">Create Group</a>-->
                                 <a href="#/all_module_groups/{{ studentId }}">MemberShipe</a>
@@ -320,7 +336,17 @@
                         </div><!-- end widget -->
                         <!-- ---->
                         
-                        <div class="widget clearfix" ng-if="groupFormedStatus && lecturerAcceptStatus">
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Team Members</h3>
+                                <hr>
+                            </div><!-- end widget-title -->
+                            <div class="tags clearfix">
+                                <a href="#/viewAllTeamMembers/{{ studentId }}">View Members</a>
+                            </div><!-- end tags -->
+                        </div><!-- end widget -->
+                        
+                        <div class="widget clearfix" ng-if="(groupFormedStatus && lecturerAcceptStatus) || pending">
                             <div class="widget-title">
                                 <h3>Friends Portal</h3>
                                 <hr>
@@ -330,13 +356,13 @@
                             </div><!-- end tags -->
                         </div><!-- end widget -->
                         
-                        <div class="widget clearfix" ng-if="groupForumStatus">
+                        <div class="widget clearfix" ng-if="groupForumStatus && !pending">
                             <div class="widget-title">
                                 <h3>Group Forum</h3>
                                 <hr>
                             </div><!-- end widget-title -->
                             <div class="tags clearfix">
-                                <a href="#">Go to Group Forum</a>
+                                <a href="#/courseGroupForum/{{ groupIdForLec }}">Go to Group Forum</a>
                             </div><!-- end tags -->
                         </div><!-- end widget -->
                         

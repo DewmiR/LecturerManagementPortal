@@ -35,6 +35,9 @@ module.exports.getMyFriendsRequests = function(id,callback){
 module.exports.getGroupId = function(userId,courseid,callback){
 	Request.find({ requestFrom:userId , courseId:courseid , acceptStatus:"1" },callback);
 }
+module.exports.getAcceptedStatus = function(userId,courseid,callback){
+	Request.find({ requestFrom:userId , courseId:courseid },callback);
+}
 module.exports.acceptFriendRequest = function(id,callback){
 	Request.update({ _id:id },{ $set:{ status:"1",acceptStatus:"1"}},callback);
 }
