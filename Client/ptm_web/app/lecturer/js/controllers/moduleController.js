@@ -15,7 +15,9 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
         
     };
 
-
+    /**
+     * load all modules at init
+     */
     $scope.loadModulesFirstYear = function () {
         var params = {};
         $http({
@@ -56,6 +58,9 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
         );
     }
 
+    /**
+     * get all lecturers at init
+     */
     $scope.getLecturers = function () {
         var params = {};
         $http({
@@ -83,6 +88,9 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
         $scope.formData.enkey="";
     }
 
+    /**
+     * create a new module
+     */
     $scope.createModuleFormSubmit = function () {
 
         $http.post('/createModuleFormSubmit', {

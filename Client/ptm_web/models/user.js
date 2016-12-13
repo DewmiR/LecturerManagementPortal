@@ -79,9 +79,6 @@ module.exports.getEmailOfUserByName = function(name, callback){
 }
 
 
-
-
-
 module.exports.getUsers = function(id, callback){
     User.findById(id, callback);
 }
