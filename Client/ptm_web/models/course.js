@@ -15,7 +15,8 @@ var CourseSchema = new mongoose.Schema({
     created: String,
     abbreviation: String,
     description: String,
-    maxGroupMembers: String
+    maxGroupMembers: String,
+    assignmentCriteria: [String]
 });
 
 var Course = module.exports = mongoose.model('Course',CourseSchema);
@@ -82,4 +83,11 @@ module.exports.getModulesInCharge = function(lecInCharge,callback){
     Course.find({lecInCharge:lecInCharge},callback);
 }
 
+module.exports.changeMaxGroupMembers = function(moduleName,maxGroupMembers,callback){
+    Course.update({courseName:moduleName},{ maxGroupMembers: maxGroupMembers }, callback);
+}
+
+module.exports.changeAssignmentCriteria = function(moduleName,midEv,finalEv,finalDoc,callback){
+    Course.update({courseName:moduleName},{ assignmentCriteria: [midEv,finalEv,finalDoc] }, callback);
+}
 

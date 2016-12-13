@@ -1,4 +1,4 @@
-myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$routeParams', function($scope,$http,$location,$routeParams) {
+myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$routeParams','toastr', function($scope,$http,$location,$routeParams,toastr) {
  	
 
       	
@@ -8,7 +8,36 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
         $scope.isTeamLeader=true;
         $scope.getCurrentUser();
         $scope.group=[];
+       // $scope.checkRequestSent();
         $scope.getAllGroups();
+    }
+    
+    
+    $scope.checkRequestSent = function (){
+
+        $http.post('/getUser').success(
+        function(data){
+           $scope.currentUserId=data._id;
+            console.log($scope.currentUserId);
+            
+            $http.post('/').success(
+            function(data){
+               $scope.currentUserId=data._id;
+
+            }
+            ).error(
+                function(error){
+                    console.log(error)
+                }
+            );
+            
+            
+        }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
     }
 
     $scope.getAllGroups = function (){
@@ -19,8 +48,10 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
             cid: $scope.courseId
             }).success(
                 function(data){
-                    //console.log(data);
+                    console.log(data);
                     for(var x=0;x<data.length;x++){
+                        
+        
                         
                         console.log($scope.currentUserId);
                         if(data[x].userId==$scope.currentUserId){
@@ -83,6 +114,7 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
         $http.post('/getUser').success(
             function(data){
                 console.log("Sending request to " + id + " from "+data._id+"...")
+                toastr.success('Resquest Sent Successfully!', 'Good Job');
 
                 $http.post('/sendRequestToFriend', {
                     from: data._id,
@@ -95,12 +127,45 @@ myApp.controller('ModuleGroupController', ['$scope','$http','$location', '$route
                     pending: "1"
                 }).success(
                     function(data){
-                        if(data == "pass"){
-                            //$location.url('/profile');
+                        
+//                        if(data == "pass"){
+//                            //$location.url('/profile');
+//
+//                        }else{
+//                            //$location.url('/login');
+//                        }
+                        console.log(data);
+                        
+                        $http.post('/getUser').success(
+                        function(data){
+                           $scope.currentUserId=data._id;
+                           
+                            
+                            $http.post('/updatePendingStatusInv', {
+                                                        uid: data._id,
+                                                        cid: $routeParams.id
+                                                    }).success(
+                                                        function(data){
+                                                            console.log(data);
 
-                        }else{
-                            //$location.url('/login');
+
+
+                                                        }
+                                                    ).error(
+                                                        function(error){
+                                                          console.log(error)
+                                                        }
+                                                    );
+                            
                         }
+                        ).error(
+                            function(error){
+                                console.log(error)
+                            }
+                        );
+                        
+                        
+                        
                     }
                 ).error(
                     function(error){

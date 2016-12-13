@@ -20,6 +20,10 @@ module.exports.getGroupCount = function(gid,callback){
     courseGroupMembers.count({ groupId:gid },callback);
 }
 
+module.exports.getGroupMembers = function(gid,callback){
+    courseGroupMembers.find({ groupId:gid },callback);
+}
+
 //module.exports.getLecturerAcceptStaus = function(gid,callback){
 //    courseGroupMembers.find({ groupId:gid },callback);
 //}

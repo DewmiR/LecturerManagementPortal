@@ -8,6 +8,7 @@ var EnrollSchema = new mongoose.Schema({
 	userName: String,
 	userImage: String,
     userType : String,
+    pendingStatus: String,
     requestAcceptStatus : String
 });
 
@@ -30,6 +31,7 @@ module.exports.addNewEnrollment = function(enrollment,callback){
       enroll.userId = enrollment.student_id;
       enroll.userName = enrollment.student_name;
       enroll.userImage = "testi_02.png";
+      enroll.pendingStatus = "0";
       enroll.requestAcceptStatus = "0";
       enroll.save(callback);
 };
@@ -38,7 +40,20 @@ module.exports.isEnrolled = function(userId, callback){
     Enroll.find({ userId: userId },callback);
 };
 
+module.exports.isPending = function(userId,cid,callback){
+    Enroll.find({ userId: userId,courseId:cid },callback);
+};
+
+
 module.exports.setRequestAcceptStatus = function(id,cid,callback){
 	Enroll.update({ userId:id,courseId:cid },{ $set:{ requestAcceptStatus:"1" }},callback);
+};
+
+module.exports.updatePendingStatus = function(id,cid,callback){
+	Enroll.update({ userId:id,courseId:cid },{ $set:{ pendingStatus:"0" }},callback);
+};
+
+module.exports.updatePendingStatusInv = function(id,cid,callback){
+	Enroll.update({ userId:id,courseId:cid },{ $set:{ pendingStatus:"1" }},callback);
 };
 

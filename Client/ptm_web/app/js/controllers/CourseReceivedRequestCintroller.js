@@ -1,4 +1,4 @@
-myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','toastr','$location', '$routeParams', function($scope,$http,$location,toastr,$routeParams) {
+myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','$location', '$routeParams','toastr', function($scope,$http,$location,$routeParams,toastr) {
 
   //  $scope.$parent.body_class = "leftmenu memberprofile";
 
@@ -36,7 +36,7 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','toastr','
    
    $scope.acceptRequest = function(rid,gID,cID,rFromID){
        console.log(gID);
-
+toastr.success('Accepted!', 'Good Job');
        
        $http.post('/acceptFriendRequest', {
                 status: "1",
@@ -88,7 +88,28 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','toastr','
                                                     );
 
 
-                            //
+                            //update pending status
+                            
+                            
+                             $http.post('/updatePendingStatus', {
+                                                        uid: $routeParams.id,
+                                                        cid: $routeParams.cid
+                                                    }).success(
+                                                        function(data){
+                                                            console.log(data);
+
+
+
+                                                        }
+                                                    ).error(
+                                                        function(error){
+                                                          console.log(error)
+                                                        }
+                                                    );
+                            
+                            
+                            
+                            
                         }
                     ).error(
                         function(error){
@@ -109,6 +130,7 @@ myApp.controller('CourseReceivedRequestCintroller', ['$scope','$http','toastr','
    
    $scope.declineRequest = function(rid){
        console.log("done");
+       toastr.error('Declined!', 'Woops');
        
         $http.post('/diclineFriendRequest', {
                 status: "1",
