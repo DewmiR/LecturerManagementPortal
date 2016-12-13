@@ -58,6 +58,10 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/supervisorCalendar.html',
         controller: 'supervisorController'
     }).
+//    when('/teamAcceptView', {
+//        templateUrl: 'views/teamAcceptView.html',
+//        controller: 'teamAcceptView'
+//    }).
     otherwise({
       redirectTo: '/lecturer'
     });

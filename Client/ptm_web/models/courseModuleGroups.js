@@ -26,6 +26,10 @@ module.exports.getAllCourseGroups = function(cid,callback){
     courseModuleGroups.find({ courseId:cid },callback);
 }
 
+module.exports.getModuleTeams = function(cid,callback){
+    courseModuleGroups.find({ courseId:cid },callback);
+}
+
 module.exports.updateMemberCount = function(gid,callback){
    // console.log(gid);
 	courseModuleGroups.update({ _id:gid },{ $inc:{ memberCount:1} },callback);

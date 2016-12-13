@@ -253,6 +253,15 @@ app.post('/getUsers', function (req, res) {
 	});
 });
 
+app.post('/getModuleTeams', function (req, res) {
+   // console.log(req.body.cid)
+	courseModuleGroups.getModuleTeams(req.body.cid,function(err,groups){
+		if(err) throw err;
+    //   console.log(groups);
+		res.send(groups);
+	});
+});
+
 
 app.post('/createGroups', function (req, res) {
 

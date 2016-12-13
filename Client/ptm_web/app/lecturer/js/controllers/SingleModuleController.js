@@ -7,6 +7,8 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
     $scope.init = function(){
 
         console.log("Init started(single module)");
+        $scope.teams=[];
+        $scope.loadAllGroups();
         $scope.moduleId = $routeParams.id;
         $scope.moduleDetails = [];
         $scope.lecturers = [];
@@ -15,6 +17,23 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         $scope.loadSingleModules();
         $scope.loadLecturers();
     };
+    
+    $scope.loadAllGroups = function () {
+        console.log("woops");
+        $http.post('/getModuleTeams', {
+            cid: $routeParams.id
+        }).success(
+            function(data){
+               console.log(data);
+                Array.prototype.push.apply($scope.teams, data);
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+
+    }
 
     $scope.loadSingleModules = function () {
  
