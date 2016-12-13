@@ -46,3 +46,9 @@ module.exports.getGroupIdFromGroup = function(userId,courseid,callback){
 module.exports.getLecturerAcceptStaus = function(gid,callback){
     courseModuleGroups.findById(gid,callback);
 }
+
+
+module.exports.UpdateLecturerAcceptStaus = function(id,callback){
+    courseModuleGroups.update({ _id:id },{ $set:{ lecturerAccepted:"1" }},callback);
+}
+

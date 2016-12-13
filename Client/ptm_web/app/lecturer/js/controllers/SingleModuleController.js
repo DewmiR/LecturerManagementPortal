@@ -8,6 +8,8 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
 
         console.log("Init started(single module)");
         $scope.teams=[];
+        $scope.allMembers=[];
+        $scope.members=[];
         $scope.loadAllGroups();
         $scope.moduleId = $routeParams.id;
         $scope.moduleDetails = [];
@@ -34,6 +36,49 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
 
     }
+    
+    $scope.viewMembers = function (gid){
+        
+        console.log(gid);
+        $http.post('/getGroupMembers', {
+            gid: gid
+        }).success(
+            function(data){
+                console.log("iggg");
+               console.log(data);
+                
+                   for(var x=0;x<data.length;x++){
+                    console.log(x);
+                       
+                       $http.post('/getUsers', {
+                            uid: data[x].userId
+                        }).success(
+                            function(data){
+                             //  console.log(data);
+                                $scope.allMembers.push(data);
+                               // console.log($scope.allMembers);
+                              // Array.prototype.push.apply($scope.members, data);
+                            }
+                        ).error(
+                            function(error){
+                                console.log(error)
+                            }
+                        );
+                       
+                       
+                }
+                console.log($scope.allMembers);
+                 Array.prototype.push.apply($scope.members, $scope.allMembers);
+                $scope.allMembers=[];
+                
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+       
+    }
 
     $scope.loadSingleModules = function () {
  
@@ -51,6 +96,26 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
                 console.log(error)
             }
         );
+    }
+    
+    $scope.acceptTeam = function (id) {
+        console.log(id);
+        
+        
+        
+        $http.post('/UpdateLecturerAcceptStaus', {
+            id: id
+        }).success(
+            function(data){
+                console.log(data);
+                $mdToast.show($mdToast.simple().textContent("Accepted Successfully").position('bottom right').hideDelay(5000));
+            }
+        ).error(
+            function(error){
+                console.log(error)
+            }
+        );
+        
     }
 
     $scope.showLecturersDiv = function () {

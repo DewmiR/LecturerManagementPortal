@@ -120,9 +120,34 @@
                                             
                                         </td>
                                         <td class="project-actions">
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> View </a>
-                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Accept </a>
+<!--                                            <a href="#" class="btn btn-white btn-sm" ng-click="viewMembers(team._id)"><i class="fa fa-folder"></i> View </a>-->
+                                            <button type="button" class="btn btn-white btn-sm" data-toggle="modal" data-target="#myModal4" ng-click="viewMembers(team._id)">View</button>
+                                            
+                                            <button type="button" class="btn btn-white btn-sm" ng-click="acceptTeam(team._id)">Accept</button>
+<!--                                            <a href="#" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Accept </a>-->
                                         </td>
+                                        
+                                         <div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true" >
+                                <div class="modal-dialog">
+                                    <div class="modal-content animated fadeIn">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+<!--                                            <i class="fa fa-clock-o modal-icon"></i>-->
+                                            <h4 class="modal-title">Group Members</h4>
+<!--                                            <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>-->
+                                        </div>
+                                        <div class="modal-body" ng-repeat="member in members">
+                                            <p><strong>{{ member.name }}</strong></p>
+                                            <p><strong>{{ member.email }}</strong></p>
+                                            <p><strong>{{ member.gpa }}</strong></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                                     </tr>
 
      

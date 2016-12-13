@@ -245,11 +245,24 @@ app.post('/getAllMessages', function (req, res) {
 	});
 });
 
+
+
 app.post('/getUsers', function (req, res) {
-	User.getUsers(req.body.id,function(err,groups){
+    console.log(req.body.uid);
+	User.getUsers(req.body.uid,function(err,groups){
 		if(err) throw err;
        // console.log(courses);
 		res.send(groups);
+	});
+});
+
+
+app.post('/UpdateLecturerAcceptStaus', function (req, res) {
+    //console.log(req.body.id);
+	courseModuleGroups.UpdateLecturerAcceptStaus(req.body.id,function(err,groups){
+		if(err) throw err;
+       // console.log(courses);
+		res.send("Success");
 	});
 });
 
