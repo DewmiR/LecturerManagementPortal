@@ -77,3 +77,6 @@ module.exports.getEmailOfUserByName = function(name, callback){
     User.findOne(query, callback);
 }
 
+
+
+

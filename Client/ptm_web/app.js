@@ -20,6 +20,7 @@ var Project = require("./models/project");
 var courseModuleGroups = require("./models/courseModuleGroups");
 var courseGroupMembers = require("./models/courseGroupMembers");
 var Meeting =  require("./models/meeting");
+var DeletedMeeting =  require("./models/deletedMeeting");
 var projects = require('./routes/projects');
 
 mongoose.connect("mongodb://localhost:27017/ptm_db");
@@ -50,23 +51,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-/*var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
-var transporter = nodemailer.createTransport();
+//var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+//var transporter = nodemailer.createTransport();
 
-var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
+//var transporter = nodemailer.createTransport('smtps://dewDevops%40gmail.com:intel@smtp.gmail.com');
 
-
+/*
 var transporter = nodemailer.createTransport('direct',{
 	debug: true,
-});*/
-
+});
+*/
 
 var transporter = nodemailer.createTransport({
 	service: 'Gmail',
 	auth: {
 		user: 'dewDevops@gmail.com',
 		pass: 'intel@123'
- 	}
+	}
 });
 
 
@@ -640,21 +641,24 @@ app.post('/changeEnrolmentKey', function (req, res) {
 
 });
 
-/*app.post('/addNewLecturer', function (req, res) {
+app.post('/addNewLecturer', function (req, res) {
 
 	User.addNewLecturer(function (err) {
 		if(err) throw err;
 		res.send("pass");
 	});
 
-});*/
+});
 
 
 /*
  * Send meeting requests
  * */
 app.post('/sendMeetingReq', function (req,res) {
-    console.log(req.body.body);
+	console.log("to");
+    console.log(req.body.to);
+	console.log("from");
+	console.log(req.body.from);
 
 	var newMeeting = new Meeting({
 		header: req.body.subject,
@@ -666,15 +670,15 @@ app.post('/sendMeetingReq', function (req,res) {
 		venue:req.body.venue,
 		year :req.body.year,
 		month:req.body.month,
-		status:"Pending"
+		status:"accepted"
 	});
 
 	Meeting.createMeeting(newMeeting,function (err,data) {
-		console.log(data);
+		//console.log(data);
 		if(err) throw err;
 	});
 
-	/*var mailOptions = {
+	var mailOptions = {
 		from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
 		to: req.body.to, // list of receivers
 		subject: req.body.subject, // Subject line
@@ -686,27 +690,53 @@ app.post('/sendMeetingReq', function (req,res) {
 			return console.log(error);
 		}
 		console.log('Message sent: ' + info.response);
-	});*/
+	});
 
 });
 
 
+
+app.post('/GetDeletedMeetings', function (req,res) {
+
+	console.log(req.body.header);
+	console.log(req.body.body);
+	console.log(req.body.date);
+	console.log(req.body.time);
+	
+	var newDeletedMeeting = new DeletedMeeting({
+		header: req.body.header,
+		body: req.body.body,
+		date: req.body.date,
+		time: req.body.time,
+		from: req.body.from,
+		to: req.body.to,
+		venue: req.body.venue
+	});
+
+	DeletedMeeting.createDelMeeting(newDeletedMeeting, function (err, data) {
+		//console.log(data);
+		if (err){
+		  console.log(err);
+		}
+	});
+});
 /*
  * API end point to get all meetings
  * */
 app.post('/getMeetings', function (req,res) {
-	console.log(req.body.user);
-	Meeting.getAllMeetings(req.body.user,req.body.year	,function (err,meetings) {
+
+	Meeting.getAllMeetings(req.body.user,req.body.date	,function (err,meetings) {
 		if(err) throw err;
 		res.send(meetings);
 	});
 });
 
 app.post('/getMeetingsForMonth', function (req,res) {
-	
-	Meeting.getMeetingsForMonth(req.body.user,req.body.year	,req.body.month,function (err,meetings) {
+
+	Meeting.getMeetingsForMonth(req.body.user,req.body.date,req.body.month,function (err,meetings) {
 		if(err) throw err;
 		res.send(meetings);
+		console.log(meetings);
 	});
 });
 
@@ -739,6 +769,15 @@ app.post('/deleteMeeting', function (req,res) {
 		res.send(meeting);
 	});
 });
+
+app.post('/removeAssignLecturers', function (req,res) {
+
+	assignedLecs.DeleteLecturer(req.body._id,function (err,lecturer) {
+		if(err) throw err;
+		res.send(lecturer);
+	});
+});
+
 
 app.post('/addLecturerFormSubmit', function (req, res) {
 	var randomPassword = Math.random().toString(36).slice(-8);

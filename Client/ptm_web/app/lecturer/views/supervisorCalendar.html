@@ -1,3 +1,5 @@
+
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9">
         <h2>All Events</h2>
@@ -25,7 +27,7 @@
                         <h4>{{allMeetings.header}}</h4>
                         <p>{{allMeetings.body}}</p>
                         <h5><B>Date : {{allMeetings.date}}</B></h5>
-                        <h5><B>Date : {{allMeetings.time}}</B></h5>
+                        <h5><B>Time : {{allMeetings.time}}</B></h5>
                         <button type="button" ng-click="getAppDeatils(allMeetings._id)"  data-toggle="modal" data-target="#myModal5"><B><small>Edit</small></B></button>
                         <!--<a data-toggle="modal" data-target="#myModal6"><i class="fa fa-trash-o "></i></a>-->
                         <a ng-click="confirmCancel(allMeetings._id)"><i class="fa fa-trash-o "></i></a>
@@ -49,25 +51,24 @@
 
                     <form class="form-horizontal" name="updateMeeting">
                     <div class="form-group"><label class="col-md-2 control-label">To :</label>
-                        <div class="col-lg-10"><label class="control-label">{{appoinment.to}}</label>
+                        <div class="col-lg-10"><label class="control-label " ng-model="emailTo">{{appoinment.to}}</label>
                         </div>
                     </div>
 
 
                         <div class="form-group"><label class="col-lg-2 control-label" style="margin-left:65px">Date</label>
                                                 <label class="col-lg-3 control-label" style="margin-left:30px">Time</label>
-                                                <label class="col-lg-2 control-label" style="margin-left:54px" >Venue</label>
+                                                <div class="col-md-2"></div>
+                                                <label class="col-lg-2 control-label" >Venue</label>
                         </div>
 
                         <div class="col-md-1"></div>
                         <div class="form-group" id="data_1">
-                            <div class="input-group date">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name ="appDate" ng-model="appoinment.date" style="width: 110px">
-                                <div class="col-md-1"></div>
-                                <input type="text" class="form-control" ng-model="appoinment.time"  style="width: 100px">
-                                <div class="col-md-1"></div>
-                                <input type="text" class="form-control" ng-model="appoinment.venue" style="width: 100px">
-                            </div>
+                            <div class="col-md-1"><input type="" id="datepicker"  ng-model="appoinment.date"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-1"> <input type="text"  ng-model="appoinment.time" ></div>
+                            <div class="col-md-3"></div>
+                            <input type="text"  ng-model="appoinment.venue" style="width: 100px">
                             <div class="col-md-1"></div>
                         </div>
                         <div>
@@ -98,7 +99,7 @@
                                 <button type="button" class="btn btn-primary" ng-click="updateAppoinment(appoinment._id)" ><i class="fa fa-reply"></i>Update Appointment</button>
                             </div>
                         </div>
-                    </form>
+          </form>
                 </div>
             </div>
         </div>
@@ -106,28 +107,14 @@
 </div>
 
 
-<!--Delete Appointment Dialog Pop up-->
-<!--<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="col-lg-8">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title" style="border-color: seagreen">
-                    <h5>Cancel Appointment</h5>
-                </div>
-                <div class="ibox-content">
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-
+<!--Date Picker-->
 <script>
-    $( function() {
-        $( "#datepicker" ).datepicker();
-    } );
+    $(document).ready(function() {
+        $("#datepicker").datepicker();
+    });
+
 </script>
+
 
 
 
