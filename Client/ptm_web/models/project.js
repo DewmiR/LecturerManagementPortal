@@ -66,6 +66,14 @@ module.exports.changeAssignedStatus = function(project,callback){
     Project.update(project,{assigned:"1"},callback);
 }
 
+module.exports.getProjectNotices = function(project,callback){
+
+    // console.log("Project came here :"+ project.name)
+
+    //Project.find(project).select('notices').exec(callback);
+
+    Project.find({name:project},callback);
+}
 
 /*
 module.exports.declineBit = function(bid,poc,callback){
