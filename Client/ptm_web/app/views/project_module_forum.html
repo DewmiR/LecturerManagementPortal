@@ -215,7 +215,7 @@
 
 
 
-                        <div class="blog-list course-list normal-list" ng-repeat="notice in notices">
+                        <div class="blog-list course-list normal-list" ng-repeat="notice in notices | orderBy:'-created_at'">
                             <div class="video-wrapper course-widget clearfix">
                                 <div class="row">
                                     <div class="col-md-0"> 
@@ -230,7 +230,7 @@
 
                                             <div class="bottom-line clearfix">
                                                 <div class="pull-left">
-                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_01.png" class="img-circle" alt="">
+                                                    <a href="member-profile.html" class="readmore"><img src="upload/default.png" class="img-circle" alt="">
                                                         {{notice.name}}
                                                     </a>
                                                 </div>

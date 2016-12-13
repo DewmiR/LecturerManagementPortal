@@ -1,5 +1,27 @@
 lectApp.controller('ProjectsController', ['$scope','$http','$location','$routeParams','$mdToast', function($scope,$http,$location,$routeParams,$mdToast) {
 
+
+
+
+    var getAllProjects = function(){
+        $http({
+            method: 'GET',
+            url:'/projects/getAllProjects'
+        }).then(
+                function success(response) {
+                    console.log(response)
+                    $scope.projects = response.data
+                    $scope.selectedOption = $scope.projects[0];
+                },
+                function error(error) {
+                    console.log('Failed to load courses');
+                }
+        );
+    }
+
+    getAllProjects()
+
+
     $http.post('/getUser').success(
         function(user){
             console.log("Logged user Id: "+ user._id);
@@ -22,6 +44,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
                     $scope.formData.pname="";
                     $scope.formData.pdes="";
+                    getAllProjects()
 
                     $mdToast.show($mdToast.simple().textContent("Project Successfully Created!").position('bottom right').hideDelay(5000));
                     console.log("created")
@@ -38,19 +61,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 	}
 
 
-    $http({
-        method: 'GET',
-        url:'/projects/getAllProjects'
-    }).then(
-            function success(response) {
-                console.log(response)
-                $scope.projects = response.data
-                $scope.selectedOption = $scope.projects[0];
-            },
-            function error(error) {
-                console.log('Failed to load courses');
-            }
-    );
+
 
     $scope.postNoticeFormSubmit = function() {
 
@@ -66,6 +77,12 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
                     description: $scope.formData.notice_desc
                 }).success(
                     function(data){
+                        
+                        $scope.formData.notice_title="";
+                        $scope.formData.notice_desc="";
+
+                        $mdToast.show($mdToast.simple().textContent("Notice Successfully Posted!").position('bottom right').hideDelay(5000));
+
                        console.log(data)
                     }
                 ).error(
@@ -86,18 +103,23 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 
+    var getAllProjects = function(){
+        $http({
+            method: 'GET',
+            url:'/projects/getAllProjects2'
+        }).then(
+                function success(response) {
+                    $scope.projects = response.data
+                },
+                function error(error) {
+                    console.log('Failed to load courses');
+                }
+        );
 
-    $http({
-        method: 'GET',
-        url:'/projects/getAllProjects'
-    }).then(
-            function success(response) {
-                $scope.projects = response.data
-            },
-            function error(error) {
-                console.log('Failed to load courses');
-            }
-    );
+    }
+
+    getAllProjects()
+
 
     $http({
         method: 'GET',
@@ -164,7 +186,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
                             '<h3>'+name+'</h3>' +
                             '<p>Please Select the Course</p>' +
                              '<md-select ng-model="ctrl">' +
-                                '<md-option ng-repeat="course in courses" ng-value="course">{{course.courseName}}</md-option>' +
+                                '<md-option ng-repeat="(index,course) in courses" ng-value="course" ng-selected="index == 0">{{course.courseName}}</md-option>' +
                             '</md-select>' +
                           '</div>' +
                         '</md-dialog-content>' +
@@ -196,7 +218,27 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
                 }).success(
                     function(data){
                         if(data == "pass"){
-                            $mdToast.show($mdToast.simple().textContent(projectName+ " successfuly assigned to "+ctrl.courseName).position('bottom right').hideDelay(5000));
+
+                            //1=> assigned
+                            //0=>not assigned
+                            //set assigned status to 1       
+                            //assigned
+
+                            $http.post('/projects/markAssignStatusOfProject', {
+                                project: project
+                            }).success(
+                                function(data){
+                                    console.log("sucessfully status updated")
+                                    getAllProjects()
+                                    $mdToast.show($mdToast.simple().textContent(projectName+ " successfuly assigned to "+ctrl.courseName).position('bottom right').hideDelay(5000));
+                                }
+                            ).error(
+                                function(error){
+                                    console.log(error);
+                                }
+                            );
+
+                            
                         }else{
                             $mdToast.show($mdToast.simple().textContent("Project assign Failed!").position('bottom right').hideDelay(5000));
                         }
