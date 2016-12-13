@@ -44,8 +44,11 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
 
     }
 
+    /**
+     * load all modules at init
+     */
     $scope.loadSingleModules = function () {
- 
+
 
         $http.post('/getModulesSingle', {
             id: $scope.moduleId
@@ -67,15 +70,24 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    /**
+     * show lectuer div when change lec in charge clicked
+     */
     $scope.showLecturersDiv = function () {
         $scope.lecturersDiv = true;
         console.log("lec div shown");
     }
 
+    /**
+     * hide lecturer div when change lec in charge
+     */
     $scope.hideLecturersDiv = function () {
         $scope.lecturersDiv = false;
     }
 
+    /**
+     * get all lecturers in the system
+     */
     $scope.loadLecturers = function () {
         var params = {};
         $http({
@@ -122,6 +134,11 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    /**
+     * change enrollment key of a module
+     * @param moduleName
+     * @param newKey
+     */
     $scope.changeEnrolmentKey = function (moduleName,newKey) {
         console.log(newKey);
         $http.post('/changeEnrolmentKey', {
@@ -143,6 +160,11 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    /**
+     * change maximum numbers in a group
+     * @param moduleName
+     * @param maxGroupMembers
+     */
     $scope.changeMaxGroupMembers = function (moduleName,maxGroupMembers) {
         console.log(maxGroupMembers);
         $http.post('/changeMaxGroupMembers', {
@@ -165,6 +187,9 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    /**
+     * change assignment criteria
+     */
     $scope.changeAssignmentCriteria = function () {
 
         $http.post('/changeAssignmentCriteria', {
@@ -190,6 +215,9 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    /**
+     * post new notices
+     */
     $scope.postNotice = function () {
         console.log($scope.title);
         $http.post('/postNotice', {
@@ -213,6 +241,9 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         );
     }
 
+    /**
+     * get all notices at init
+     */
     $scope.loadAllNotices = function () {
         $http.post('/getAllNotices', {
             cid: $scope.moduleDetails._id
