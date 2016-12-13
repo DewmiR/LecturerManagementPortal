@@ -1,7 +1,7 @@
 /**
  * Created by PathmilaWK on 9/30/2016.
  */
-lectApp.controller('SingleModuleController', ['$scope','$http','$location','$routeParams', function($scope,$http,$location,$routeParams) {
+lectApp.controller('SingleModuleController', ['$scope','$http','$location','$routeParams','$mdToast', function($scope,$http,$location,$routeParams,$mdToast) {
 
     $scope.$parent.body_class = "";
     $scope.init = function(){
@@ -77,7 +77,7 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
             function(data){
                 if(data == "pass"){
                     $scope.moduleDetails.lecInCharge = lecName;
-
+                    $mdToast.show($mdToast.simple().textContent("Lecturer assigned successfully").position('bottom right').hideDelay(5000));
                 }else{
                     
                 }

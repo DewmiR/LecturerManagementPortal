@@ -14,12 +14,13 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
         $scope.minDate = moment().subtract(1, 'month');
         $scope.maxDate = moment().add(1, 'month');
 
-
         $scope.modInChg=false;
         $scope.getCurrentUser();
         $scope.name="";
         $scope.lecInchg=[];
         $scope.modInChgName=[];
+        $scope.modInChgID=[];
+
 
         $scope.alllecModules=[];
         $scope.alllecModulesDetails=[];
@@ -42,6 +43,8 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
         var d = new Date();
         $scope.month = d.getMonth()+1;
         $scope.year = d.getFullYear();
+        $scope.day = d.getDate();
+        $scope.today = $scope.month+'/'+$scope.day+'/'+$scope.year;
         $scope.status="Pending";
 
         $scope.allMeetings=[];
@@ -66,6 +69,13 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
         $scope.errorMsgSub="";
         $scope.errorBody="false";
         $scope.errorMsgBody="";
+        $scope.errorTo="";
+        $scope.errorMsgTo="";
+        
+        $scope.obj={};
+
+
+   
     };
 
 
@@ -104,7 +114,8 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
                 }else{
                     Array.prototype.push.apply($scope.lecInchg, data);
                     angular.forEach($scope.lecInchg, function(value){
-                        $scope.modInChgName.push(value.courseName);
+                        $scope.modInChgName.push(value);
+                        //$scope.modInChgName.push(value._id);
 
                      });
                 }
@@ -132,7 +143,7 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
                 }else{
                     Array.prototype.push.apply($scope.alllecModulesDetails, data);
                     angular.forEach($scope.alllecModulesDetails, function(value){
-                        $scope.alllecModules.push(value.courseName);
+                        $scope.alllecModules.push(value);
 
                     });
                 }
@@ -160,7 +171,7 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
                 }else{
                     Array.prototype.push.apply($scope.supModDetails, data);
                     angular.forEach($scope.supModDetails, function(value){
-                        $scope.allSupervisorModules.push(value.courseName);
+                        $scope.allSupervisorModules.push(value);
 
                     });
                 }
@@ -198,71 +209,291 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
     /*
     * Send meeting request
     * */
-   /* $scope.sendMeetingRequest = function () {
 
-        /!*$http.post('/getUser').success(
-            function(data){
-                $scope.from=data.email;
-                console.log($scope.from);
-
-                $scope.getMeetingDetails();
-            }
-        ).error(
-            function(error){
-                console.log(error)
-            }
-        );*!/
-           console.log("called");
-
-        $http({
-                  method: 'post',
-                  url:'/sendMeetingReq'
-             }).then(
-                    function success(response) {
-                         console.log(response);
-                     },
-                       function error(error) {
-                                console.log(error);
-                             }
-                );
-    };
-*/
     $scope.sendMeetingRequest=function () {
 
         $scope.to=$scope.mailto;
-        $scope.date=$scope.maildate;
+        $scope.date="12/28/2016";
         $scope.time=$scope.mailtime;
         $scope.venue=$scope.mailvenue;
         $scope.subject=$scope.mailsubject;
         $scope.body=$scope.mailbody;
+        $scope.from=$scope.name;
 
-        console.log($scope.maildate);
-        console.log($scope.mailtime);
+        if( angular.isUndefined($scope.mailvenue) || $scope.mailvenue == ""  || angular.isUndefined($scope.mailtime) ||
+            $scope.mailtime == "" || $scope.mailto == "" || angular.isUndefined($scope.mailto) )
+        {
 
-        $http.post('/sendMeetingReq',{
-            
-           from:$scope.from,
-           to:$scope.to,
-           date:$scope.date,
-           time:$scope.time,
-           venue:$scope.venue,
-           subject:$scope.subject,
-           body:$scope.body,
-           month:$scope.month,
-           year:$scope.year,
-           status:$scope.status 
-
-
-        }).success(
-            function(data){
-               // $scope.name=data.name;
-                console.log(data);
+            if(angular.isUndefined($scope.mailvenue) || $scope.mailvenue == "" ){
+                $scope.errorVenue="true";
+                $scope.errorMsgVenue="*Invalid Venue";
+            }else{
+                $scope.errorVenue="false";
+                $scope.errorMsgVenue="";
             }
-        ).error(
-            function(error){
-                console.log(error)
+
+            if(angular.isUndefined($scope.mailtime) || $scope.mailtime == "" ){
+                $scope.errorTime="true";
+                $scope.errorMsgTime="*Invalid Time";
+            }else{
+                $scope.errorTime="false";
+                $scope.errorMsgTime="";
             }
-        );
+
+            if(angular.isUndefined($scope.mailto) || $scope.mailto == "" ){
+                $scope.errorTo="true";
+                $scope.errorMsgTo="*Invalid Recipient";
+            }else{
+                $scope.errorTo="false";
+                $scope.errorMsgTo="";
+            }
+
+        }else if($scope.mailto != "" || angular.isDefined($scope,mailto)) {
+
+            $scope.errorVenue="false";
+            $scope.errorMsgVenue="";
+            $scope.errorTime="false";
+            $scope.errorMsgTime="";
+            $scope.errorVenue="false";
+            $scope.errorMsgVenue="";
+
+            $scope.atpos = $scope.to.indexOf("@");
+            $scope.dotpos = $scope.to.lastIndexOf(".");
+
+            if ($scope.atpos < 1 || $scope.dotpos < $scope.atpos + 2 || $scope.dotpos + 2 >= $scope.to.length) {
+                $scope.errorTo = "true";
+                $scope.errorMsgTo = "*Invalid Email";
+
+            } else {
+                $scope.errorTo = "";
+                $scope.errorMsgTo = "";
+
+                if ((angular.isUndefined($scope.mailsubject) || $scope.mailsubject == "" ) && (angular.isUndefined($scope.mailbody) || $scope.mailbody == "")) {
+
+                    sweet.show({
+                        title: 'Confirm',
+                        text: 'Send without Subject and Message Body?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes!',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+
+                            $http.post('/sendMeetingReq', {
+
+                                from: $scope.from,
+                                to: $scope.to,
+                                date: $scope.date,
+                                time: $scope.time,
+                                venue: $scope.venue,
+                                subject: " ",
+                                body: " ",
+                                month: $scope.month,
+                                year: $scope.year,
+                                status: $scope.status
+
+
+                            }).success(
+                                function (data) {
+                                    // $scope.name=data.name;
+
+
+                                    $scope.sentMail();
+                                }
+                            ).error(
+                                function (error) {
+                                    console.log(error)
+                                }
+                            );
+                            $scope.mailto ="";
+                            $scope.maildate = "";
+                            $scope.mailtime = "";
+                            $scope.mailvenue= "";
+                            $scope.mailsubject= "";
+                            $scope.mailbody= "";
+                            $scope.errorVenue="false";
+                            $scope.errorMsgVenue="";
+                            $scope.errorTime="false";
+                            $scope.errorMsgTime="";
+                            $scope.errorVenue="false";
+                            $scope.errorMsgVenue="";
+                            $('#myModal5').modal('hide');
+                            sweet.show('Sent!', 'Message Sent', 'success');
+                        } else {
+                            sweet.show('Cancelled', ' ', 'error');
+                        }
+                    });
+
+
+                }
+
+                else if(angular.isUndefined($scope.mailsubject) || $scope.mailsubject == "") {
+
+                    sweet.show({
+                        title: 'Confirm',
+                        text: 'Send without Subject?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes!',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+
+                            $http.post('/sendMeetingReq', {
+
+                                from: $scope.from,
+                                to: $scope.to,
+                                date: $scope.date,
+                                time: $scope.time,
+                                venue: $scope.venue,
+                                subject: " ",
+                                body: $scope.body,
+                                month: $scope.month,
+                                year: $scope.year,
+                                status: $scope.status
+
+
+                            }).success(
+                                function (data) {
+                                    // $scope.name=data.name;
+                                    console.log(data);
+                                    $scope.sentMail();
+                                }
+                            ).error(
+                                function (error) {
+                                    console.log(error)
+                                }
+                            );
+
+                            $scope.mailto ="";
+                            $scope.maildate = "";
+                            $scope.mailtime = "";
+                            $scope.mailvenue= "";
+                            $scope.mailsubject= "";
+                            $scope.mailbody= "";
+                            $scope.errorVenue="false";
+                            $scope.errorMsgVenue="";
+                            $scope.errorTime="false";
+                            $scope.errorMsgTime="";
+                            $scope.errorVenue="false";
+                            $scope.errorMsgVenue="";
+
+                            $('#myModal5').modal('hide');
+                            sweet.show('Sent!', 'Message Sent', 'success');
+                        } else {
+                            sweet.show('Cancelled', ' ', 'error');
+                        }
+                    });
+                }
+                else if(angular.isUndefined($scope.mailbody) || $scope.mailbody == ""){
+
+                    sweet.show({
+                        title: 'Confirm',
+                        text: 'Send without Message Body?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes!',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+
+                            $http.post('/sendMeetingReq', {
+
+                                from: $scope.from,
+                                to: $scope.to,
+                                date: $scope.date,
+                                time: $scope.time,
+                                venue: $scope.venue,
+                                subject: $scope.subject,
+                                body: " ",
+                                month: $scope.month,
+                                year: $scope.year,
+                                status: $scope.status
+
+
+                            }).success(
+                                function (data) {
+
+
+                                    console.log(data);
+                                }
+                            ).error(
+                                function (error) {
+                                    console.log(error)
+                                }
+                            );
+                            $scope.mailto ="";
+                            $scope.maildate = "";
+                            $scope.mailtime = "";
+                            $scope.mailvenue= "";
+                            $scope.mailsubject= "";
+                            $scope.mailbody= "";
+                            $scope.errorVenue="false";
+                            $scope.errorMsgVenue="";
+                            $scope.errorTime="false";
+                            $scope.errorMsgTime="";
+                            $scope.errorVenue="false";
+                            $scope.errorMsgVenue="";
+                            $('#myModal5').modal('hide');
+                            sweet.show('Sent!', 'Message Sent', 'success');
+                        } else {
+                            sweet.show('Cancelled', ' ', 'error');
+                        }
+                    });
+                }
+
+                else{
+                    $http.post('/sendMeetingReq', {
+
+                        from: $scope.from,
+                        to: $scope.to,
+                        date: $scope.date,
+                        time: $scope.time,
+                        venue: $scope.venue,
+                        subject: $scope.subject,
+                        body: $scope.body,
+                        month: $scope.month,
+                        year: $scope.year,
+                        status: $scope.status
+
+
+                    }).success(
+                        function (data) {
+
+                        }
+                    ).error(
+                        function (error) {
+                            console.log(error)
+                        }
+
+                    );
+
+                    $scope.mailto ="";
+                    $scope.maildate = "";
+                    $scope.mailtime = "";
+                    $scope.mailvenue= "";
+                    $scope.mailsubject= "";
+                    $scope.mailbody= "";
+                    $scope.errorVenue="false";
+                    $scope.errorMsgVenue="";
+                    $scope.errorTime="false";
+                    $scope.errorMsgTime="";
+                    $scope.errorVenue="false";
+                    $scope.errorMsgVenue="";
+                    $('#myModal5').modal('hide');
+                    sweet.show('Sent successfully');
+                }
+
+
+            }
+        }
     };
 
 
@@ -275,19 +506,17 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
          $http.post('/getUser').success(
              function(data){
                  $scope.name=data.name;
-                 console.log($scope.name);
+                 console.log($scope.today);
 
                  $http.post('/getMeetings',{
                      user : $scope.name,
-                     year :$scope.year
+                     date :$scope.today
                  }).success(
                      function(data){
                          $scope.allMeetings=[];
                          Array.prototype.push.apply($scope.allMeetings, data);
                          console.log($scope.allMeetings);
-                         /*angular.forEach($scope.allMeetings, function(value){
-                          $scope.allSupervisorModules.push(value.courseName);
-                          });*/
+                         
                      }
                  ).error(
                      function(error){
@@ -310,15 +539,11 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
     $scope.getAllMeetingsForMonths=function () {
         $http.post('/getUser').success(
             function(data){
-                $scope.name=data.name;
-                console.log($scope.year);
-                console.log($scope.name);
-                console.log($scope.month);
 
                 $http.post('/getMeetingsForMonth',{
                     user : $scope.name,
-                    year :$scope.year,
-                    month:$scope.month
+                    month :$scope.month,
+                    date:$scope.today
                 }).success(
                     function(data){
                         Array.prototype.push.apply($scope.meetings, data);
@@ -355,6 +580,7 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
         }).success(
             function(data){
                 $scope.appoinment=data;
+                console.log(data);
             }
         ).error(
             function(error){
@@ -410,12 +636,16 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
        }
      else {
 
+         $scope.errorSub="false";
+         $scope.errorMsgSub="";
          $scope.error="false";
          $scope.errorMsg="";
          $scope.errorTime="false";
          $scope.errorMsgTime="";
          $scope.errorVenue="false";
          $scope.errorMsgVenue="";
+         $scope.errorBody="false";
+         $scope.errorMsgBody="";
 
          $http.post('/updateMeetingAppointment',{
              _id : id,
@@ -430,6 +660,7 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
              function(data){
                  console.log(data);
                  $scope.getAllMeetings();
+                 $scope.success();
              }
          ).error(
              function(error){
@@ -437,8 +668,19 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
              }
 
          );
+
+           $scope.error="false";
+           $scope.errorMsg="";
+           $scope.errorTime="false";
+           $scope.errorMsgTime="";
+           $scope.errorVenue="false";
+           $scope.errorMsgVenue="";
             $scope.error="false";
             $scope.errorMsg="";
+           $scope.errorBody="false";
+           $scope.errorMsgBody="";
+           $scope.errorSub="false";
+           $scope.errorMsgSub="";
           $('#myModal5').modal('hide')
 
     }
@@ -462,6 +704,42 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
             closeOnCancel: false
         }, function(isConfirm) {
             if (isConfirm) {
+
+                $http.post('/findMeetingById',{
+                    id : id
+                }).success(
+                    function(data){
+                        $scope.appoinment=data;
+
+
+                        $http.post('/GetDeletedMeetings',{
+                            header:$scope.appoinment.header,
+                            body:$scope.appoinment.body,
+                            date:$scope.appoinment.date,
+                            time : $scope.appoinment.time,
+                            venue:$scope.appoinment.venue,
+                            to : $scope.appoinment.to,
+                            from:$scope.appoinment.from
+
+                        }).success(
+                            function(data){
+                                console.log(data);
+                                $scope.success();
+                            }
+                        ).error(
+                            function(error){
+                                console.log(error)
+                            }
+
+                        );
+                        
+                    }
+                ).error(
+                    function(error){
+                        console.log(error)
+                    }
+
+                );
                 console.log(id);
                 $http.post('/deleteMeeting',{
                     _id : id
@@ -477,11 +755,45 @@ lectApp.controller('supervisorController', ['$scope','$http','$location','sweet'
 
                 );
 
+
                 sweet.show('Deleted!', 'The appointment has been cancelled.', 'success');
             } else {
                 sweet.show('Cancelled', ' ', 'error');
             }
         });
+    };
+
+
+    $scope.discardEmail=function () {
+
+        sweet.show({
+            title: 'Confirm',
+            text: 'Discard Appointment?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, discard Appointment!',
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $('#myModal5').modal('hide');
+                sweet.show('Discarded!', 'The appointment discarded sucessfully', 'success');
+            } else {
+                sweet.show('Cancelled', ' ', 'error');
+            }
+        });
+    };
+
+    $scope.success = function() {
+        sweet.show('Updated successfully');
+    };
+
+
+
+
+    $scope.sentMail = function() {
+        sweet.show('Sent successfully');
     };
 
     $scope.init();
