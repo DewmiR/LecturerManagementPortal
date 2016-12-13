@@ -284,7 +284,10 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     $scope.success = function() {
         $mdToast.show($mdToast.simple().textContent("Lecturer assigned successfully").position('bottom right').hideDelay(5000));
     };
-    
+
+    /**
+     * add new lecturer to the system
+     */
     $scope.addLecturerFormSubmit = function () {
         $http.post('/addLecturerFormSubmit', {
             firstname: $scope.formData.firstname,
