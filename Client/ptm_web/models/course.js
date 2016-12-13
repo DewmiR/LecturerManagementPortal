@@ -32,7 +32,7 @@ module.exports.getAllCourses = function(callback){
 
 module.exports.getAllCoursesFirstYear = function(callback){
 	var year = '1st Year';
-	Course.find({ year:year },callback);
+	Course.find({},callback);
 }
 
 module.exports.getAllCoursesSecondYear = function(callback){
