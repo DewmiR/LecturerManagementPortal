@@ -833,7 +833,8 @@ app.post('/createModuleFormSubmit', function (req, res) {
 		year : req.body.year,
 		semester:req.body.semester,
         lecInCharge:req.body.lecInCharge,
-		status:"Active"
+		status:"Active",
+        maxGroupMembers:"4"
 	});
 
 	Course.createCourse(newCourse,function (err,data) {

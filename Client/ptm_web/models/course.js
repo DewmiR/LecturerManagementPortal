@@ -14,7 +14,8 @@ var CourseSchema = new mongoose.Schema({
     lastUpdated: String,
     created: String,
     abbreviation: String,
-    description: String
+    description: String,
+    maxGroupMembers: String
 });
 
 var Course = module.exports = mongoose.model('Course',CourseSchema);

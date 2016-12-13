@@ -50,6 +50,10 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/create_module.html',
         controller: 'moduleController'
     }).
+    when('/moduleDetails/:id?', {
+        templateUrl: 'views/modules_details.html',
+        controller: 'SingleModuleController'
+    }).
     when('/supervisorCal', {
         templateUrl: 'views/supervisorCalendar.html',
         controller: 'supervisorController'
