@@ -12,6 +12,7 @@ var UserSchema = new mongoose.Schema({
     post : String,
     phone:String,
     email: String,
+    gpa:String,
     lecturerPosition: String,
     image: String,
     staffNumber: String
@@ -79,4 +80,9 @@ module.exports.getEmailOfUserByName = function(name, callback){
 
 
 
+
+
+module.exports.getUsers = function(id, callback){
+    User.findById(id, callback);
+}
 

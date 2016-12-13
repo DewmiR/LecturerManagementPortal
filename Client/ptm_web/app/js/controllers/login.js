@@ -24,7 +24,7 @@ myApp.controller('LoginController', ['$scope','$http','$location','$window','toa
                 function(data){
                     if(data.userType == 'lecturer'){
                         //console.log("lecturer logged!!!")
-                        $window.open('http://localhost:3000/lecturer/#/lecturer','_self');
+                        $window.open('http://localhost:3000/lecturer/#/supervisorView','_self');
                         //$location.path('lecturer/#/lecturer');
                     }else{
                         $location.url('/my_coursee_grid');

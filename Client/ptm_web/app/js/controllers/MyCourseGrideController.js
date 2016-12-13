@@ -1,4 +1,4 @@
-myApp.controller('MyCourseGrideController', ['$scope','$http','$location','$mdDialog', function($scope,$http,$location,$mdDialog) {
+myApp.controller('MyCourseGrideController', ['$scope','$http','$location','$mdDialog','toastr', function($scope,$http,$location,$mdDialog,toastr) {
 
 $scope.$parent.body_class = "";
 
@@ -30,9 +30,19 @@ $scope.loadCourses = function () {
     }).then(
             function success(response) {
 
-              //  console.log(response.data)
+                $http.post('/getUser', {
+        }).success(
+            function(data){
+           // $scope.currentUser=data._id;
+            
+           
+                
+                
+                console.log("ddddddd")
+                console.log(data._id);
                  $http.post('/isEnrolled', {
-                    user_id: $scope.currentUser
+//                    user_id: $scope.currentUser
+                    user_id: data._id
                     }).success(
                         function(dataIsEnrolled){
                          console.log("isEnroll called");
@@ -70,6 +80,14 @@ $scope.loadCourses = function () {
                // console.log(response.data);
                // Array.prototype.push.apply($scope.courses, response.data);
                 //console.log($scope.courses)
+                
+                
+                }
+        ).error(
+            function(error){
+            console.log(error);
+            }
+        );
 
             },
             function error(error) {
@@ -94,41 +112,69 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
       .cancel('Cancel\'');
     $mdDialog.show(confirm).then(function(result) {
      // console.log(studentID);
-        console.log(courseID);
+        console.log(result);
+        if(typeof result === "undefined"){
+            console.log("Null");
+            toastr.error('Please Enter the Key!', 'Woops');
+        }else{
 
         $http.post('/getEnrollmentkeyByCourseId', {
         cid: courseID
         }).success(
-            function(data){
+            function(data){      
+                
                 console.log(data[0].enrollmentKey);
                 if(data[0].enrollmentKey==result){
                     console.log("Matched");
+                    
+                    $http.post('/getUser', {
+                    }).success(
+                        function(data){
+                        $scope.currentUser=data._id;
+                       
+                        
+                    
 
                        $http.post('/addNewEnrollment', {
                         course_id: courseID,
-                        student_id: studentID,
+                        student_id: data._id,
                         student_name: $scope.currentUserName
                     }).success(
                         function(data){
                            console.log(data);
                            $location.url('/course_module_forum/'+courseID); 
+                            toastr.success('You have successfully Enrolled!', 'Welcome');
                         }
                     ).error(
                         function(error){
                             console.log(error);
                         }
                     );
+                            
+                            }
+                    ).error(
+                        function(error){
+                        console.log(error);
+                        }
+                    );
+                    
 
+                }//-------------
+                else{
+                    console.log("wrong");
+                    toastr.error('Invalied Enrollment Key!', 'Woops');
                 }
+                        
+                        
 
-            }
+            } 
         ).error(
             function(error){
               console.log(error)
             }
         );
 
-
+    }
      }, function() {
         console.log("Don't");
     });

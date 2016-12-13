@@ -59,10 +59,14 @@ myApp.config(['$routeProvider','toastrConfig', function($routeProvider,toastrCon
       templateUrl: 'views/test.html',
       controller: 'testController'
     }).
-    when('/courseGroupForum', {
+    when('/courseGroupForum/:gid?', {
       templateUrl: 'views/groupForum.html',
       controller: 'GroupModuleForumController'
     }).
+     when('/viewAllTeamMembers/:cid?', {
+      templateUrl: 'views/allTeamMembers.html',
+      controller: 'teamMembersController'
+	 }).
     when('/project_module_forum/:id?', {
       templateUrl: 'views/project_module_forum.html',
       controller: 'ProjectModuleForumController'

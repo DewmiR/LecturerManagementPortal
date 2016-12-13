@@ -14,12 +14,15 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand with-text" title="PSD to HTML" href="index.html">EduPress.</a>
+                            <img src="upload/sliit.png">
+                            
                         </div>
+                        <a class="navbar-brand with-text" title="PSD to HTML" href="index.html">SLIIT</a>
                         <!-- end navbar header -->
 
                         <div id="navbar" class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
+<!--
                                 <li class="dropdown yamm-fw"><a href="#" data-toggle="dropdown" class="dropdown-toggle active">Home <b class="fa fa-angle-down"></b></a>
                                     <ul class="dropdown-menu">
                                         <li>
@@ -44,6 +47,8 @@
                                                     <div class="col-md-2 col-sm-4 col-xs-12">
                                                         <p>Course Pages</p>
                                                         <hr>
+-->
+<!--
                                                         <ul class="menu-item">
                                                             <li><a href="course-list.html">Courses List View</a></li>
                                                             <li><a href="course-grid.html">Courses Grid View</a></li>
@@ -73,7 +78,9 @@
                                                             <li><a href="blog-archive.html">Member Blog Archive</a></li>
                                                         </ul>
                                                     </div>
+-->
 
+<!--
                                                     <div class="col-md-3 col-sm-12 col-xs-12">
                                                         <p>Popular Courses</p>
                                                         <hr>
@@ -95,6 +102,8 @@
                                                                     </a>
                                                                 </div>  
                                               
+-->
+<!--
                                                                 <div class="post clearfix">
                                                                     <a href="course-single.html">
                                                                         <img alt="" src="upload/pager_06.jpg" class="img-responsive alignleft">
@@ -105,7 +114,7 @@
 
                                                                 <a href="#" class="btn btn-primary">View all courses</a>
                                                             </div>   
-                                                        </div><!-- end postpager -->
+                                                        </div>
                                                     </div>
 
 
@@ -117,6 +126,8 @@
                                                 </div>
                                             </div>
                                         </li>
+-->
+<!--
                                     </ul>
                                 </li>
                                 <li><a title="" href="page-about.html">About</a></li>
@@ -149,18 +160,20 @@
                                     </ul>
                                 </li>
                                 <li><a title="" href="page-contact.html">Contact</a></li>
+-->
                             </ul>
+<!--                            klklkk-->
                             <ul class="nav navbar-nav navbar-right">
                                 
                                 <md-menu md-position-mode="target-right target">
                                       <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                                        <li class="cartmenu"><i class="fa fa-bell"></i> <sup>{{ myRequests }}</sup></li>
+                                        <li class="cartmenu"><i class="fa fa-bell"></i> <sup> dfdfdfdfd</sup></li>
                                       </md-button>
                                       <md-menu-content width="4">
-                                        <md-menu-item ng-repeat="item in requestFromNameArr" ng-if="item.status==0">
+                                        <md-menu-item >
                                           <md-button ng-click="ctrl.announceClick($index)">
                                               <div layout="row" flex="" ng-click="test(item.requestFrom);">
-                                                <p flex="9" style="color:black">{{item.requestFromName}}</p>
+                                                <p flex="9" style="color:black">cvcvcvcvcvcvcvcvc</p>
 <!--                                                <md-icon md-menu-align-target="" md-svg-icon="call:portable-wifi-off" style="margin: auto 3px auto 0;"></md-icon>-->
                                                   <a href=""><i class="fa fa-comments-o" ></i></a>
                                                   
@@ -223,30 +236,33 @@
                 <div class="row">
                     <hr class="invis">
                     <div class="content col-md-9 col-sm-12">
-                        <div class="blog-list course-list normal-list" ng-repeat="message in courseMessages">
+                        <div class="blog-list course-list normal-list" >
                             <div class="video-wrapper course-widget clearfix">
                                 <div class="row">
                                     <div class="col-md-0"> 
                                     </div><!-- end col-->
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" >
                                         <div class="widget-title clearfix">
-<!--                                            <h3><a href="blog-single.html">Welcome to the EduPress Blog.</a></h3>-->
-                                            <p style="color:black">{{ message.message }}</p>
+                                            <h3><a href="blog-single.html">Prageeth</a></h3>
+                                            <hr>
+                                            <p style="color:black">C++,JAVA,PHP</p>
+                                            <hr>
+
                                             <div class="bottom-line clearfix">
                                                 <div class="pull-left">
-                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_01.png" class="img-circle" alt="">{{ message.name }}</a>
+                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_01.png" class="img-circle" alt="">GPA 3.6</a>
                                                 </div>
-<!--
                                                 <div class="pull-right">
                                                     <a href="blog-single.html" class="btn btn-sm btn-default">Read More</a>
                                                 </div>
--->
                                             </div><!-- end bottom -->
                                         </div><!-- end title -->
                                         
+                                        
+                                        
                                         <div class="course-meta clearfix">
                                             <div class="pull-left">
-                                                <p><i class="fa fa-clock-o"></i> 21 Jan 2016</p>
+                                                <p><i class="fa fa-clock-o"></i>{{notice.time }}</p>
                                             </div>
                                             <div class="pull-right">
                                                 <p><a href="blog-single.html"><i class="fa fa-comments-o"></i> 12</a></p>
@@ -254,50 +270,171 @@
                                         </div><!-- end meta -->
                                         
                                     </div><!-- end col -->
+                                    
+                                    
+                                    
                                 </div>
+                                
+                                
+                                
                             </div><!--widget -->
+                            
+                            
+                            
+                        </div><!-- end row -->
+                        
+                        
+                        <div class="blog-list course-list normal-list" >
+                            <div class="video-wrapper course-widget clearfix">
+                                <div class="row">
+                                    <div class="col-md-0"> 
+                                    </div><!-- end col-->
+                                    <div class="col-md-12" >
+                                        <div class="widget-title clearfix">
+                                            <h3><a href="blog-single.html">Sanath </a></h3>
+                                            <hr>
+                                            <p style="color:black">C#,.Net</p>
+                                            <hr>
+
+                                            <div class="bottom-line clearfix">
+                                                <div class="pull-left">
+                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_01.png" class="img-circle" alt="">3.5</a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="blog-single.html" class="btn btn-sm btn-default">Read More</a>
+                                                </div>
+                                            </div><!-- end bottom -->
+                                        </div><!-- end title -->
+                                        
+                                        
+                                        
+                                        <div class="course-meta clearfix">
+                                            <div class="pull-left">
+                                                <p><i class="fa fa-clock-o"></i>{{notice.time }}</p>
+                                            </div>
+                                            <div class="pull-right">
+                                                <p><a href="blog-single.html"><i class="fa fa-comments-o"></i> 12</a></p>
+                                            </div>
+                                        </div><!-- end meta -->
+                                        
+                                    </div><!-- end col -->
+                                    
+                                    
+                                    
+                                </div>
+                                
+                                
+                                
+                            </div><!--widget -->
+                            
+                            
+                            
+                        </div><!-- end row -->
+                        
+                        <div class="blog-list course-list normal-list" >
+                            <div class="video-wrapper course-widget clearfix">
+                                <div class="row">
+                                    <div class="col-md-0"> 
+                                    </div><!-- end col-->
+                                    <div class="col-md-12" >
+                                        <div class="widget-title clearfix">
+                                            <h3><a href="blog-single.html">Kamal </a></h3>
+                                            <hr>
+                                            <p style="color:black">JAVA.Javascript</p>
+                                            <hr>
+
+                                            <div class="bottom-line clearfix">
+                                                <div class="pull-left">
+                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_01.png" class="img-circle" alt="">3.89</a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="blog-single.html" class="btn btn-sm btn-default">Read More</a>
+                                                </div>
+                                            </div><!-- end bottom -->
+                                        </div><!-- end title -->
+                                        
+                                        
+                                        
+                                        <div class="course-meta clearfix">
+                                            <div class="pull-left">
+                                                <p><i class="fa fa-clock-o"></i>{{notice.time }}</p>
+                                            </div>
+                                            <div class="pull-right">
+                                                <p><a href="blog-single.html"><i class="fa fa-comments-o"></i> 12</a></p>
+                                            </div>
+                                        </div><!-- end meta -->
+                                        
+                                    </div><!-- end col -->
+                                    
+                                    
+                                    
+                                </div>
+                                
+                                
+                                
+                            </div><!--widget -->
+                            
+                            
+                            
+                        </div><!-- end row -->
+                        
+                        <div class="blog-list course-list normal-list" >
+                            <div class="video-wrapper course-widget clearfix">
+                                <div class="row">
+                                    <div class="col-md-0"> 
+                                    </div><!-- end col-->
+                                    <div class="col-md-12" >
+                                        <div class="widget-title clearfix">
+                                            <h3><a href="blog-single.html">Pathmila </a></h3>
+                                            <hr>
+                                            <p style="color:black">C,C++,C#</p>
+                                            <hr>
+
+                                            <div class="bottom-line clearfix">
+                                                <div class="pull-left">
+                                                    <a href="member-profile.html" class="readmore"><img src="upload/testi_01.png" class="img-circle" alt="">3.5</a>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a href="blog-single.html" class="btn btn-sm btn-default">Read More</a>
+                                                </div>
+                                            </div><!-- end bottom -->
+                                        </div><!-- end title -->
+                                        
+                                        
+                                        
+                                        <div class="course-meta clearfix">
+                                            <div class="pull-left">
+                                                <p><i class="fa fa-clock-o"></i>{{notice.time }}</p>
+                                            </div>
+                                            <div class="pull-right">
+                                                <p><a href="blog-single.html"><i class="fa fa-comments-o"></i> 12</a></p>
+                                            </div>
+                                        </div><!-- end meta -->
+                                        
+                                    </div><!-- end col -->
+                                    
+                                    
+                                    
+                                </div>
+                                
+                                
+                                
+                            </div><!--widget -->
+                            
+                            
+                            
                         </div><!-- end row -->
 
 
-<!--
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="banner-widget">
                                     <a href="#"><img src="upload/banner_02.jpg" alt="" class="img-responsive"></a>
                                 </div>
                             </div>
-                        </div> end row 
--->
+                        </div><!-- end row -->
                         
-                        <!-------->
-                        <br>
-                        
-                        <div layout="column" ng-cloak="" class="md-inline-form inputdemoBasicUsage">
-
-                          <md-content layout-padding="">
-                            <div>
-                              <form name="userForm">
-
-                                <md-input-container class="md-block">
-                                  <label>Type Your Message</label>
-                                  <input ng-model="Message" md-maxlength="150" rows="5" md-select-on-focus="" type="text">
-                                </md-input-container>
-                                  
-                                  <div class="row section-signup">
-                                      <div class="col-md-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-default btn-block " ng-click="sendMessage()">Send Message</button>
-                                    </div>
-                                </div>
-                                  </div>
-
-                              </form>
-                            </div>
-                          </md-content>
-
-                        </div>
-                        
-                        <!-------->
+                         
                         
 
                         <div class="row text-center">
@@ -338,16 +475,42 @@
                             </form>
                         </div><!-- end widget -->
                         
+                      
+                        <!-- ---->
                         
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Team Members</h3>
+                                <hr>
+                            </div><!-- end widget-title -->
+                            <div class="tags clearfix">
+                                <a href="#">Back</a>
+                            </div><!-- end tags -->
+                        </div><!-- end widget -->
+                        
+<!--
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Friends Portal</h3>
+                                <hr>
+                            </div>
+                            <div class="tags clearfix">
+                                <a href="#"></a>
+                            </div>
+                        </div>
+                        
+-->
+<!--
                         <div class="widget clearfix">
                             <div class="widget-title">
                                 <h3>Group Forum</h3>
                                 <hr>
-                            </div><!-- end widget-title -->
+                            </div>
                             <div class="tags clearfix">
-                                <a href="#">Back to the Module Forum</a>
-                            </div><!-- end tags -->
-                        </div><!-- end widget -->
+                                <a href="">Go to Group Forum</a>
+                            </div>
+                        </div>
+-->
                         
                          
                         <!--<link rel="stylesheet" type="text/css" href="test.css">-->
@@ -358,7 +521,7 @@
                           <form >
                             <md-toolbar>
                               <div class="md-toolbar-tools">
-                                <h2 style="color:white">Create Group {{ leaderName }}</h2>
+                                <h2 style="color:white"></h2>
                                 <span flex></span>
                                 <md-button class="md-icon-button" ng-click="cancel()">
 <!--                                  <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>-->
