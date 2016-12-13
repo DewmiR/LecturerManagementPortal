@@ -40,11 +40,20 @@
                                     <input type="text" placeholder="Enter Project name" class="form-control" ng-model="formData.pname" name="pname" required>
                                     <p ng-show="form.pname.$error.required" style="color:#FEC2C2">*Project name is required.</p>
                                 </div>
+
+                                <!--       
                                 <div class="form-group">
                                     <label>Description</label>
                                     <input type="text" placeholder="Enter Project description" class="form-control" ng-model="formData.pdes" name="pdesc" required> 
                                     <p ng-show="form.pdesc.$error.required" style="color:#FEC2C2">*Description is required.</p>
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" ng-model="formData.pdes" name="pdesc" placeholder="Enter Project description" required></textarea>
+                                    <p ng-show="form.pdesc.$error.required" style="color:#FEC2C2">*Description is required.</p>
                                 </div>
+
                                 <div>
                                     <button ng-disabled="form.pname.$error.required || form.pdesc.$error.required" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Create</strong></button>
                                 </div>
@@ -94,9 +103,17 @@
                                     <p ng-show="nform.ntitle.$error.required" style="color:#FEC2C2">*Title is required.</p>
                                 </div>
                                 
+                                <!-- 
                                 <div class="form-group">
                                     <label>Decription</label>
                                     <input type="text" placeholder="Description of the Notice" class="form-control" ng-model="formData.notice_desc" name="ndesc" required> 
+                                    <p ng-show="nform.ndesc.$error.required" style="color:#FEC2C2">*Decription is required.</p>
+                                </div>
+                                -->
+
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" ng-model="formData.notice_desc" name="ndesc" placeholder="Description of the Notice" required></textarea>
                                     <p ng-show="nform.ndesc.$error.required" style="color:#FEC2C2">*Decription is required.</p>
                                 </div>
 

@@ -3,6 +3,15 @@ var router = express.Router();
 var Project = require("../models/project");
 var Course = require("../models/course")
 var ProjectOfCourse = require("../models/projectOfCourse");
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+	service: 'Gmail',
+	auth: {
+		user: 'dewDevops@gmail.com',
+		pass: 'intel@123'
+ 	}
+});
 
 
 router.post('/createProject', function (req, res) {
@@ -92,6 +101,24 @@ router.post('/declineBit', function (req, res) {
 
 router.post('/approveBit', function (req, res) {
 	ProjectOfCourse.approveBit(req.body.bid,req.body.poc,function(err,data){
+
+
+		//send mail to newly added lecturer
+		var mailOptions = {
+			from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
+			to: 'sameerachandrasena@gmail.com', // list of receivers
+			subject: 'Bid Request Approved!', // Subject line
+			text: 'Dear Student,\nYour request is approved. Please view more details from the portal.\n\nRegards,\nTharindu Perera'
+		};
+
+		transporter.sendMail(mailOptions, function(error, info){
+			if(error){
+				return console.log(error);
+			}
+			console.log('Message sent: ' + info.response);
+		});
+
+
 		res.send(data)
 	})
 });
