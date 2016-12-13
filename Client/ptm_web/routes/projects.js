@@ -191,4 +191,14 @@ router.post('/markAssignStatusOfProject', function (req, res) {
 
 });
 
+
+router.post('/getProjectNotices', function (req, res) {
+
+	Project.getProjectNotices(req.body.project,function(err,data){
+	 	res.send(data)
+	})
+
+});
+
+
 module.exports = router;

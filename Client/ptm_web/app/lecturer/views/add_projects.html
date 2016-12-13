@@ -81,6 +81,11 @@
                                 </tr>
                                 
                             </table> -->
+
+
+
+                            
+
                            
                         </div>
                         <div class="col-sm-6 b-r">
@@ -92,7 +97,7 @@
                                 <div class="form-group">
                                     <label>Project</label> 
 
-                                    <select class="form-control m-b" ng-model="selectedOption" ng-options="pro.name for pro in projects">
+                                    <select class="form-control m-b" ng-model="selectedOption" ng-options="pro.name for pro in projects" ng-change="selectedItemChanged()">
 
                                     </select>
 
@@ -121,7 +126,41 @@
                                     <button ng-disabled="nform.ndesc.$error.required || nform.ntitle.$error.required" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Post</strong></button>
                                 </div>
                             </form>
-                           
+
+                            <br/><br/>
+                            
+                            <h4 style="color:#AFA9A9;text-align:center">Posted Notices</h4>
+                            
+                            <div class="ibox-content inspinia-timeline">
+
+                                <div ng-repeat="x in notices">
+                                    <div ng-repeat="n in x.notices | orderBy:'-created_at'">
+                                        <div class="timeline-item">
+                                            <div class="row">
+                                                <div class="col-xs-3 date">
+                                                    <i class="fa fa-file-text"></i>
+                                                    {{n.created_at| date:'y-M-d'}}
+                                                    <br>
+                                                    <small class="text-navy">{{n.created_at| date:'HH:mm:ss'}}</small>
+                                                </div>
+                                                <div class="col-xs-9 content">
+                                                    <p class="m-b-xs"><strong>{{n.title}}</strong></p>
+                                                    <p>{{n.description}}</p>
+                                                </div>
+                                            </div>
+                                        </div>              
+                                    </div>   
+
+                                    <div ng-hide="x.notices.length">
+                                        No Notices yet!
+                                    </div>
+.
+
+                                </div>
+
+                            </div>
+
+                            
                         </div>
 
                     </div>

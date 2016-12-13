@@ -60,7 +60,22 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         );
 	}
 
+    var refreshNotices = function(name){
 
+        $http.post('/projects/getProjectNotices', {
+             project:name
+        }).success(
+            function(data){
+                console.log(data)
+                $scope.notices = data
+            }
+        ).error(
+            function(error){
+                console.log("Failed to decline bit");
+            }
+        );
+
+    }
 
 
     $scope.postNoticeFormSubmit = function() {
@@ -81,6 +96,8 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
                         $scope.formData.notice_title="";
                         $scope.formData.notice_desc="";
 
+                        refreshNotices($scope.selectedOption.name)
+
                         $mdToast.show($mdToast.simple().textContent("Notice Successfully Posted!").position('bottom right').hideDelay(5000));
 
                        console.log(data)
@@ -100,6 +117,25 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
     }
 
 
+    $scope.selectedItemChanged = function(){
+        console.log('You selected number ' + $scope.selectedOption.name)
+
+        $http.post('/projects/getProjectNotices', {
+             project:$scope.selectedOption.name
+        }).success(
+            function(data){
+                console.log(data)
+                $scope.notices = data
+            }
+        ).error(
+            function(error){
+                console.log("Failed to decline bit");
+            }
+        );
+
+    }
+
+
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 
@@ -109,6 +145,7 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
             url:'/projects/getAllProjects2'
         }).then(
                 function success(response) {
+                    console.log(response)
                     $scope.projects = response.data
                 },
                 function error(error) {
