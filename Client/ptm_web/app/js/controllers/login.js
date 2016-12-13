@@ -60,7 +60,7 @@ myApp.controller('LoginController', ['$scope','$http','$location','$window','toa
         }).success(
             function(data){
                 if(data == "pass"){
-                    $location.url('/my_coursee_grid');
+                    $location.url('/');
                     toastr.success('You have successfully registered!', 'Welcome');
                 }else{
                     $location.url('/login');
