@@ -9,7 +9,8 @@ router.post('/createProject', function (req, res) {
 	
 	var newProject = new Project({
 		name : req.body.name,
-		description : req.body.desc
+		description : req.body.desc,
+		assigned : "0"
 	});
 
 	Project.createProject(newProject,function (err,project) {
@@ -23,6 +24,14 @@ router.post('/createProject', function (req, res) {
 router.get('/getAllProjects', function (req, res) {
 
 	Project.getAllPrpjects(function(err,projects){
+		if(err) throw err;
+		res.send(projects);
+	});
+});
+
+router.get('/getAllProjects2', function (req, res) {
+
+	Project.getAllPrpjects2(function(err,projects){
 		if(err) throw err;
 		res.send(projects);
 	});
@@ -142,6 +151,15 @@ router.post('/postNoticeForProject', function (req, res) {
 
 	Project.postNoticeForProject(req.body.user,req.body.project,req.body.title,req.body.description,function(err,data){
 		res.send(data)
+	})
+
+});
+
+router.post('/markAssignStatusOfProject', function (req, res) {
+
+	Project.changeAssignedStatus(req.body.project,function(err,data){
+		console.log("No of lined update afected: "+data.name)
+	 	res.send("pass")
 	})
 
 });

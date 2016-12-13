@@ -778,6 +778,27 @@ app.post('/addLecturerFormSubmit', function (req, res) {
 });
 
 
+// app.get('*',ensureAuthenticated , function(req, res) {
+//   	console.log("access granted. secure stuff happens here");
+// });
+
+
+
+// function ensureAuthenticated(req, res, next){
+//     if(req.isAuthenticated()){
+//     	//res.redirect('/auth/google');
+//         return next();
+//     } else {
+//         //req.flash('error_msg','You are not logged in');
+//         res.redirect('/login');
+//     }
+// }
+
+
+
+
+
+
 /*************************
         Server
 *************************/

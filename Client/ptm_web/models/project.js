@@ -13,6 +13,7 @@ var ProjectSchema = new mongoose.Schema({
         created_at: { type: Date, default: Date.now },
         name: String
     }],
+    assigned: String,
     created: { type: Date, default: Date.now }
 });
 
@@ -29,6 +30,10 @@ module.exports.createProject = function(newproject, callback){
 
 module.exports.getAllPrpjects = function(callback){
 	Project.find({},callback);
+}
+
+module.exports.getAllPrpjects2 = function(callback){
+    Project.find({assigned:"0"},callback);
 }
 
 module.exports.getProjectData = function(pid,callback){
@@ -56,3 +61,25 @@ module.exports.postNoticeForProject = function(user,project,title,description,ca
         callback
     );
 }
+
+module.exports.changeAssignedStatus = function(project,callback){
+    Project.update(project,{assigned:"1"},callback);
+}
+
+
+/*
+module.exports.declineBit = function(bid,poc,callback){
+    ProjectOfCourse.update(
+        {
+            'bids._id':bid._id
+        },
+        { 
+            $set: {   
+                'bids.$.status': false,
+                'bids.$.active': false
+            }
+        },
+        callback
+    );
+}
+*/
