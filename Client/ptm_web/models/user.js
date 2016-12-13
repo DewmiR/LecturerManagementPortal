@@ -14,7 +14,8 @@ var UserSchema = new mongoose.Schema({
     phone:String,
     email: String,
     lecturerPosition: String,
-    image: String
+    image: String,
+    staffNumber: String
 });
 
 var User = module.exports = mongoose.model('User',UserSchema);
@@ -57,9 +58,13 @@ module.exports.getUserByUserName = function(callback){
 };
 
 
-module.exports.addNewLecturer = function(callback){
-
-    
+module.exports.createLecturer = function(newUser, callback){
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(newUser.password, salt, function(err, hash) {
+            newUser.password = hash;
+            newUser.save(callback);
+        });
+    });
 };
 
 

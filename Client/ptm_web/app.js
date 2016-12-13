@@ -770,6 +770,43 @@ app.post('/deleteMeeting', function (req,res) {
 	});
 });
 
+app.post('/addLecturerFormSubmit', function (req, res) {
+	var randomPassword = Math.random().toString(36).slice(-8);
+
+	var newUser = new User({
+		name: req.body.firstname+" "+req.body.lastname,
+		phone: req.body.phone,
+		email : req.body.email,
+		staffNumber: req.body.staffNumber,
+		post : req.body.post,
+        type:"lecturer",
+		username:req.body.username,
+		password: randomPassword,
+		image:"img/lecturers/default.jpg"
+	});
+
+	User.createLecturer(newUser,function (err,data) {
+		//console.log(data);
+		if(err) throw err;
+        res.send("pass");
+	});
+
+	//send mail to newly added lecturer
+	var mailOptions = {
+		from: 'SLIIT TM portal👥 <comtale.noreply@gmail.com>', // sender address
+		to: req.body.email, // list of receivers
+		subject: 'Temporary username and password for SLIIT TM portal login', // Subject line
+		text: 'You have been added to SLIIT TM portal as a lecturer.\nYour temporary username - '+req.body.username+' and password - '+randomPassword, // plaintext body
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			return console.log(error);
+		}
+		console.log('Message sent: ' + info.response);
+	});
+});
+
 
 /*************************
         Server

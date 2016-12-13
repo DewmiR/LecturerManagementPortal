@@ -42,7 +42,7 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/myProjects.html',
         controller: 'MyProjectsController'
     }).
-    when('/add_module', {
+    when('/addLecturer', {
         templateUrl: 'views/add_lecturer.html',
         controller: 'moduleController'
     }).

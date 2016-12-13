@@ -56,7 +56,7 @@ router.get('/getAllProjectOfCourse', function (req, res) {
 
 router.post('/getProjectsListForCourse', function (req, res) {
 
-	ProjectOfCourse.getProjectsByCourseID(req.body.cid,function(err,projects){
+	ProjectOfCourse.getProjectsByCourseID(req.body.user,req.body.cid,function(err,projects){
 
 		console.log(projects)
 
@@ -97,6 +97,53 @@ router.post('/removeBit', function (req, res) {
 	ProjectOfCourse.removeBit(req.body.bid,req.body.poc,function(err,data){
 		res.send(data)
 	})
-})
+});
+
+router.post('/getAllMyProjects', function (req, res) {
+
+	ProjectOfCourse.getAllMyProjects(req.body.user,function(err,projects){
+		if(err) throw err;
+
+		res.send(projects);
+	});
+
+});
+
+router.post('/getAllMyPendingProjects', function (req, res) {
+
+	ProjectOfCourse.getAllMyPendingProjects(req.body.user,function(err,projects){
+		if(err) throw err;
+
+		res.send(projects);
+	});
+
+});
+
+router.post('/getAllMyRejectedProjects', function (req, res) {
+
+	ProjectOfCourse.getAllMyRejectedProjects(req.body.user,function(err,projects){
+		if(err) throw err;
+
+		res.send(projects);
+	});
+
+});
+
+router.post('/getProjectData', function (req, res) {
+
+	Project.getProjectData(req.body.pid,function(err,projects){
+		if(err) throw err;
+		res.send(projects);
+	});
+
+});
+
+router.post('/postNoticeForProject', function (req, res) {
+
+	Project.postNoticeForProject(req.body.user,req.body.project,req.body.title,req.body.description,function(err,data){
+		res.send(data)
+	})
+
+});
 
 module.exports = router;

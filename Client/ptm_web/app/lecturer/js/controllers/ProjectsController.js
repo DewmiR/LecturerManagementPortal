@@ -1,7 +1,14 @@
-lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialog','$routeParams', function($scope,$http,$location,$routeParams,$mdDialog) {
+lectApp.controller('ProjectsController', ['$scope','$http','$location','$routeParams','$mdToast', function($scope,$http,$location,$routeParams,$mdToast) {
 
-    $scope.message = "Adooooo"
-
+    $http.post('/getUser').success(
+        function(user){
+            console.log("Logged user Id: "+ user._id);
+        }
+    ).error(
+      function(error){
+        console.log(error)
+      }
+    );
 
 	$scope.addProjectFormSubmit = function() {
 
@@ -12,8 +19,14 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
         }).success(
             function(data){
                 if(data == "pass"){
+
+                    $scope.formData.pname="";
+                    $scope.formData.pdes="";
+
+                    $mdToast.show($mdToast.simple().textContent("Project Successfully Created!").position('bottom right').hideDelay(5000));
                     console.log("created")
                 }else{
+                    $mdToast.show($mdToast.simple().textContent("Failed!").position('bottom right').hideDelay(5000));
                     console.log("failed")
                 }
             }
@@ -22,8 +35,54 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$mdDialo
                 console.log(error);
             }
         );
-
 	}
+
+
+    $http({
+        method: 'GET',
+        url:'/projects/getAllProjects'
+    }).then(
+            function success(response) {
+                console.log(response)
+                $scope.projects = response.data
+                $scope.selectedOption = $scope.projects[0];
+            },
+            function error(error) {
+                console.log('Failed to load courses');
+            }
+    );
+
+    $scope.postNoticeFormSubmit = function() {
+
+        console.log($scope.selectedOption)
+        
+        $http.post('/getUser').success(
+            function(user){
+
+                $http.post('/projects/postNoticeForProject', {
+                    user: user,
+                    project: $scope.selectedOption,
+                    title: $scope.formData.notice_title,
+                    description: $scope.formData.notice_desc
+                }).success(
+                    function(data){
+                       console.log(data)
+                    }
+                ).error(
+                    function(error){
+
+                    }
+                );
+
+            }
+        ).error(
+          function(error){
+            console.log(error)
+          }
+        );
+    }
+
+
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 

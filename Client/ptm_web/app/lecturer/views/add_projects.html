@@ -21,7 +21,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Create New Projects</h5>
+                    <h5>Projects Pool</h5>
                     <div class="ibox-tools">
                         <a class="close-link">
                             <i class="fa fa-times"></i>
@@ -31,17 +31,77 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-6 b-r">
-                            <form role="form" ng-submit="addProjectFormSubmit()">
+
+                            <h4 style="color:#AFA9A9;text-align:center">Create Projects</h4>
+
+                            <form name="form" role="form" ng-submit="addProjectFormSubmit()">
                                 <div class="form-group">
                                     <label>Project Name</label>
-                                    <input type="text" placeholder="Enter Project name" class="form-control" ng-model="formData.pname"> 
+                                    <input type="text" placeholder="Enter Project name" class="form-control" ng-model="formData.pname" name="pname" required>
+                                    <p ng-show="form.pname.$error.required" style="color:#FEC2C2">*Project name is required.</p>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <input type="text" placeholder="Enter Project description" class="form-control" ng-model="formData.pdes"> 
+                                    <input type="text" placeholder="Enter Project description" class="form-control" ng-model="formData.pdes" name="pdesc" required> 
+                                    <p ng-show="form.pdesc.$error.required" style="color:#FEC2C2">*Description is required.</p>
                                 </div>
                                 <div>
-                                    <button onclick="showNotification('New Project','Sucessfully Created!')" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Create</strong></button>
+                                    <button ng-disabled="form.pname.$error.required || form.pdesc.$error.required" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Create</strong></button>
+                                </div>
+                            </form>
+
+                            
+<!-- 
+                            <br/><br/>
+
+                            <table class="table">
+                                <tr>
+                                    <th>Col 1</th>
+                                    <th>Col 2</th>
+                                    <th>Col 3</th>    
+                                </tr>
+                                <tr>
+                                    <td>Col 1</td>
+                                    <td>Col 2</td>
+                                    <td>Col 3</td>    
+                                </tr>
+                               <tr>
+                                    <td>Col 1</td>
+                                    <td>Col 2</td>
+                                    <td>Col 3</td>     
+                                </tr>
+                                
+                            </table> -->
+                           
+                        </div>
+                        <div class="col-sm-6 b-r">
+
+                            <h4 style="color:#AFA9A9;text-align:center">Post Notices</h4>
+
+
+                            <form role="form" name="nform" ng-submit="postNoticeFormSubmit()">
+                                <div class="form-group">
+                                    <label>Project</label> 
+
+                                    <select class="form-control m-b" ng-model="selectedOption" ng-options="pro.name for pro in projects">
+
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" placeholder="Title of the Notice" class="form-control" ng-model="formData.notice_title" name="ntitle" required> 
+                                    <p ng-show="nform.ntitle.$error.required" style="color:#FEC2C2">*Title is required.</p>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Decription</label>
+                                    <input type="text" placeholder="Description of the Notice" class="form-control" ng-model="formData.notice_desc" name="ndesc" required> 
+                                    <p ng-show="nform.ndesc.$error.required" style="color:#FEC2C2">*Decription is required.</p>
+                                </div>
+
+                                <div>
+                                    <button ng-disabled="nform.ndesc.$error.required || nform.ntitle.$error.required" class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Post</strong></button>
                                 </div>
                             </form>
                            
@@ -52,6 +112,8 @@
             </div>
         </div>
 
+
+
+
     </div>
 </div>    
-

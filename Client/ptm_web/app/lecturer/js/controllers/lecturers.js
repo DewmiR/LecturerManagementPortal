@@ -2,7 +2,7 @@
  * Created by DewmiR on 9/26/2016.
  */
 
-lectApp.controller('lecturerController', ['$scope','$http','$location','$routeParams','sweet', function($scope,$http,$location,$routeParams, sweet) {
+lectApp.controller('lecturerController', ['$scope','$http','$location','$routeParams','sweet','$mdToast', function($scope,$http,$location,$routeParams, sweet , $mdToast) {
 
 
     $scope.init = function () {
@@ -73,7 +73,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
             }).success(
                 function(data){
                     Array.prototype.push.apply($scope.moduleLecturers, data);
-                    //console.log($scope.moduleLecturers);
+                    console.log($scope.moduleLecturers);
                 }
             ).error(
                 function(error){
@@ -278,9 +278,47 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     $scope.success = function() {
         sweet.show('Assigned successfully');
     };
-    $scope.init();
-
     
+    $scope.addLecturerFormSubmit = function () {
+        $http.post('/addLecturerFormSubmit', {
+            firstname: $scope.formData.firstname,
+            lastname: $scope.formData.lastname,
+            email: $scope.formData.email,
+            phone: $scope.formData.phone,
+            staffNumber: $scope.formData.staffNumber,
+            post: $scope.formData.post,
+            username: $scope.formData.username
+        }).success(
+            function(data){
+                if(data == "pass"){
 
+                    //$window.location.reload();
+                    //$scope.$on('$includeContentLoaded', function() {
+                        $mdToast.show($mdToast.simple().textContent("Lecturer added to the system successfully").position('bottom right').hideDelay(5000));
+                    //});
+                    /*angular.element(document).ready(function () {
+
+                        $mdToast.show($mdToast.simple().textContent("Lecturer added to the system successfully").position('bottom right').hideDelay(5000));
+
+                    });*/
+                    $scope.formData.firstname="";
+                    $scope.formData.lastname="";
+                    $scope.formData.email="";
+                    $scope.formData.phone="";
+                    $scope.formData.staffNumber="";
+                    $scope.formData.username="";
+                }else{
+                    console.log("failed")
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+
+    }
+    
+    $scope.init();
 
 }]);
