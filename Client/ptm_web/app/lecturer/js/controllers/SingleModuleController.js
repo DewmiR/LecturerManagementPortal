@@ -12,8 +12,13 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         $scope.lecturers = [];
         $scope.curLecName;
         $scope.lecturersDiv=false;
+        $scope.maxGroupMembers=null;
+        $scope.finalEv=null;
+        $scope.midEv=null;
+        $scope.finalDoc=null;
         $scope.loadSingleModules();
         $scope.loadLecturers();
+
     };
 
     $scope.loadSingleModules = function () {
@@ -25,6 +30,10 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
             function(data){
                 console.log(data);
                 $scope.moduleDetails = data;
+                $scope.maxGroupMembers=data.maxGroupMembers;
+                $scope.midEv=data.assignmentCriteria[0];
+                $scope.finalEv=data.assignmentCriteria[1];
+                $scope.finalDoc=data.assignmentCriteria[2];
                 //$scope.currentModuleLecInCharge=data.lecInCharge;
             }
         ).error(
@@ -108,6 +117,57 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
                 console.log(error);
             }
         );
+    }
+
+    $scope.changeMaxGroupMembers = function (moduleName,maxGroupMembers) {
+        console.log(maxGroupMembers);
+        $http.post('/changeMaxGroupMembers', {
+            maxGroupMembers: maxGroupMembers,
+            moduleName: moduleName,
+        }).success(
+            function(data){
+                if(data == "pass"){
+                    $scope.moduleDetails.maxGroupMembers = maxGroupMembers;
+                    $mdToast.show($mdToast.simple().textContent("Successfully changed!").position('bottom right').hideDelay(5000));
+
+                }else{
+
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+    }
+
+    $scope.changeAssignmentCriteria = function () {
+
+        $http.post('/changeAssignmentCriteria', {
+            midEv: $scope.midEv,
+            moduleName: $scope.moduleDetails.courseName,
+            finalEv:$scope.finalEv,
+            finalDoc:$scope.finalDoc
+        }).success(
+            function(data){
+                if(data == "pass"){
+                    $scope.moduleDetails.assignmentCriteria[0] = $scope.midEv;
+                    $scope.moduleDetails.assignmentCriteria[1] = $scope.finalEv;
+                    $scope.moduleDetails.assignmentCriteria[2] = $scope.finalDoc;
+                    $mdToast.show($mdToast.simple().textContent("Successfully changed!").position('bottom right').hideDelay(5000));
+                }else{
+
+                }
+            }
+        ).error(
+            function(error){
+                console.log(error);
+            }
+        );
+
+
+
+
     }
     
     $scope.init();

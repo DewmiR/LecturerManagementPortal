@@ -20,13 +20,13 @@
 
 <div class="row wrapper wrapper-content animated fadeInUp">
 
-    <div class="col-lg-4 col-md-4">
+    <div class="col-lg-5 col-md-5">
         <div class="row">
             <div class="col-lg-12">
 
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Group restrictions and Assignment Criteria</h5>
+                        <h3 class="col-md-10" style="">Group restrictions and Assignment Criteria</h3>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -36,14 +36,95 @@
                     <div class="ibox-content">
                         <dl class="dl-horizontal">
 
-                            <dt>Year:</dt>
-                            <dd>{{ moduleDetails.maxGroupCount }}<i class="fa fa-edit pull-right"></i></dd>
+                            <dt style="text-align: left;width: 75%;font-size: medium";>Maximum group members:</dt>
+                            <dd>{{ moduleDetails.maxGroupMembers }}<i class="fa fa-edit pull-right" style="color: #1ab394" data-toggle="modal" data-target="#changeMaxGroupCount"></i></dd>
+                            <hr>
+                            <dt style="text-align: left;width: 75%;font-size: medium;">Assignment criteria:</dt>
+                            <dd><i class="fa fa-edit pull-right" style="color: #1ab394" data-toggle="modal" data-target="#changeAssignmentCriteria"></i></dd>
+                            <br>
+                            <dt style="text-align: right">Mid evaluation</dt>
+                            <dd style="text-align: center">{{ moduleDetails.assignmentCriteria[0] }}%</dd>
 
+                            <br>
+                            <dt style="text-align: right">Final evaluation</dt>
+                            <dd style="text-align: center">{{ moduleDetails.assignmentCriteria[1] }}%</dd>
+
+                            <br>
+                            <dt style="text-align: right">Final documentation</dt>
+                            <dd style="text-align: center">{{ moduleDetails.assignmentCriteria[2] }}%</dd>
                         </dl>
+
+                        <!-- change assignment criteria model-->
+                        <div class="modal inmodal fade" id="changeAssignmentCriteria" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <p class="font-bold" style="font-size: large">Change assignment criteria</p>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="assignmentC">
+                                        <div class="form-group"><label class="col-lg-4 control-label">Mid evaluation:</label>
+
+                                            <div class="col-lg-8"><input type="text" id="midEv" name="midEv" placeholder="" class="form-control" ng-model="midEv">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group"><label class="col-lg-4 control-label">Final evaluation:</label>
+
+                                            <div class="col-lg-8">
+                                                <input type="text" id="finalEv" name="finalEv" placeholder="" class="form-control" ng-model="finalEv">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="form-group"><label class="col-lg-4 control-label">Final documentation:</label>
+
+                                            <div class="col-lg-8"><input type="text" id="finalDoc" name="finalDoc" placeholder="" class="form-control" ng-model="finalDoc">
+                                            </div>
+                                        </div>
+                                        <br>
+                                            <br>
+                                        </form>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" id="assC">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end-->
+
+                        <!-- change max group count model-->
+                        <div class="modal inmodal fade" id="changeMaxGroupCount" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                        <p class="font-bold" style="font-size: large">Change maximum number of members per group</p>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group"><label class="col-lg-2 control-label">Members:</label>
+
+                                            <div class="col-lg-10"><input type="text" placeholder="" class="form-control" ng-model="maxGroupMembers">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" ng-click="changeMaxGroupMembers(moduleDetails.courseName,maxGroupMembers)" data-dismiss="modal">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end-->
+
                     </div>
                 </div><div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Assignment Criteria</h5>
+                    <h3 class="col-md-10" style="">Notices</h3>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -51,6 +132,19 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <div class="row">
+                        <form id="notice">
+                         <div class="col-md-10">
+                            <textarea type="text" rows="3" placeholder="" class="form-control" ng-model="notice"></textarea>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" ng-click="changeMaxGroupMembers(moduleDetails.courseName,maxGroupMembers)">Post</button>
+                        </div>
+                        </form>
+                    </div>
+
+                    <hr>
+
 
 
                 </div>
@@ -66,7 +160,67 @@
 </div>
 
 
+<!-- Jquery Validate -->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+
+        $("#assignmentC").validate({
+            rules: {
+                midEv: {
+                    required: true,
+                    digits: true
+                },
+                finalDoc: {
+                    required: true,
+                    digits: true
+                },
+                finalEv: {
+                    required: true,
+                    digits: true
+                }
+            },
+            messages: {
+                midEv: "Invalid input",
+                finalDoc: "Invalid input",
+                finalEv: "Invalid input"
+            }
+        });
+
+        $("#notice").validate({
+            rules: {
+                midEv: {
+                    required: true,
+                    digits: true
+                },
+                finalDoc: {
+                    required: true,
+                    digits: true
+                },
+                finalEv: {
+                    required: true,
+                    digits: true
+                }
+            },
+            messages: {
+                midEv: "Invalid input",
+                finalDoc: "Invalid input",
+                finalEv: "Invalid input"
+            }
+        });
+
+    });
+
+    $("#assC").click(function(){
+        if($("#assignmentC").valid()){   // test for validity
+           angular.element(document.getElementById('changeAssignmentCriteria')).scope().changeAssignmentCriteria();
+            $('#changeAssignmentCriteria').modal('hide')
+        }
+        else {
+
+        }
+    });
 
 
-
-        <
+</script>

@@ -834,7 +834,8 @@ app.post('/createModuleFormSubmit', function (req, res) {
 		semester:req.body.semester,
         lecInCharge:req.body.lecInCharge,
 		status:"Active",
-        maxGroupMembers:"4"
+        maxGroupMembers:"4",
+        assignmentCriteria:["not set","not set","not set"]
 	});
 
 	Course.createCourse(newCourse,function (err,data) {
@@ -866,6 +867,22 @@ app.post('/createModuleFormSubmit', function (req, res) {
 
 });
 
+
+app.post('/changeMaxGroupMembers', function (req, res) {
+
+    Course.changeMaxGroupMembers(req.body.moduleName,req.body.maxGroupMembers,function (err) {
+        if(err) throw err;
+        res.send("pass");
+    });
+});
+
+app.post('/changeAssignmentCriteria', function (req, res) {
+    //console.log(req.body.moduleName);
+    Course.changeAssignmentCriteria(req.body.moduleName,req.body.midEv,req.body.finalEv,req.body.finalDoc,function (err) {
+        if(err) throw err;
+        res.send("pass");
+    });
+});
 
 // app.get('*',ensureAuthenticated , function(req, res) {
 //   	console.log("access granted. secure stuff happens here");
