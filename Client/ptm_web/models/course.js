@@ -8,12 +8,14 @@ var CourseSchema = new mongoose.Schema({
 	year: String,
 	image: String,
 	enrollmentKey: String,
-    lecturerIncharge: String,
     lecturerImage: String,
     status: String,
     lecInCharge: String,
     lastUpdated: String,
-    created: String
+    created: String,
+    abbreviation: String,
+    description: String,
+    maxGroupMembers: String
 });
 
 var Course = module.exports = mongoose.model('Course',CourseSchema);

@@ -432,6 +432,52 @@
                         </md-dialog>
                         </script>
                         </div>
+
+
+                        <div class="widget clearfix">
+                            <div class="widget-title">
+                                <h3>Projects</h3>
+                                <hr>
+                                <div>
+                                    <table class="table">
+                                        <tr ng-repeat="ap in approved_projects_list">
+                                            <td>
+                                                <h5 ng-click="viewMyProject(ap.project)">{{ ap.project.name }}</h5>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-default">Approved</a>
+                                            </td>
+
+                                        </tr>
+                                        <tr ng-repeat="pp in pending_projects_list">
+                                            <td>
+                                                <h5>{{ pp.project.name }}</h5>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-pending">Pending</a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="rp in rejected_projects_list">
+                                            <td>
+                                                <h5>{{ rp.project.name }}</h5>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-rejected">Rejected</a>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="p in projects_list">
+                                            <td>
+                                                <h5>{{ p.project.name }}</h5>
+                                            </td>
+                                            <td>
+                                                <a ng-click="bidForProject(p)" class="btn btn-sm btn-bidnow">Bid Now !</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
            
                         <div class="widget clearfix">
                             <div class="widget-title">

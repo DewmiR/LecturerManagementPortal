@@ -38,3 +38,7 @@ module.exports.getModulesAssignedForLecturer = function(userName,callback){
 module.exports.getModulesAssignedForSupervisor = function(userName,callback){
     Asgnlec.find({userName:userName,post:"Supervisor"},callback);
 };
+
+module.exports.DeleteLecturer = function(_id,callback){
+    Asgnlec.remove( { _id :_id },callback );
+};

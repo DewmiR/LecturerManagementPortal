@@ -34,9 +34,10 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
 //    $route.reload();*/
 //});
         
-       // setInterval(function(){ $scope.requestFromNameArr=[];$scope.getReceivedRequests() }, 2000);
+
+     //   setInterval(function(){ $scope.requestFromNameArr=[];$scope.getReceivedRequests() }, 200000);
         
-       //  setInterval(function(){ $scope.isGroupFormed(); }, 2000);
+     //    setInterval(function(){ $scope.isGroupFormed(); }, 200000);
       
     }
     $scope. testx = function (){
@@ -404,6 +405,135 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
   }
 
     $scope.init();
+
+
+
+
+
+
+    /************************************************************************************
+    *************************************************************************************
+        
+        Kichiki following functions are related to projects part. Dont change any thing
+
+    *************************************************************************************
+    ************************************************************************************/
+
+
+    $scope.bidForProject = function(poc){
+
+        $http.post('/getUser').success(
+            function(user){
+
+                $http.post('/projects/bidForProject', {
+                    poc: poc,
+                    user: user
+                }).success(
+                    function(data){
+                       console.log(data)
+                       $scope.getAllMyProjects();
+                    }
+                ).error(
+                    function(error){
+
+                    }
+                );
+
+            }
+        ).error(
+          function(error){
+            console.log(error)
+          }
+        );
+
+    }
+
+    $scope.getAllMyProjects = function(poc){
+
+        $http.post('/getUser').success(
+            function(user){
+
+                $http.post('/projects/getAllMyProjects', {
+                    user: user
+                }).success(
+                    function(data){
+                        $scope.approved_projects_list = data
+                    }
+                ).error(
+                    function(error){
+                        console.log(error);
+                    }
+                );
+
+
+                $http.post('/projects/getAllMyPendingProjects', {
+                    user: user
+                }).success(
+                    function(data){
+                        $scope.pending_projects_list = data
+                    }
+                ).error(
+                    function(error){
+                        console.log(error);
+                    }
+                );
+
+
+                $http.post('/projects/getAllMyRejectedProjects', {
+                    user: user
+                }).success(
+                    function(data){
+                        $scope.rejected_projects_list = data
+                    }
+                ).error(
+                    function(error){
+                        console.log(error);
+                    }
+                );
+
+
+                $http.post('/projects/getProjectsListForCourse', {
+                    cid: $routeParams.id,
+                    user: user
+                }).success(
+                    function(data){
+                        $scope.projects_list = data
+                    }
+                ).error(
+                    function(error){
+                        console.log(error);
+                    }
+                );
+
+            }
+        ).error(
+          function(error){
+            console.log(error)
+          }
+        );
+
+    }
+
+    $scope.getAllMyProjects();
+
+    $scope.viewMyProject = function(project){
+        console.log()
+         $location.url('/project_module_forum/'+project._id);
+        //TODO: continue development
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

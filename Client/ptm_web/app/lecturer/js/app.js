@@ -1,4 +1,4 @@
-var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial','hSweetAlert']);
+var lectApp = angular.module('lectApp', ['ngRoute','ngAnimate','ngMaterial','hSweetAlert','angular-chosen']);
 
 lectApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
@@ -42,9 +42,17 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/myProjects.html',
         controller: 'MyProjectsController'
     }).
-    when('/add_module', {
+    when('/addLecturer', {
         templateUrl: 'views/add_lecturer.html',
+        controller: 'lecturerController'
+    }).
+    when('/createModule', {
+        templateUrl: 'views/create_module.html',
         controller: 'moduleController'
+    }).
+    when('/moduleDetails/:id?', {
+        templateUrl: 'views/modules_details.html',
+        controller: 'SingleModuleController'
     }).
     when('/supervisorCal', {
         templateUrl: 'views/supervisorCalendar.html',
