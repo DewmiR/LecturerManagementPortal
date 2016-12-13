@@ -2,7 +2,11 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
 
 
-
+    /**
+     * get all projects
+     * @param moduleName
+     * @param projects
+     */
     var getAllProjects = function(){
         $http({
             method: 'GET',
@@ -32,6 +36,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
       }
     );
 
+    /**
+     * post all projects
+     * @param name,desc
+     */
 	$scope.addProjectFormSubmit = function() {
 
 
@@ -60,6 +68,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         );
 	}
 
+    /**
+     * get all notices
+     * @param module name
+     */
     var refreshNotices = function(name){
 
         $http.post('/projects/getProjectNotices', {
@@ -77,7 +89,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
     }
 
-
+    /**
+     * post postNoticeFormSubmit
+     * @param user,title,description
+     */
     $scope.postNoticeFormSubmit = function() {
 
         console.log($scope.selectedOption)
@@ -116,7 +131,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         );
     }
 
-
+    /**
+     * post selectedItemChanged
+     * @param project
+     */
     $scope.selectedItemChanged = function(){
         console.log('You selected number ' + $scope.selectedOption.name)
 
@@ -139,6 +157,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
 }]).controller('AssignProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 
+    /**
+     * post getAllProjects
+     * @param url,method
+     */
     var getAllProjects = function(){
         $http({
             method: 'GET',
@@ -170,6 +192,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         }
     );
 
+    /**
+     * post viewProjet
+     * @param ev,name,desciption
+     */
     $scope.viewProjet = function(ev,name,desciption) {
         var parentEl = angular.element(document.body);
         $mdDialog.show({
@@ -208,7 +234,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         }
     }
 
-
+    /**
+     * post assignProjet
+     * @param ev,name,pId,project
+     */
     $scope.assignProjet = function(ev,name,pId,project) {
         var parentEl = angular.element(document.body);
         $mdDialog.show({
@@ -241,6 +270,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
             controller: AsignController
         });
 
+        /**
+         * post AsignController
+         * @param courses, projectId, projectName,project
+         */
         function AsignController($scope, $mdDialog, courses, projectId, projectName,project) {
 
             $scope.courses = courses;
@@ -295,6 +328,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
 }]).controller('MyProjectsController', ['$scope','$http','$location','$routeParams','$mdDialog','$mdToast', function($scope,$http,$location,$routeParams,$mdDialog,$mdToast) {
 
+    /**
+     * GET getAllProjects
+     * @param courses, projectId, projectName,project
+     */
     var getAllProjects = function(){
 
         $http({
@@ -312,7 +349,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
 
     getAllProjects()
 
-
+    /**
+     * GET approve - bids approve
+     * @param bid,poc
+     */
     $scope.approve = function(bid,poc){
         $http.post('/projects/approveBit', {
             bid: bid,
@@ -329,7 +369,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         );
     }
 
-
+    /**
+     * GET decline - bids decline
+     * @param bid,poc
+     */
     $scope.decline = function(bid,poc){
  
         $http.post('/projects/declineBit', {
@@ -348,6 +391,10 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
     }
 
 
+    /**
+     * GET recover - bids recover
+     * @param bid,poc
+     */
     $scope.recover = function(bid,poc){
  
         $http.post('/projects/recoverBit', {
@@ -365,7 +412,11 @@ lectApp.controller('ProjectsController', ['$scope','$http','$location','$routePa
         );
     }
 
-
+    
+    /**
+     * GET delete - bids delete
+     * @param bid,poc
+     */
     $scope.delete = function(bid,poc){
 
         $http.post('/projects/removeBit', {
