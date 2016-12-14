@@ -2,6 +2,13 @@ myApp.controller('MyCourseGrideController', ['$scope','$http','$location','$mdDi
 
 $scope.$parent.body_class = "";
 
+    
+/**
+  * init key of module
+  * @param moduleName
+  * @param newKey
+  * @param callback
+  */
 $scope.init = function () {
 
     //all variables
@@ -18,6 +25,14 @@ $scope.init = function () {
 
 
 }
+
+
+/**
+  * change enrollment key of module
+  * @param moduleName
+  * @param newKey
+  * @param callback
+  */
 
 $scope.loadCourses = function () {
     var params = {};
@@ -95,6 +110,14 @@ $scope.loadCourses = function () {
             }
     );
 }
+
+
+/**
+  * change enrollment key of module
+  * @param moduleName
+  * @param newKey
+  * @param callback
+  */
 
 $scope.showEnrollmentKeyPrompt = function(ev,cid) {
     var studentID=$scope.currentUser;
@@ -181,6 +204,15 @@ $scope.showEnrollmentKeyPrompt = function(ev,cid) {
 
   };
 
+    
+    
+    /**
+  * change enrollment key of module
+  * @param moduleName
+  * @param newKey
+  * @param callback
+  */
+    
 $scope.getCurrentUser = function (){
 
      $http.post('/getUser', {
