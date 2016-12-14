@@ -215,7 +215,7 @@ myApp.controller('CourseModuleForumController', ['$scope','$http','$location', '
                 }).success(
                 function(data){
                    console.log(data);
-                    if(data=="2" || data > 2){
+                    if(data=="4" || data > 4){
                         console.log("Group Formed");
                         $scope.groupFormedStatus=true;
                         console.log($scope.groupIdForLec);
