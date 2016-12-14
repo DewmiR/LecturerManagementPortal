@@ -393,13 +393,31 @@
                             <div>
                               <md-input-container>
                                 <label>Name</label>
-                                <input ng-model="createGroup.name">
+                                <input ng-model="createGroup.name" required>
+<!--                                  <div ng-message="required" class="my-message">You must supply a postal code.</div>-->
+                                  
+                                  <div ng-messages="userForm.postalCode.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Enter the Name</div>
+<!--
+              <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+                code.
+              </div>
+-->
+<!--
+              <div ng-message="md-maxlength" class="my-message">
+                Don't use the long version silly...we don't need to be that specific...
+              </div>
+-->
+            </div>
+                                  
                               </md-input-container>
 
+<!--
                               <md-input-container>
                                 <label>Id Number</label>
                                 <input ng-model="createGroup.IdNumber" >
                               </md-input-container>
+-->
                             </div>
                           </md-content>
 
@@ -408,15 +426,33 @@
                                 <div layout-gt-sm="row">
                                   <md-input-container class="md-block" flex-gt-sm="">
                                     <label>Group Name</label>
-                                    <input ng-model="createGroup.groupName">
+                                    <input ng-model="createGroup.groupName" required>
+                                      
+                                      <div ng-messages="userForm.postalCode.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Please Enter the Group Name</div>
+<!--
+              <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+                code.
+              </div>
+-->
+<!--
+              <div ng-message="md-maxlength" class="my-message">
+                Don't use the long version silly...we don't need to be that specific...
+              </div>
+-->
+            </div>
+                                      
+                                      
                                   </md-input-container>
                                 </div>
+<!--
                                 <div layout-gt-sm="row">
                                   <md-input-container class="md-block" flex-gt-sm="">
                                     <label>CGPA</label>
                                     <input ng-model="createGroup.cgpa">
                                   </md-input-container>
                                 </div>
+-->
                             </div>
                           </md-content>
                         </div>
