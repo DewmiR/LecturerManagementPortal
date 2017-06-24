@@ -26,22 +26,6 @@ lectApp.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'views/assignLecturer.html',
       controller: 'lecturerController'
     }).
-    when('/addProjects', {
-      templateUrl: 'views/add_projects.html',
-      controller: 'ProjectsController'
-    }).
-    when('/assignProjects', {
-      templateUrl: 'views/assignProjects.html',
-      controller: 'AssignProjectsController'
-    }).
-    when('/myProjects', {
-      templateUrl: 'views/myProjects.html',
-      controller: 'MyProjectsController'
-    }).
-    when('/myProjects', {
-        templateUrl: 'views/myProjects.html',
-        controller: 'MyProjectsController'
-    }).
     when('/addLecturer', {
         templateUrl: 'views/add_lecturer.html',
         controller: 'lecturerController'
@@ -58,10 +42,6 @@ lectApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/supervisorCalendar.html',
         controller: 'supervisorController'
     }).
-//    when('/teamAcceptView', {
-//        templateUrl: 'views/teamAcceptView.html',
-//        controller: 'teamAcceptView'
-//    }).
     otherwise({
       redirectTo: '/lecturer'
     });

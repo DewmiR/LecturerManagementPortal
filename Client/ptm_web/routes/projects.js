@@ -174,31 +174,6 @@ router.post('/getProjectData', function (req, res) {
 
 });
 
-router.post('/postNoticeForProject', function (req, res) {
-
-	Project.postNoticeForProject(req.body.user,req.body.project,req.body.title,req.body.description,function(err,data){
-		res.send(data)
-	})
-
-});
-
-router.post('/markAssignStatusOfProject', function (req, res) {
-
-	Project.changeAssignedStatus(req.body.project,function(err,data){
-		console.log("No of lined update afected: "+data.name)
-	 	res.send("pass")
-	})
-
-});
-
-
-router.post('/getProjectNotices', function (req, res) {
-
-	Project.getProjectNotices(req.body.project,function(err,data){
-	 	res.send(data)
-	})
-
-});
 
 
 module.exports = router;

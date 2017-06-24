@@ -1,6 +1,3 @@
-/**
- * Created by DewmiR on 9/26/2016.
- */
 
 lectApp.controller('lecturerController', ['$scope','$http','$location','$routeParams','sweet','$mdToast', function($scope,$http,$location,$routeParams, sweet , $mdToast) {
 
@@ -8,7 +5,6 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     $scope.init = function () {
         $scope.moduleId = $routeParams.id;
         $scope.moduleDetails = [];
-      //  $scope.moduleLecturers=[];
         $scope.loadSingleModules();
 
         $scope.lec = "Lecturers";
@@ -86,7 +82,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     };
 
 
-
+     //Display all modules
     $scope.displayAllModules = function () {
         $http({
             method: 'GET',
@@ -109,6 +105,9 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
 
     };
 
+
+
+    //Assign Lecturer
     $scope.assignLecs = function() {
 
         //get all selected lecturers
@@ -181,6 +180,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
          }
     };
 
+     //Display all Modules
     $scope.displayAllModules = function () {
         $http({
             method: 'GET',
@@ -199,6 +199,7 @@ lectApp.controller('lecturerController', ['$scope','$http','$location','$routePa
     };
 
 
+    //Display lecturers assigned for modules
     $scope.displayAsgnDetails = function () {
 
         $scope.details=[];

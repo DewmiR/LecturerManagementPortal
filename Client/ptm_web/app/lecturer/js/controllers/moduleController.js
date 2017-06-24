@@ -1,6 +1,4 @@
-/**
- * Created by PathmilaWK on 9/23/2016.
- */
+
 lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast', function($scope,$http,$location,$mdToast) {
 
     $scope.$parent.body_class = "";
@@ -36,7 +34,7 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
                 console.log('Failed to load modules');
             }
         );
-    }
+    };
 
     $scope.loadModulesSecondYear = function () {
         var params = {};
@@ -56,7 +54,7 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
                 console.log('Failed to load modules');
             }
         );
-    }
+    };
 
     /**
      * get all lecturers at init
@@ -79,14 +77,14 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
                 console.log('Failed to load modules');
             }
         );
-    }
+    };
 
     $scope.clear = function () {
         $scope.formData.name="";
         $scope.formData.abbr="";
         $scope.formData.description="";
         $scope.formData.enkey="";
-    }
+    };
 
     /**
      * create a new module
@@ -121,7 +119,7 @@ lectApp.controller('moduleController', ['$scope','$http','$location','$mdToast',
             }
         );
 
-    }
+    };
     
     $scope.init();
 

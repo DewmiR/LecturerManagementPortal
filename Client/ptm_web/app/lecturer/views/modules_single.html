@@ -24,7 +24,6 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="m-b-md">
-                                    <a href="#/moduleDetails/{{ moduleDetails._id }}" class="btn btn-primary btn-outline btn-xs pull-right">View more >></a>
                                     <h2>{{ moduleDetails.courseName }}</h2>
                                 </div>
                                 <dl class="dl-horizontal">
@@ -48,11 +47,9 @@
                                     <dt>Lecturer-In-Charge:</dt>
                                     <dd ng-if="!moduleDetails.lecInCharge">
                                         Not assigned
-                                        <a href="" class="btn btn-white btn-xs pull-right" ng-click="showLecturersDiv()" ng-show="!lecturersDiv">Assign Lecturer-In-Charge</a>
                                     </dd>
                                     <dd ng-if="moduleDetails.lecInCharge">
                                         <a href="#" class="text-navy"> {{ moduleDetails.lecInCharge }}</a>
-                                        <a href="" class="btn btn-white btn-xs pull-right" ng-click="showLecturersDiv()" ng-show="!lecturersDiv">Change Lecturer-In-Charge</a>
                                     </dd>
                                     <dt>Enrolment Key:</dt>
                                     <dd> {{ moduleDetails.enrollmentKey }}

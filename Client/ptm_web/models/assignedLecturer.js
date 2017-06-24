@@ -1,6 +1,4 @@
-/**
- * Created by DewmiR on 9/30/2016.
- */
+
 'use strict';
 
 var mongoose = require('mongoose');

@@ -1,6 +1,3 @@
-/**
- * Created by PathmilaWK on 9/30/2016.
- */
 lectApp.controller('SingleModuleController', ['$scope','$http','$location','$routeParams','$mdToast', function($scope,$http,$location,$routeParams,$mdToast) {
 
     $scope.$parent.body_class = "";
@@ -14,14 +11,11 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
         $scope.moduleId = $routeParams.id;
         $scope.moduleDetails = [];
         $scope.lecturers = [];
-        $scope.curLecName;
         $scope.lecturersDiv=false;
         $scope.maxGroupMembers=null;
         $scope.finalEv=null;
         $scope.midEv=null;
         $scope.finalDoc=null;
-        $scope.notice;
-        $scope.title;
         $scope.allNotices=[];
         $scope.loadSingleModules();
         $scope.loadLecturers();
@@ -44,7 +38,7 @@ lectApp.controller('SingleModuleController', ['$scope','$http','$location','$rou
             }
         );
 
-    }
+    };
     
     $scope.viewMembers = function (gid){
         
